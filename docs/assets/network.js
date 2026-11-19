@@ -37,7 +37,7 @@
                 const [x, y] = project(region.anchor);
                 return `<g data-map-line="${region.key}"><path d="M${x.toFixed(1)} ${y.toFixed(1)} L${region.label[0] * 10} ${region.label[1] * 5}"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="5"/></g>`;
               }).join('')}</svg>
-              ${regions.map(region => `<div class="network-cluster" style="left:${region.label[0]}%;top:${region.label[1]}%;--cluster-width:${region.partners.length > 2 ? 27 : region.key === 'hong-kong' ? 25 : region.key === 'united-states' ? 22 : 17}%;--mark-columns:${Math.min(region.partners.length, 3)}"><button class="network-pin" type="button" data-region="${region.key}" aria-pressed="${state.region === region.key}" aria-controls="network-panel" aria-label="${escape(name(region))}: ${institutionCount(region.partners.length)}"><span>${name(region)}</span><strong>${region.partners.length}</strong></button><div class="network-map-marks">${region.partners.map(key => {
+              ${regions.map(region => `<div class="network-cluster" style="left:${region.label[0]}%;top:${region.label[1]}%;--cluster-width:${region.partners.length > 2 ? 30 : region.key === 'hong-kong' ? 27 : region.key === 'united-states' ? 23 : 18}%;--mark-columns:${Math.min(region.partners.length, 3)}"><button class="network-pin" type="button" data-region="${region.key}" aria-pressed="${state.region === region.key}" aria-controls="network-panel" aria-label="${escape(name(region))}: ${institutionCount(region.partners.length)}"><span>${name(region)}</span><strong>${region.partners.length}</strong></button><div class="network-map-marks">${region.partners.map(key => {
                 const partner = data.partners.find(item => item.key === key);
                 const label = escape(en ? partner.nameEn : partner.nameZh);
                 return `<button type="button" data-partner="${key}" aria-label="${label}" title="${label}"><img src="${partner.logo}" alt="" draggable="false"></button>`;
@@ -60,7 +60,7 @@
       </div>
       <details class="network-roster" open>
         <summary><span>${t('认识项目团队', 'Meet the project team')} <small>${data.team.length} ${t('位成员', 'people')}</small></span><span class="network-roster-toggle" aria-hidden="true"></span></summary>
-        <div class="network-roster-grid">${sortedPeople.map(person => `<button class="network-portrait" type="button" data-person="${person.key}" aria-haspopup="dialog"><img src="${person.photo}" alt="" width="48" height="52" loading="lazy"><span>${escape(en ? person.nameEn : person.nameZh)}</span></button>`).join('')}</div>
+        <div class="network-roster-grid">${sortedPeople.map(person => `<button class="network-portrait" type="button" data-person="${person.key}" aria-haspopup="dialog"><img src="${person.photo}" alt="" width="36" height="39" loading="lazy"><span>${escape(en ? person.nameEn : person.nameZh)}</span></button>`).join('')}</div>
       </details>
       <dialog class="network-dialog" aria-labelledby="network-person-title"><button class="network-dialog-close" type="button" aria-label="${t('关闭成员资料', 'Close profile')}">×</button><div class="network-dialog-content"></div></dialog>
     </section>`;
