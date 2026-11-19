@@ -1,8 +1,8 @@
 # OmniDentBench
 
-OmniDentBench (ODB) evaluates dental reasoning across 12 specialties. Each of its eight editions contains the same 1,178 items from 1,020 source articles. There are 605 exact-answer questions, 108 multiple-choice questions and 465 rubric-scored open-ended questions.
+OmniDentBench (ODB) is a benchmark for dental reasoning across 12 specialties. It contains 1,178 items in eight languages, including 605 exact-answer questions, 108 multiple-choice questions and 465 rubric-scored open-ended questions.
 
-The eight editions share the same item IDs and all **2,141 images**. [Project website](https://freedomintelligence.github.io/OmniDentBench/)
+[Project website](https://freedomintelligence.github.io/OmniDentBench/)
 
 ## Repository layout
 
@@ -49,7 +49,7 @@ Remove `--limit 3` for a full run. Use `--text-only` for the 79 items that requi
 
 ## Data and figures
 
-Each `data/<language>/items.json` contains questions, answer options, reference answers, scoring rubrics and image references. Item IDs are shared across languages. The translations were machine-checked and revised against the source text. Experts reviewed a shared sample of 118 items.
+Each `data/<language>/items.json` contains questions, answer options, reference answers, scoring rubrics and image references. Experts reviewed translations for a shared sample of 118 items.
 
 The repository includes all figures for the 1,099 image-supported items. The figure manifest maps images to source articles and lists licences where available. Consult the original article for figure-specific credits and reuse terms. Some images retain their original embedded metadata. [Figure manifest](data/figures.csv) · [Source articles](data/sources.csv)
 
