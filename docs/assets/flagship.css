@@ -135,10 +135,10 @@ h2 em { font-size: 1.08em; color: var(--blue); letter-spacing: -.025em; }
 .languages { display: flex; gap: 12px 24px; flex-wrap: wrap; font-size: 1.125rem; }
 .languages span { border-bottom: 1px solid #c7d4df; padding: 2px 0 7px; }
 
-.section.people-section { background: #fff; padding-block: 72px; }
-.people-section .section-heading { margin-bottom: 32px; }
+.section.people-section { background: #fff; padding: 48px max(3vw, calc((100vw - 1680px) / 2)); }
+.people-section .section-heading { margin-bottom: 24px; }
 .people-section .section-heading .eyebrow { margin-bottom: 16px; }
-.team-group { border-top: 1px solid var(--line); padding: 18px 0 22px; }
+.team-group { border-top: 1px solid var(--line); padding: 14px 0 16px; }
 .team-group summary { list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 24px; cursor: pointer; font-size: 1.65rem; font-weight: 600; letter-spacing: -.035em; }
 .team-group summary::-webkit-details-marker { display: none; }
 .team-group summary small { color: var(--muted); margin-left: 24px; font-size: 1rem; font-weight: 400; letter-spacing: 0; }
@@ -146,16 +146,16 @@ h2 em { font-size: 1.08em; color: var(--blue); letter-spacing: -.025em; }
 .expand-icon::before, .expand-icon::after { content: ''; position: absolute; top: 11px; left: 2px; width: 20px; height: 1px; background: currentColor; }
 .expand-icon::after { transform: rotate(90deg); }
 .team-group[open] > summary .expand-icon::after { transform: rotate(0); }
-.team-grid { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 20px 12px; max-width: 1120px; margin: 18px auto 0; }
+.team-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 16px 10px; margin: 12px auto 0; }
 .person { min-width: 0; text-align: center; }
-.portrait { width: 100%; max-width: 104px; margin: 0 auto; aspect-ratio: 1; background: #eef2f6; overflow: hidden; }
+.portrait { width: 100%; max-width: 88px; margin: 0 auto; aspect-ratio: 1; background: #eef2f6; overflow: hidden; }
 .portrait img { width: 100%; height: 100%; object-fit: cover; object-position: center 25%; transition: transform .35s ease; }
 .person:hover .portrait img { transform: scale(1.025); }
-.person-caption { padding-top: 8px; }
+.person-caption { padding-top: 6px; }
 .person h3 { font-size: .875rem; font-weight: 600; line-height: 1.4; letter-spacing: -.015em; text-align: center; text-wrap: balance; overflow-wrap: anywhere; }
 .person p { font-size: .75rem; line-height: 1.4; color: var(--muted); margin-top: 3px; }
-.chairs { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 552px; gap: 24px; }
-.chairs .portrait { max-width: 120px; aspect-ratio: 1; }
+.chairs { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 480px; gap: 20px; }
+.chairs .portrait { max-width: 108px; aspect-ratio: 1; }
 .chairs h3 { font-size: 1rem; letter-spacing: -.015em; }
 .chairs p { font-size: .8125rem; }
 
@@ -216,7 +216,7 @@ html[lang='zh-CN'] .hero-desc { line-height: 1.9; }
   .scope-grid { gap: 25px 28px; }
   .specialty h3 { font-size: 1rem; }
   .specialty-label { min-height: 76px; }
-  .team-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .team-grid { grid-template-columns: repeat(8, minmax(0, 1fr)); }
   .chairs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .method-section .heading-row { align-items: start; flex-direction: column; }
   .method-card { padding-left: 28px; padding-right: 28px; }
@@ -258,8 +258,8 @@ html[lang='zh-CN'] .hero-desc { line-height: 1.9; }
   .specialty-label { min-height: 54px; }
   .specialty h3 { font-size: 1.125rem; }
   .language-panel { gap: 28px; grid-template-columns: 1fr; }
-  .team-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px 12px; }
-  .portrait { max-width: 96px; }
+  .team-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px 10px; }
+  .portrait { max-width: 80px; }
   .chairs { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 480px; gap: 20px; }
   .chairs .portrait { max-width: 104px; }
   .method-grid { gap: 28px; }
@@ -332,13 +332,13 @@ html[lang='zh-CN'] .hero-desc { line-height: 1.9; }
   .language-panel { margin-top: 40px; padding-top: 30px; }
   .language-panel h3 { font-size: 1.5rem; }
   .languages { font-size: 1.0625rem; gap: 10px 22px; }
-  .section.people-section { padding-block: 48px; }
-  .people-section .section-heading { margin-bottom: 24px; }
-  .team-group { padding-top: 16px; padding-bottom: 18px; }
+  .section.people-section { padding: 40px 5vw; }
+  .people-section .section-heading { margin-bottom: 20px; }
+  .team-group { padding-top: 12px; padding-bottom: 14px; }
   .team-group summary { font-size: 1.4rem; letter-spacing: -.03em; }
   .team-group summary small { display: block; margin: 5px 0 0; font-size: .9375rem; }
-  .team-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 10px; margin-top: 14px; }
-  .portrait { max-width: 80px; }
+  .team-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px 8px; margin-top: 12px; }
+  .portrait { max-width: 72px; }
   .chairs { grid-template-columns: 1fr; max-width: 320px; gap: 14px; }
   .chairs .person { display: grid; grid-template-columns: 72px minmax(0, 1fr); align-items: center; gap: 12px; text-align: left; }
   .chairs .portrait { max-width: 72px; aspect-ratio: 1; }
@@ -375,7 +375,7 @@ html[lang='zh-CN'] .hero-desc { line-height: 1.9; }
   .brand-logo { width: 34px; }
   nav { gap: 6px; font-size: .9375rem; }
   #language { font-size: .875rem; padding-left: 10px; }
-  .team-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .team-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .chairs { grid-template-columns: 1fr; }
   .chairs .person { grid-template-columns: 68px minmax(0, 1fr); }
   .chairs .portrait { max-width: 68px; }

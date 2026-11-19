@@ -60,7 +60,8 @@
       </div>
       <details class="network-roster" open>
         <summary><span>${t('认识项目团队', 'Meet the project team')} <small>${data.team.length} ${t('位成员', 'people')}</small></span><span class="network-roster-toggle" aria-hidden="true"></span></summary>
-        <div class="network-roster-grid">${sortedPeople.map(person => `<button class="network-portrait" type="button" data-person="${person.key}" aria-haspopup="dialog"><img src="${person.photo}" alt="" width="36" height="39" loading="lazy"><span>${escape(en ? person.nameEn : person.nameZh)}</span></button>`).join('')}</div>
+        <div class="network-roster-grid">${sortedPeople.map(person => `<button class="network-portrait" type="button" data-person="${person.key}" aria-label="${escape(en ? person.nameEn : person.nameZh)}" aria-haspopup="dialog"><img src="${person.photo}" alt="" width="28" height="30" loading="lazy"></button>`).join('')}</div>
+        <span class="network-roster-tooltip" aria-hidden="true" hidden></span>
       </details>
       <dialog class="network-dialog" aria-labelledby="network-person-title"><button class="network-dialog-close" type="button" aria-label="${t('关闭成员资料', 'Close profile')}">×</button><div class="network-dialog-content"></div></dialog>
     </section>`;
@@ -85,8 +86,42 @@
     const viewport = root.querySelector('.network-map-scroll');
     const canvas = root.querySelector('.network-map-canvas');
     const location = root.querySelector('.network-location');
+    const roster = root.querySelector('.network-roster');
+    const rosterTooltip = root.querySelector('.network-roster-tooltip');
     let dialogTrigger = null;
     let zoom = 1;
+
+    function hideRosterName() {
+      rosterTooltip.hidden = true;
+    }
+
+    function showRosterName(button) {
+      rosterTooltip.textContent = button.getAttribute('aria-label');
+      rosterTooltip.hidden = false;
+      const item = button.getBoundingClientRect();
+      const area = roster.getBoundingClientRect();
+      const left = item.left - area.left + (item.width - rosterTooltip.offsetWidth) / 2;
+      rosterTooltip.style.left = `${Math.max(8, Math.min(area.width - rosterTooltip.offsetWidth - 8, left))}px`;
+      rosterTooltip.style.top = `${item.top - area.top - rosterTooltip.offsetHeight - 6}px`;
+    }
+
+    roster.addEventListener('pointerover', event => {
+      const button = event.target.closest('.network-portrait');
+      if (button && event.pointerType !== 'touch') showRosterName(button);
+    });
+    roster.addEventListener('pointerout', event => {
+      const button = event.target.closest('.network-portrait');
+      if (button && !button.contains(event.relatedTarget)) hideRosterName();
+    });
+    roster.addEventListener('focusin', event => {
+      const button = event.target.closest('.network-portrait');
+      if (button) showRosterName(button);
+    });
+    roster.addEventListener('focusout', hideRosterName);
+    roster.addEventListener('toggle', hideRosterName);
+    roster.addEventListener('keydown', event => {
+      if (event.key === 'Escape') hideRosterName();
+    });
 
     function setZoom(next, center) {
       const x = center ? center[0] : (viewport.scrollLeft + viewport.clientWidth / 2) / canvas.offsetWidth;
@@ -141,6 +176,7 @@
     function openPerson(key, trigger) {
       const person = data.team.find(item => item.key === key);
       if (!person) return;
+      hideRosterName();
       const profile = profiles[key];
       dialogTrigger = trigger;
       dialog.querySelector('.network-dialog-content').innerHTML = `<img class="network-profile-photo" src="${person.photo}" alt="${escape(personName(person))}" width="160" height="176"><p class="network-kicker">${escape(role(person))}</p><h3 id="network-person-title">${escape(personName(person))}</h3>${person.nameEn !== person.nameZh ? `<p class="network-profile-other-name">${escape(en ? person.nameZh : person.nameEn)}</p>` : ''}${profile ? `<p class="network-profile-affiliation">${escape(name(profile))}</p><p class="network-profile-region">${name(findRegion(profile.region))}</p><a class="network-profile-source" href="${profile.url}" target="_blank" rel="noopener noreferrer">${t('机构公开资料', 'Institutional profile')}</a>` : ''}<a class="network-profile-team" href="#member-${person.key}">${t('在团队名册中查看', 'View in the team roster')}</a>`;

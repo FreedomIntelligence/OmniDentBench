@@ -78,18 +78,19 @@
 .network-subheading span { color: #536c7d; margin-left: 5px; }
 .network-empty { padding: 16px 4px; font-size: .875rem; line-height: 1.6; }
 .network-empty-copy { padding: 10px 0 16px; font-size: .875rem; line-height: 1.6; color: #536c7d; }
-.network-roster { border-top: 1px solid #d4e0e8; padding: 0 20px; }
-.network-roster summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 15px; cursor: pointer; padding: 12px 0; font-weight: 650; font-size: 1.125rem; }
+.network-roster { position: relative; border-top: 1px solid #d4e0e8; padding: 0 20px; }
+.network-roster summary { list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 15px; cursor: pointer; padding: 10px 0; font-weight: 650; font-size: 1rem; }
 .network-roster summary::-webkit-details-marker { display: none; }
 .network-roster summary small { font-size: .875rem; font-weight: 500; color: #536c7d; margin-left: 12px; }
 .network-roster-toggle { width: 14px; height: 14px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg); flex-shrink: 0; margin: -7px 4px 0; }
 .network-roster[open] .network-roster-toggle { transform: rotate(225deg); margin-top: 7px; }
-.network-roster-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(72px, 1fr)); gap: 10px 8px; padding: 4px 0 14px; }
-.network-portrait { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 0; border: 0; background: none; min-width: 0; }
-.network-portrait img { width: 36px; height: auto; aspect-ratio: 12/13; object-fit: cover; object-position: center 23%; border-radius: 3px; background: #e9eff4; }
-.network-portrait span { font-size: .8125rem; line-height: 1.25; font-weight: 550; overflow-wrap: anywhere; }
-.network-portrait:hover span { color: var(--blue); text-decoration: underline; text-underline-offset: 3px; }
-.network-portrait:focus-visible { outline-offset: 3px; }
+.network-roster-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(36px, 1fr)); gap: 6px; padding: 2px 0 12px; }
+.network-portrait { display: grid; place-items: center; min-width: 0; min-height: 36px; padding: 2px; border: 0; border-radius: 3px; background: none; }
+.network-portrait img { width: 28px; height: auto; aspect-ratio: 12/13; object-fit: cover; object-position: center 23%; border-radius: 2px; background: #e9eff4; }
+.network-portrait:hover, .network-portrait:focus-visible { background: #e7eff7; }
+.network-portrait:focus-visible { outline-offset: 1px; }
+.network-roster-tooltip { position: absolute; z-index: 6; width: max-content; max-width: min(190px, calc(100% - 16px)); padding: 5px 8px; border-radius: 3px; background: var(--navy); color: white; font-size: .75rem; font-weight: 550; line-height: 1.4; text-align: center; overflow-wrap: anywhere; box-shadow: 0 3px 12px #071d3226; pointer-events: none; }
+.network-roster-tooltip[hidden] { display: none; }
 .network-dialog { color: var(--ink); border: 1px solid #c7d6e0; padding: 38px; border-radius: 8px; width: min(460px, calc(100% - 32px)); max-height: calc(100dvh - 48px); overflow-y: auto; box-shadow: 0 20px 80px #071d3250; text-align: center; }
 .network-dialog::backdrop { background: #071d32b8; backdrop-filter: blur(3px); }
 .network-dialog-close { position: absolute; right: 10px; top: 10px; display: grid; place-content: center; width: 40px; height: 40px; background: #edf3f8; border: 0; border-radius: 50%; font-size: 1.75rem; line-height: 1; }
@@ -151,9 +152,9 @@
   .network-roster { padding-inline: 16px; }
   .network-roster summary { font-size: 1rem; }
   .network-roster summary small { font-size: .8125rem; margin-left: 6px; }
-  .network-roster-grid { grid-template-columns: repeat(auto-fit, minmax(62px, 1fr)); gap: 10px 8px; }
-  .network-portrait img { width: 34px; }
-  .network-portrait span { font-size: .75rem; }
+  .network-roster-grid { grid-template-columns: repeat(auto-fit, minmax(32px, 1fr)); gap: 5px; }
+  .network-portrait { min-height: 32px; }
+  .network-portrait img { width: 24px; }
   .network-dialog { padding: 38px 24px 28px; }
   .specialty { grid-template-columns: 42px minmax(0, 1fr); gap: 0 14px; }
   .specialty-icon { width: 42px; height: 46px; }
@@ -162,6 +163,4 @@
 }
 @media (max-width: 420px) {
   .network-roster { padding-inline: 12px; }
-  .network-roster-grid { gap: 10px 7px; }
-  .network-portrait img { width: 32px; }
 }
