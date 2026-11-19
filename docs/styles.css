@@ -66,6 +66,11 @@ nav a { font-size: .92rem; font-weight: 650; }
 .text-link { display: inline-block; margin-top: .65rem; font-weight: 700; }
 .formats { margin: 0; padding: 0; list-style: none; }
 .formats li { display: flex; justify-content: space-between; gap: 1rem; padding: .6rem 0; border-bottom: 1px solid var(--line); }
+.coverage { grid-column: 1 / -1; }
+.coverage table { width: 100%; border-collapse: collapse; font-size: .92rem; }
+.coverage th, .coverage td { padding: .4rem .45rem; border-bottom: 1px solid var(--line); text-align: left; }
+.coverage td, .coverage th:last-child { text-align: right; }
+.coverage tbody th { font-weight: 500; }
 .content-section { padding-top: 3.3rem; }
 .content-section h3 { margin-top: 1rem; }
 .partners, .people { display: grid; gap: .65rem; list-style: none; padding: 0; margin: 1rem 0; }
