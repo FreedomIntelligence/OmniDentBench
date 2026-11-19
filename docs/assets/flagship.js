@@ -44,16 +44,6 @@ function render() {
   pinnedInstitution = null;
   const t = (zh, english) => en ? english : zh;
   document.documentElement.lang = en ? 'en' : 'zh-CN';
-  const atlasImage = './images/atlas/network-overview' + (en ? '' : '-zh') + '.png';
-  const atlasPortraits = groups.map(([category, zhRole, enRole]) =>
-    data.team.filter(person => person.category === category).map(person => {
-      const name = en ? person.nameEn : person.nameZh;
-      return `<a class="atlas-portrait" href="#member-${person.key}" title="${name} · ${t(zhRole, enRole)}">
-        <img src="${person.photo}" alt="" width="44" height="48" decoding="async">
-        <span>${name}</span>
-      </a>`;
-    }).join('')
-  ).join('');
   document.getElementById('app').innerHTML = `
     <a class="skip" href="#main">${t('跳到正文', 'Skip to content')}</a>
     <header class="site-header">
@@ -77,11 +67,8 @@ function render() {
           <p class="atlas-explainer">${t('让不同模型回答同一组牙科问题，再按同一套规则比较表现。1,178 道题覆盖 12 个专科，其中 1,099 道附有图像。客观题按参考答案判分，开放题按逐题量表评分。', 'Give models the same dental questions and compare their answers under the same scoring rules. Of 1,178 questions across 12 specialties, 1,099 include images. A judge checks objective answers against references and grades open-ended responses against item-specific rubrics.')}</p>
         </div>
         <figure class="research-atlas" id="collaboration-map">
-          <div class="atlas-heading"><h2>${t('六个国家的牙科研究协作', 'Dental research across six countries')}</h2><span>${t('16 家合作机构 · 74 位项目成员', '16 partner institutions · 74 team members')}</span></div>
-          <div class="atlas-people-map">
-            ${renderInstitutionMap(data.partners, t, atlasImage)}
-            ${atlasPortraits}
-          </div>
+          <div class="atlas-heading"><h2>${t('连接全球牙科研究团队', 'Connecting dental research worldwide')}</h2><span>${t('16 家合作机构 · 74 位项目成员', '16 partner institutions · 74 team members')}</span></div>
+          ${window.ODBNetwork.render({ en, data, groups })}
         <div class="case-example">
           <img src="./images/atlas/odb-0777.jpg" alt="${t('题目 ODB-0777 的牙根 X 光片','Dental radiograph supplied with item ODB-0777')}" width="86" height="146">
           <div><p class="case-label">${t('牙体牙髓病学 · 精确答案题', 'Endodontics · Exact answer')} · ODB-0777</p>
@@ -90,7 +77,7 @@ function render() {
             <small>${t('图像','Image')} · <a href="https://doi.org/10.7759/cureus.86471">Doumari et al. (2025), Fig. 2</a> · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></small>
           </div>
         </div>
-          <figcaption>${t('点选头像查看成员及其项目角色。底图','Select a portrait for the member’s name and project role. Base map')} · <a href="https://www.naturalearthdata.com/">Natural Earth</a></figcaption>
+          <figcaption>${t('中国大陆与香港分开统计。点击地区查看机构，点选头像查看成员资料。底图', 'Chinese mainland and Hong Kong are reported separately. Select a location to explore institutions, or a portrait to meet a team member. Base map')} · <a href="https://www.naturalearthdata.com/">Natural Earth</a></figcaption>
         </figure>
         <div class="actions atlas-actions"><a class="button primary" href="${repo}/tree/main/data">${t('探索数据集', 'Explore the dataset')}</a><a class="button secondary" href="#method">${t('查看评分方法', 'How scoring works')}</a></div>
       </section>
@@ -107,7 +94,7 @@ function render() {
       <section id="benchmark" class="section scope-section" aria-labelledby="scope-title">
         <div class="section-heading"><p class="eyebrow">THE BENCHMARK</p><div class="heading-row"><h2 id="scope-title">${t('一个基准。<br><em>十二个专科。</em>', 'One benchmark.<br><em>Twelve specialties.</em>')}</h2><p>${t('覆盖口腔医学的专科问题、视觉证据与临床推理，公开每个专科的实际题量。', 'From visual evidence to clinical reasoning, evaluate dental AI across a broad spectrum of specialist knowledge.')}</p></div></div>
         <div class="scope-content"><div class="evidence-panel"><div class="evidence-number">93.3<span>%</span></div><h3>${t('让推理立足于<br>图像证据。', 'Reasoning grounded<br>in visual evidence.')}</h3><p>${t('1,099 / 1,178 道题包含图像。各题可追溯到对应的图像与来源资料。', '1,099 of 1,178 items include images, with figure references and source attribution available in the release.')}</p><a class="text-link" href="${repo}/blob/main/data/figures.csv">${t('图像来源与许可', 'Figure sources & licences')}</a></div>
-          <div class="scope-grid">${specialties.map(({ nameEn, nameZh, items }) => `<div class="specialty"><div class="specialty-label"><h3>${en ? nameEn : nameZh}</h3><strong>${items}</strong></div><div class="bar"><i style="width:${items / largestSpecialty * 100}%"></i></div></div>`).join('')}</div>
+          <div class="scope-grid">${specialties.map(({ nameEn, nameZh, items }) => `<div class="specialty">${window.ODBSpecialtyIcon(nameEn)}<div class="specialty-label"><h3>${en ? nameEn : nameZh}</h3><strong>${items}</strong></div><div class="bar"><i style="width:${items / largestSpecialty * 100}%"></i></div></div>`).join('')}</div>
         </div>
         <div class="language-panel"><div><h3>${t('同一套题目。八种语言。', 'One shared benchmark. Eight languages.')}</h3><p>${t('语言版本共享同一套 1,178 题；翻译专家审核覆盖共同抽样的 118 题。', 'Eight versions of the same 1,178 items. Expert translation review covers a shared sample of 118 items.')}</p></div><div class="languages">${['English', '简体中文', '繁體中文', 'Español', 'Français', 'Deutsch', '日本語', 'العربية'].map(x => `<span>${x}</span>`).join('')}</div></div>
       </section>
@@ -135,7 +122,7 @@ function render() {
     <footer><div class="footer-top"><a class="footer-brand" href="./">OmniDentBench</a><p>${t('面向口腔医学 AI 的<br>多模态、多语言评测基准。', 'A multimodal, multilingual<br>benchmark for dental AI.')}</p><div><a href="${repo}#institutions-and-team">${t('项目团队', 'Project team')}</a><a href="${repo}/issues">${t('反馈与交流', 'Feedback & issues')}</a></div></div><div class="footer-bottom"><p>${t('评测代码：MIT · 原创基准内容：CC BY 4.0', 'Evaluation code: MIT · Original benchmark content: CC BY 4.0')}</p><a href="${repo}/blob/main/data/figures.csv">${t('第三方图像来源与许可', 'Third-party figure credits & licences')}</a></div></footer>
   `;
 
-  bindInstitutionMap(document.querySelector('.atlas-geography'), data.partners, t);
+  window.ODBNetwork.init({ en, data, groups });
 
   document.getElementById('language').onclick = () => {
     en = !en;
