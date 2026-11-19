@@ -29,7 +29,6 @@
     return `<section class="network" aria-label="${t('交互式合作地图', 'Interactive collaboration map')}">
       <div class="network-layout">
         <div class="network-map-column">
-          <div class="network-map-intro"><span class="network-kicker">${t('全球研究网络', 'GLOBAL RESEARCH NETWORK')}</span><p>${t('点选地图，探索机构与团队。', 'Select a location. Meet the institutions and people.')}</p></div>
           <div class="network-map-controls"><label>${t('定位', 'Locate')}<select class="network-location"><option value="all">${t('全部国家及地区', 'All countries & regions')}</option>${regions.map(region => `<option value="${region.key}">${name(region)}</option>`).join('')}</select></label><div class="network-zoom"><button type="button" data-zoom="out" aria-label="${t('缩小地图', 'Zoom out')}">−</button><output class="network-scale" aria-label="${t('缩放比例', 'Zoom level')}">100%</output><button type="button" data-zoom="in" aria-label="${t('放大地图', 'Zoom in')}">+</button><button type="button" data-zoom="fit">${t('全图', 'Fit map')}</button></div></div>
           <div class="network-map-scroll" tabindex="0" role="region" aria-label="${t('全球机构分布；小屏幕可横向滚动，或使用下方地区按钮', 'Institution locations; scroll horizontally on small screens or use the location buttons below')}">
             <div class="network-map-canvas">
@@ -45,22 +44,21 @@
               }).join('')}</div></div>`).join('')}
             </div>
           </div>
-          <p class="network-map-note">${t('数字为机构数量，标记为地区代表位置。点击 Logo 查看机构；放大后可拖动地图。', 'Counts show institutions; markers show representative locations. Select a logo for details, or zoom in and drag to explore.')}</p>
+          <p class="network-map-note">${t('点选地区或 Logo 查看机构。标记表示地区代表位置。', 'Select a location or logo. Markers represent regional locations.')}</p>
           <div class="network-regions" aria-label="${t('按国家或地区筛选', 'Filter by country or region')}">
-            <button type="button" data-region="all" aria-pressed="${state.region === 'all'}" aria-controls="network-panel">${t('全部', 'All locations')} <strong>${data.partners.length}</strong></button>
             ${regions.map(region => `<button type="button" data-region="${region.key}" aria-pressed="${state.region === region.key}" aria-controls="network-panel">${name(region)} <strong>${region.partners.length}</strong></button>`).join('')}
           </div>
         </div>
         <aside id="network-panel" class="network-panel" aria-labelledby="network-panel-title">
-          <div class="network-panel-heading"><p class="network-kicker">${t('探索研究网络', 'EXPLORE THE NETWORK')}</p><h3 id="network-panel-title"></h3><p id="network-panel-count"></p></div>
+          <div class="network-panel-heading"><h3 id="network-panel-title"></h3><p id="network-panel-count"></p></div>
           <div class="network-modes" role="group" aria-label="${t('查看内容', 'Browse content')}"><button type="button" data-mode="institutions" aria-pressed="true">${t('机构', 'Institutions')}</button><button type="button" data-mode="people" aria-pressed="false">${t('成员', 'People')}</button></div>
           <label class="network-search" hidden><span>${t('搜索成员', 'Search people')}</span><input type="search" placeholder="${t('姓名', 'Search by name')}" autocomplete="off"></label>
           <div class="network-panel-content" id="network-results" tabindex="0" aria-label="${t('机构与成员列表', 'Institutions and people')}"></div>
-          <p class="network-profile-note">${t('地区成员仅列出有公开机构资料支持的关联；完整名册包含 74 位成员。', 'Regional people lists include profiles with a public affiliation source. The full roster includes all 74 members.')}</p>
+          <p class="network-profile-note">${t('地区成员按公开机构资料关联。完整名册包含 74 位成员。', 'Regional profiles use public affiliation sources. All 74 members are in the full roster.')}</p>
           <span id="network-status" class="visually-hidden" role="status" aria-live="polite"></span>
         </aside>
       </div>
-      <details class="network-roster" open>
+      <details class="network-roster">
         <summary><span>${t('认识项目团队', 'Meet the project team')} <small>${data.team.length} ${t('位成员', 'people')}</small></span><span class="network-roster-toggle" aria-hidden="true"></span></summary>
         <div class="network-roster-grid">${sortedPeople.map(person => `<button class="network-portrait" type="button" data-person="${person.key}" aria-haspopup="dialog"><img src="${person.photo}" alt="" width="76" height="82" loading="lazy"><span>${escape(en ? person.nameEn : person.nameZh)}</span></button>`).join('')}</div>
       </details>
