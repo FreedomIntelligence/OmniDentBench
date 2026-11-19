@@ -49,7 +49,7 @@ function render() {
     data.team.filter(person => person.category === category).map(person => {
       const name = en ? person.nameEn : person.nameZh;
       return `<a class="atlas-portrait" href="#member-${person.key}" title="${name} · ${t(zhRole, enRole)}">
-        <img src="${person.photo}" alt="" width="70" height="76" decoding="async">
+        <img src="${person.photo}" alt="" width="44" height="48" decoding="async">
         <span>${name}</span>
       </a>`;
     }).join('')
@@ -79,11 +79,7 @@ function render() {
         <figure class="research-atlas" id="collaboration-map">
           <div class="atlas-heading"><h2>${t('六个国家的牙科研究协作', 'Dental research across six countries')}</h2><span>${t('16 家合作机构 · 74 位项目成员', '16 partner institutions · 74 team members')}</span></div>
           <div class="atlas-people-map">
-            <div class="atlas-geography">
-              <a href="${atlasImage}" aria-label="${t('查看大图', 'Open full-size map')}"><img class="world-map" src="./images/atlas/partners-${en ? 'en' : 'zh'}.png" alt="${t('中国 7 家、尼日利亚 5 家，美国、德国、埃塞俄比亚和马来西亚各 1 家。星标标示主席所在的香港和深圳。','Seven partners in China, five in Nigeria, and one each in the United States, Germany, Ethiopia, and Malaysia. The star marks Hong Kong and Shenzhen, the cities of the steering chairs.')}"></a>
-              <p class="atlas-mobile-counts">${t('中国 7 家、尼日利亚 5 家，美国、德国、埃塞俄比亚、马来西亚各 1 家。', 'China 7 · Nigeria 5 · United States, Germany, Ethiopia and Malaysia 1 each.')} <a href="${atlasImage}">${t('放大地图', 'Enlarge map')}</a></p>
-              <p class="atlas-key"><span>●</span> ${t('每国标出一家代表机构，数字为该国机构数。','One partner site per country. Numbers give the institution count.')} <b>★</b> ${t('项目主席所在城市：王俊文（香港），金作林、王本友（深圳）。','Steering chair locations: Junwen Wang in Hong Kong, Zuolin Jin and Benyou Wang in Shenzhen.')}</p>
-            </div>
+            ${renderInstitutionMap(data.partners, t, atlasImage)}
             ${atlasPortraits}
           </div>
         <div class="case-example">
@@ -138,6 +134,8 @@ function render() {
 
     <footer><div class="footer-top"><a class="footer-brand" href="./">OmniDentBench</a><p>${t('面向口腔医学 AI 的<br>多模态、多语言评测基准。', 'A multimodal, multilingual<br>benchmark for dental AI.')}</p><div><a href="${repo}#institutions-and-team">${t('项目团队', 'Project team')}</a><a href="${repo}/issues">${t('反馈与交流', 'Feedback & issues')}</a></div></div><div class="footer-bottom"><p>${t('评测代码：MIT · 原创基准内容：CC BY 4.0', 'Evaluation code: MIT · Original benchmark content: CC BY 4.0')}</p><a href="${repo}/blob/main/data/figures.csv">${t('第三方图像来源与许可', 'Third-party figure credits & licences')}</a></div></footer>
   `;
+
+  bindInstitutionMap(document.querySelector('.atlas-geography'), data.partners, t);
 
   document.getElementById('language').onclick = () => {
     en = !en;
