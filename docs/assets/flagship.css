@@ -135,7 +135,7 @@ h2 em { font-size: 1.08em; color: var(--blue); letter-spacing: -.025em; }
 .languages { display: flex; gap: 12px 24px; flex-wrap: wrap; font-size: 1.125rem; }
 .languages span { border-bottom: 1px solid #c7d4df; padding: 2px 0 7px; }
 
-.section.people-section { background: #fff; padding: 48px clamp(24px, 2vw, 40px); }
+.section.people-section { background: #fff; padding: 48px var(--gutter); }
 .people-section .section-heading { margin-bottom: 24px; }
 .people-section .section-heading .eyebrow { margin-bottom: 16px; }
 .team-group { border-top: 1px solid var(--line); padding: 14px 0 16px; }
@@ -332,7 +332,7 @@ html[lang='zh-CN'] .hero-desc { line-height: 1.9; }
   .language-panel { margin-top: 40px; padding-top: 30px; }
   .language-panel h3 { font-size: 1.5rem; }
   .languages { font-size: 1.0625rem; gap: 10px 22px; }
-  .section.people-section { padding: 40px 16px; }
+  .section.people-section { padding: 40px var(--gutter); }
   .people-section .section-heading { margin-bottom: 20px; }
   .team-group { padding-top: 12px; padding-bottom: 14px; }
   .team-group summary { font-size: 1.4rem; letter-spacing: -.03em; }
