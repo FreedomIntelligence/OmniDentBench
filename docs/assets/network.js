@@ -104,7 +104,8 @@
 
     function revealLocation() {
       const region = findRegion(state.region);
-      if (region) setZoom(Math.max(zoom, Math.min(3, 800 / viewport.clientWidth)), [region.label[0] / 100, region.label[1] / 100]);
+      const readableZoom = viewport.clientWidth < 680 ? Math.min(3, 800 / viewport.clientWidth) : 1;
+      if (region) setZoom(Math.max(zoom, readableZoom), [region.label[0] / 100, region.label[1] / 100]);
     }
 
     const personCard = person => `<button class="network-person-row" type="button" data-person="${person.key}" aria-haspopup="dialog"><img src="${person.photo}" alt="" width="64" height="70" loading="lazy"><span><strong>${escape(personName(person))}</strong><small>${escape(role(person))}</small></span></button>`;
