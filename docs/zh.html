@@ -1,216 +1,26 @@
 <!doctype html>
 <html lang="zh-CN">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="OmniDentBench 是面向牙科 AI 推理的多语言、多模态评测基准。">
-  <title>OmniDentBench · 牙科 AI 评测基准</title>
-  <link rel="icon" href="images/favicon.png">
-  <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-  <a class="skip" href="#main">跳到正文</a>
-  <header class="topbar">
-    <div class="wrap topbar-inner">
-      <a class="brand" href="zh.html"><img src="images/logo.png" alt="" width="36" height="36">OmniDentBench</a>
-      <nav aria-label="主导航">
-        <a href="#benchmark">评测</a>
-        <a href="#institutions">机构</a>
-        <a href="#team">团队</a>
-        <a href="./" lang="en" hreflang="en">English</a>
-      </nav>
-    </div>
-  </header>
-  <main id="main">
-    <section class="hero wrap">
-      <div>
-        <p class="eyebrow">牙科人工智能基准</p>
-        <h1>OmniDentBench</h1>
-        <p class="intro">跨专科、跨语言、结合临床图像，评估 AI 的牙科推理能力。</p>
-        <p class="supporting">由牙科临床医师与研究人员共同建设。公开版本包含评测题目、评分量表和可复现的评测工具。</p>
-        <div class="actions">
-          <a class="button primary" href="https://github.com/FreedomIntelligence/OmniDentBench">GitHub 数据与代码</a>
-          <a class="button" href="https://github.com/FreedomIntelligence/OmniDentBench#quick-start">运行评测</a>
-        </div>
-      </div>
-      <dl class="metrics" aria-label="评测概况">
-        <div><dt>1,178</dt><dd>道评测题目</dd></div>
-        <div><dt>1,099</dt><dd>道带图题目</dd></div>
-        <div><dt>12</dt><dd>个牙科专科</dd></div>
-        <div><dt>8</dt><dd>种语言</dd></div>
-      </dl>
-    </section>
-
-    <section class="band" id="benchmark">
-      <div class="wrap section-grid">
-        <div>
-          <h2>评测内容</h2>
-          <p>在同一基准中比较客观题准确率与开放式推理表现。开放题采用逐题加权评分量表，并设置安全红线。</p>
-          <a class="text-link" href="https://github.com/FreedomIntelligence/OmniDentBench#interpretation-and-reproducibility">查看评分规则 →</a>
-        </div>
-        <ul class="formats">
-          <li><span>精确答案题</span><strong>605</strong></li>
-          <li><span>选择题</span><strong>108</strong></li>
-          <li><span>量表评分开放题</span><strong>465</strong></li>
-        </ul>
-        <details class="coverage">
-          <summary>查看 12 个专科的题量</summary>
-          <table>
-            <thead><tr><th scope="col">专科</th><th scope="col">题目</th></tr></thead>
-            <tbody>
-            <tr><th scope="row">牙体牙髓病学</th><td>198</td></tr>
-            <tr><th scope="row">口腔颌面病理学</th><td>173</td></tr>
-            <tr><th scope="row">口腔正畸学</th><td>126</td></tr>
-            <tr><th scope="row">口腔颌面外科学</th><td>111</td></tr>
-            <tr><th scope="row">儿童口腔医学</th><td>107</td></tr>
-            <tr><th scope="row">口腔公共卫生</th><td>102</td></tr>
-            <tr><th scope="row">口腔修复学</th><td>96</td></tr>
-            <tr><th scope="row">口腔颌面影像学</th><td>81</td></tr>
-            <tr><th scope="row">牙周病学</th><td>72</td></tr>
-            <tr><th scope="row">口腔颌面疼痛</th><td>54</td></tr>
-            <tr><th scope="row">口腔内科学</th><td>35</td></tr>
-            <tr><th scope="row">口腔麻醉学</th><td>23</td></tr>
-            </tbody>
-          </table>
-          <a class="text-link" href="https://github.com/FreedomIntelligence/OmniDentBench/blob/main/data/en/items.json">数据来源：英文题集</a>
-        </details>
-      </div>
-    </section>
-
-    <section class="wrap content-section" id="institutions">
-      <h2>合作机构</h2>
-      <ul class="partners">
-          <li><img src="images/logo/CUHK.webp" alt="" width="120" height="54" loading="lazy"><span>香港中文大学（深圳）</span></li>
-          <li><img src="images/logo/HKU.webp" alt="" width="120" height="54" loading="lazy"><span>香港大学牙医学院</span></li>
-          <li><img src="images/logo/FRD.webp" alt="" width="120" height="54" loading="lazy"><span>深圳自由动脉科技有限公司</span></li>
-          <li><img src="images/logo/peking-university.webp" alt="" width="120" height="54" loading="lazy"><span>北京大学</span></li>
-          <li><img src="images/logo/peking-tesinghua-center-for-life-sciences.webp" alt="" width="120" height="54" loading="lazy"><span>北大清华生命科学联合中心</span></li>
-          <li><img src="images/logo/national-biomedical-imaging-center.webp" alt="" width="120" height="54" loading="lazy"><span>北京大学国家生物医学成像科学中心</span></li>
-          <li><img src="images/logo/the-prince-philip-dentap-hospital.webp" alt="" width="120" height="54" loading="lazy"><span>菲腊牙科医院</span></li>
-          <li><img src="images/logo/mayo-clinic-logo.webp" alt="" width="120" height="54" loading="lazy"><span>美国梅奥诊所</span></li>
-          <li><img src="images/logo/lmu-klinikum-logo.webp" alt="" width="120" height="54" loading="lazy"><span>德国慕尼黑大学医院</span></li>
-      </ul>
-      <details>
-        <summary>查看另外 7 家合作机构</summary>
-        <ul class="partners">
-          <li><img src="images/logo/SEGi.webp" alt="" width="120" height="54" loading="lazy"><span>马来西亚世纪大学</span></li>
-          <li><img src="images/logo/national-hospital-abuja-logo.webp" alt="" width="120" height="54" loading="lazy"><span>非洲尼日利亚阿布贾国家医院</span></li>
-          <li><img src="images/logo/cmul-logo.webp" alt="" width="120" height="54" loading="lazy"><span>拉各斯大学医学院</span></li>
-          <li><img src="images/logo/bayero-university-kano-logo.webp" alt="" width="120" height="54" loading="lazy"><span>巴耶罗大学</span></li>
-          <li><img src="images/logo/smanu-Danfodiyo-University-Sokoto.webp" alt="" width="120" height="54" loading="lazy"><span>索科托乌斯马努·丹佛迪约大学</span></li>
-          <li><img src="images/logo/university-of-maiduguri-logo.webp" alt="" width="120" height="54" loading="lazy"><span>迈杜古里大学</span></li>
-          <li><img src="images/logo/madda-walabu-university-logo.webp" alt="" width="120" height="54" loading="lazy"><span>非洲埃塞俄比亚马达瓦拉布大学</span></li>
-        </ul>
-      </details>
-    </section>
-
-    <section class="wrap content-section" id="team">
-      <h2>项目团队</h2>
-      <h3>指导委员会主席</h3>
-      <ul class="people chairs">
-          <li><img src="images/team/team-059-junwen-wang.webp" alt="" width="64" height="64" loading="lazy"><span>王俊文</span></li>
-          <li><img src="images/team/team-060-zuolin-jin.webp" alt="" width="64" height="64" loading="lazy"><span>金作林</span></li>
-          <li><img src="images/team/team-061-benyou-wang.webp" alt="" width="64" height="64" loading="lazy"><span>王本友</span></li>
-      </ul>
-      <details>
-        <summary>指导委员会成员 (8)</summary>
-        <ul class="people">
-          <li><img src="images/team/team-062-liangyi-chen.webp" alt="" width="64" height="64" loading="lazy"><span>陈良怡</span></li>
-          <li><img src="images/team/team-063-walter-yu-hang-lam.webp" alt="" width="64" height="64" loading="lazy"><span>林宇恒</span></li>
-          <li><img src="images/team/team-064-will-wei-qiao.webp" alt="" width="64" height="64" loading="lazy"><span>喬威</span></li>
-          <li><img src="images/team/team-065-john-adeoye.webp" alt="" width="64" height="64" loading="lazy"><span>John Adeoye</span></li>
-          <li><img src="images/team/team-066-shan-zhiyi.webp" alt="" width="64" height="64" loading="lazy"><span>單知一</span></li>
-          <li><img src="images/team/team-067-teddy-weifa-yang.webp" alt="" width="64" height="64" loading="lazy"><span>楊偉發</span></li>
-          <li><img src="images/team/team-068-xin-li.webp" alt="" width="64" height="64" loading="lazy"><span>李新</span></li>
-          <li><img src="images/team/team-069-zhongyuan-tang.webp" alt="" width="64" height="64" loading="lazy"><span>唐中元</span></li>
-        </ul>
-      </details>
-      <details>
-        <summary>指导委员会学生成员 (5)</summary>
-        <ul class="people">
-          <li><img src="images/team/team-070-junjie-zhao.webp" alt="" width="64" height="64" loading="lazy"><span>赵俊杰</span></li>
-          <li><img src="images/team/team-071-ziying-sheng.webp" alt="" width="64" height="64" loading="lazy"><span>盛孜莹</span></li>
-          <li><img src="images/team/team-072-jiajun-you.webp" alt="" width="64" height="64" loading="lazy"><span>游佳君</span></li>
-          <li><img src="images/team/team-073-zhenyang-cai.webp" alt="" width="64" height="64" loading="lazy"><span>蔡镇阳</span></li>
-          <li><img src="images/team/team-074-zhou-su.webp" alt="" width="64" height="64" loading="lazy"><span>苏周</span></li>
-        </ul>
-      </details>
-      <details>
-        <summary>专科委员会主席 (12)</summary>
-        <ul class="people">
-          <li><img src="images/team/team-001-ming-zhong.webp" alt="" width="64" height="64" loading="lazy"><span>钟鸣</span></li>
-          <li><img src="images/team/team-002-dayong-liu.webp" alt="" width="64" height="64" loading="lazy"><span>刘大勇</span></li>
-          <li><img src="images/team/team-003-hui-zhang.webp" alt="" width="64" height="64" loading="lazy"><span>张惠</span></li>
-          <li><img src="images/team/team-004-mingming-xu.webp" alt="" width="64" height="64" loading="lazy"><span>徐明明</span></li>
-          <li><img src="images/team/team-005-qing-liu.webp" alt="" width="64" height="64" loading="lazy"><span>刘青</span></li>
-          <li><img src="images/team/team-006-weihua-cai.webp" alt="" width="64" height="64" loading="lazy"><span>蔡伟华</span></li>
-          <li><img src="images/team/team-007-xiaojing-wang.webp" alt="" width="64" height="64" loading="lazy"><span>王小竞</span></li>
-          <li><img src="images/team/team-008-yanning-ma.webp" alt="" width="64" height="64" loading="lazy"><span>马艳宁</span></li>
-          <li><img src="images/team/team-009-shan-jiang.webp" alt="" width="64" height="64" loading="lazy"><span>江山</span></li>
-          <li><img src="images/team/team-010-feng-wang.webp" alt="" width="64" height="64" loading="lazy"><span>王凤</span></li>
-          <li><img src="images/team/team-011-kun-qi.webp" alt="" width="64" height="64" loading="lazy"><span>亓坤</span></li>
-          <li><img src="images/team/team-012-yancheng-fang.webp" alt="" width="64" height="64" loading="lazy"><span>方彦成</span></li>
-        </ul>
-      </details>
-      <details>
-        <summary>专科委员会成员 (46)</summary>
-        <ul class="people">
-          <li><img src="images/team/team-013-bing-liu.webp" alt="" width="64" height="64" loading="lazy"><span>刘冰</span></li>
-          <li><img src="images/team/team-014-daheng-li.webp" alt="" width="64" height="64" loading="lazy"><span>李大桁</span></li>
-          <li><img src="images/team/team-015-dongfei-wang.webp" alt="" width="64" height="64" loading="lazy"><span>王侗飞</span></li>
-          <li><img src="images/team/team-016-fangjie-zhou.webp" alt="" width="64" height="64" loading="lazy"><span>周芳洁</span></li>
-          <li><img src="images/team/team-017-fen-liu.webp" alt="" width="64" height="64" loading="lazy"><span>刘芬</span></li>
-          <li><img src="images/team/team-018-forest-cheng.webp" alt="" width="64" height="64" loading="lazy"><span>Forest Cheng</span></li>
-          <li><img src="images/team/team-019-fujia-kang.webp" alt="" width="64" height="64" loading="lazy"><span>康芙嘉</span></li>
-          <li><img src="images/team/team-020-hao-chunxiu.webp" alt="" width="64" height="64" loading="lazy"><span>郝春秀</span></li>
-          <li><img src="images/team/team-021-jiamin-zhao.webp" alt="" width="64" height="64" loading="lazy"><span>赵家敏</span></li>
-          <li><img src="images/team/team-022-jiaming-zhang.webp" alt="" width="64" height="64" loading="lazy"><span>张佳明</span></li>
-          <li><img src="images/team/team-023-jinwen-liu.webp" alt="" width="64" height="64" loading="lazy"><span>刘荩文</span></li>
-          <li><img src="images/team/team-024-jinyan-chen.webp" alt="" width="64" height="64" loading="lazy"><span>陈金妍</span></li>
-          <li><img src="images/team/team-025-junting-wang.webp" alt="" width="64" height="64" loading="lazy"><span>王珺婷</span></li>
-          <li><img src="images/team/team-026-kuan-yang.webp" alt="" width="64" height="64" loading="lazy"><span>杨宽</span></li>
-          <li><img src="images/team/team-027-lei-shi.webp" alt="" width="64" height="64" loading="lazy"><span>石磊</span></li>
-          <li><img src="images/team/team-028-lin-zhao.webp" alt="" width="64" height="64" loading="lazy"><span>赵琳</span></li>
-          <li><img src="images/team/team-029-mao-yilin.webp" alt="" width="64" height="64" loading="lazy"><span>MAO Yilin</span></li>
-          <li><img src="images/team/team-030-menghong-li.webp" alt="" width="64" height="64" loading="lazy"><span>李梦红</span></li>
-          <li><img src="images/team/team-031-mengmeng-song.webp" alt="" width="64" height="64" loading="lazy"><span>宋萌萌</span></li>
-          <li><img src="images/team/team-032-min-huang.webp" alt="" width="64" height="64" loading="lazy"><span>黄敏</span></li>
-          <li><img src="images/team/team-033-minghui-wei.webp" alt="" width="64" height="64" loading="lazy"><span>卫明慧</span></li>
-          <li><img src="images/team/team-034-mingxin-zhang.webp" alt="" width="64" height="64" loading="lazy"><span>张明欣</span></li>
-          <li><img src="images/team/team-035-patricia-ho.webp" alt="" width="64" height="64" loading="lazy"><span>Patricia Ho</span></li>
-          <li><img src="images/team/team-036-peijuan-wang.webp" alt="" width="64" height="64" loading="lazy"><span>王沛娟</span></li>
-          <li><img src="images/team/team-037-peng-chen.webp" alt="" width="64" height="64" loading="lazy"><span>陈鹏</span></li>
-          <li><img src="images/team/team-038-rui-lu.webp" alt="" width="64" height="64" loading="lazy"><span>芦睿</span></li>
-          <li><img src="images/team/team-039-shiduo-sun.webp" alt="" width="64" height="64" loading="lazy"><span>孙仕铎</span></li>
-          <li><img src="images/team/team-040-shirong-he.webp" alt="" width="64" height="64" loading="lazy"><span>何世荣</span></li>
-          <li><img src="images/team/team-041-shixin-zhang.webp" alt="" width="64" height="64" loading="lazy"><span>张仕鑫</span></li>
-          <li><img src="images/team/team-042-shuwei-huang.webp" alt="" width="64" height="64" loading="lazy"><span>黄舒蔚</span></li>
-          <li><img src="images/team/team-043-siqi-qiu.webp" alt="" width="64" height="64" loading="lazy"><span>邱思齐</span></li>
-          <li><img src="images/team/team-044-tai-pak-chuen-patrick.webp" alt="" width="64" height="64" loading="lazy"><span>Tai Pak Chuen Patrick</span></li>
-          <li><img src="images/team/team-045-wu-songying.webp" alt="" width="64" height="64" loading="lazy"><span>Wu Songying</span></li>
-          <li><img src="images/team/team-046-xu-leyao.webp" alt="" width="64" height="64" loading="lazy"><span>XU Leyao</span></li>
-          <li><img src="images/team/team-047-xiangjie-jin.webp" alt="" width="64" height="64" loading="lazy"><span>金相杰</span></li>
-          <li><img src="images/team/team-048-xue-qiao.webp" alt="" width="64" height="64" loading="lazy"><span>乔雪</span></li>
-          <li><img src="images/team/team-049-yang-jiang.webp" alt="" width="64" height="64" loading="lazy"><span>蒋旸</span></li>
-          <li><img src="images/team/team-050-yaqiu-zhang.webp" alt="" width="64" height="64" loading="lazy"><span>张亚秋</span></li>
-          <li><img src="images/team/team-051-yefeng-wu.webp" alt="" width="64" height="64" loading="lazy"><span>Yefeng Wu</span></li>
-          <li><img src="images/team/team-052-yidan-guo.webp" alt="" width="64" height="64" loading="lazy"><span>郭一丹</span></li>
-          <li><img src="images/team/team-053-yifan-zheng.webp" alt="" width="64" height="64" loading="lazy"><span>郑依凡</span></li>
-          <li><img src="images/team/team-054-ying-wang.webp" alt="" width="64" height="64" loading="lazy"><span>王莹</span></li>
-          <li><img src="images/team/team-055-yujia-wu.webp" alt="" width="64" height="64" loading="lazy"><span>吴宇佳</span></li>
-          <li><img src="images/team/team-056-zhenlai-zhu.webp" alt="" width="64" height="64" loading="lazy"><span>朱振来</span></li>
-          <li><img src="images/team/team-057-zhiqiang-deng.webp" alt="" width="64" height="64" loading="lazy"><span>邓志强</span></li>
-          <li><img src="images/team/team-058-zhuoying-li.webp" alt="" width="64" height="64" loading="lazy"><span>李卓盈</span></li>
-        </ul>
-      </details>
-    </section>
-  </main>
-  <footer>
-    <div class="wrap footer-inner">
-      <strong>OmniDentBench</strong>
-      <a href="https://github.com/FreedomIntelligence/OmniDentBench#citation-and-licensing">引用与许可</a>
-      <a href="https://github.com/FreedomIntelligence/OmniDentBench/issues">问题反馈</a>
-    </div>
-  </footer>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="./images/favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="OmniDentBench 是由牙科医生和研究人员共同建设的多语言、多模态牙科 AI 评测基准。"
+    />
+    <title>OmniDentBench · 牙科 AI 评测基准</title>
+    <script defer src="./assets/showcase-data.js"></script>
+    <script defer src="./assets/showcase.js"></script>
+    <link rel="stylesheet" href="./assets/showcase.css" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <noscript
+      ><p>
+        <a href="https://github.com/FreedomIntelligence/OmniDentBench"
+          >OmniDentBench · GitHub</a
+        >
+      </p></noscript
+    >
+  </body>
 </html>

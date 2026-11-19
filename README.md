@@ -146,7 +146,7 @@ Bing Liu · Daheng Li · Dongfei Wang · Fangjie Zhou · Fen Liu · Forest Cheng
 | [`tests/`](tests) | Offline evaluator tests |
 | [`docs/`](docs) | Bilingual GitHub Pages site and project assets |
 
-To preview the site locally, run `python -m http.server --directory docs 8000` and open `http://localhost:8000`. GitHub Pages publishes from `main:/docs`.
+To preview the site locally, run `python -m http.server --directory docs 8000` and open `http://localhost:8000`. GitHub Pages publishes from `main:/docs`. The [showcase data](docs/assets/showcase-data.js) contains the bilingual names, photos, and specialty counts. The [page script](docs/assets/showcase.js) and [stylesheet](docs/assets/showcase.css) control the layout.
 
 ## Citation and licensing
 
