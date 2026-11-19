@@ -224,28 +224,28 @@ OmniDentBench brings together **74 team members** and **16 partner institutions*
 
 <table>
   <tr>
-    <td align="center" width="25%"><img src="docs/images/logo/CUHK.webp" width="140" alt="The Chinese University of Hong Kong, Shenzhen"></td>
-    <td align="center" width="25%"><img src="docs/images/logo/HKU.webp" width="140" alt="Faculty of Dentistry, The University of Hong Kong"></td>
-    <td align="center" width="25%"><img src="docs/images/logo/FRD.webp" width="140" alt="Freedom AI"></td>
-    <td align="center" width="25%"><img src="docs/images/logo/peking-university.webp" width="140" alt="Peking University"></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/CUHK.webp" width="140" alt="The Chinese University of Hong Kong, Shenzhen"></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/HKU.webp" width="140" alt="Faculty of Dentistry, The University of Hong Kong"></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/FRD.webp" width="140" alt="Freedom AI"></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/peking-university.webp" width="140" alt="Peking University"></td>
   </tr>
   <tr>
-    <td align="center" width="25%"><img src="docs/images/logo/peking-tesinghua-center-for-life-sciences.webp" width="140" alt="Peking-Tsinghua Center for Life Sciences"></td>
-    <td align="center" width="25%"><img src="docs/images/logo/national-biomedical-imaging-center.webp" width="140" alt="Peking University National Biomedical Imaging Center"></td>
-    <td align="center" width="25%"><img src="docs/images/logo/the-prince-philip-dentap-hospital.webp" width="140" alt="The Prince Philip Dental Hospital"></td>
-    <td align="center" width="25%"><img src="docs/images/logo/mayo-clinic-logo.webp" width="140" alt="Mayo Clinic"></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/peking-tesinghua-center-for-life-sciences.webp" width="140" alt="Peking-Tsinghua Center for Life Sciences"></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/national-biomedical-imaging-center.webp" width="140" alt="Peking University National Biomedical Imaging Center"></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/the-prince-philip-dentap-hospital.webp" width="140" alt="The Prince Philip Dental Hospital"></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/mayo-clinic-logo.webp" width="140" alt="Mayo Clinic"></td>
   </tr>
   <tr>
-    <td align="center" width="25%"><img src="docs/images/logo/lmu-klinikum-logo.webp" width="140" alt="Ludwig-Maximilians-Universität München Klinikum (LMU Klinikum)"></td>
-    <td align="center" width="25%"><img src="docs/images/logo/SEGi.webp" width="140" alt="SEGi University &amp; Colleges"></td>
-    <td align="center" width="25%"><img src="docs/images/logo/national-hospital-abuja-logo.webp" width="140" alt="National Hospital Abuja"></td>
-    <td align="center" width="25%"><img src="docs/images/logo/cmul-logo.webp" width="140" alt="College of Medicine, University of Lagos (CMUL)"></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/lmu-klinikum-logo.webp" width="140" alt="Ludwig-Maximilians-Universität München Klinikum (LMU Klinikum)"></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/SEGi.webp" width="140" alt="SEGi University &amp; Colleges"></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/national-hospital-abuja-logo.webp" width="140" alt="National Hospital Abuja"></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/cmul-logo.webp" width="140" alt="College of Medicine, University of Lagos (CMUL)"></td>
   </tr>
   <tr>
-    <td align="center" width="25%"><img src="docs/images/logo/bayero-university-kano-logo.webp" width="140" alt="Bayero University Kano"></td>
-    <td align="center" width="25%"><img src="docs/images/logo/smanu-Danfodiyo-University-Sokoto.webp" width="140" alt="Usmanu Danfodiyo University Sokoto"></td>
-    <td align="center" width="25%"><img src="docs/images/logo/university-of-maiduguri-logo.webp" width="140" alt="University of Maiduguri"></td>
-    <td align="center" width="25%"><img src="docs/images/logo/madda-walabu-university-logo.webp" width="140" alt="Madda Walabu University"></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/bayero-university-kano-logo.webp" width="140" alt="Bayero University Kano"></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/smanu-Danfodiyo-University-Sokoto.webp" width="140" alt="Usmanu Danfodiyo University Sokoto"></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/university-of-maiduguri-logo.webp" width="140" alt="University of Maiduguri"></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/madda-walabu-university-logo.webp" width="140" alt="Madda Walabu University"></td>
   </tr>
 </table>
 
