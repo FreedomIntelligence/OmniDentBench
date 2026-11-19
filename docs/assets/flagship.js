@@ -44,6 +44,16 @@ function render() {
   pinnedInstitution = null;
   const t = (zh, english) => en ? english : zh;
   document.documentElement.lang = en ? 'en' : 'zh-CN';
+  const atlasImage = './images/atlas/network-overview' + (en ? '' : '-zh') + '.png';
+  const atlasPortraits = groups.map(([category, zhRole, enRole]) =>
+    data.team.filter(person => person.category === category).map(person => {
+      const name = en ? person.nameEn : person.nameZh;
+      return `<a class="atlas-portrait" href="#member-${person.key}" title="${name} · ${t(zhRole, enRole)}">
+        <img src="${person.photo}" alt="" width="70" height="76" decoding="async">
+        <span>${name}</span>
+      </a>`;
+    }).join('')
+  ).join('');
   document.getElementById('app').innerHTML = `
     <a class="skip" href="#main">${t('跳到正文', 'Skip to content')}</a>
     <header class="site-header">
@@ -66,20 +76,15 @@ function render() {
           <div><h1 id="hero-title">OmniDentBench</h1><p class="atlas-deck">${t('口腔医学 AI 的多语言、多模态评测基准', 'A multilingual benchmark for dental AI reasoning')}</p></div>
           <p class="atlas-explainer">${t('让不同模型回答同一组牙科问题，再按同一套规则比较表现。1,178 道题覆盖 12 个专科，其中 1,099 道附有图像。客观题按参考答案判分，开放题按逐题量表评分。', 'Give models the same dental questions and compare their answers under the same scoring rules. Of 1,178 questions across 12 specialties, 1,099 include images. A judge checks objective answers against references and grades open-ended responses against item-specific rubrics.')}</p>
         </div>
-        <figure class="research-atlas">
+        <figure class="research-atlas" id="collaboration-map">
           <div class="atlas-heading"><h2>${t('六个国家的牙科研究协作', 'Dental research across six countries')}</h2><span>${t('16 家合作机构 · 74 位项目成员', '16 partner institutions · 74 team members')}</span></div>
-          <div class="atlas-body">
+          <div class="atlas-people-map">
             <div class="atlas-geography">
-              <a href="./images/atlas/partners-${en ? 'en' : 'zh'}.png" aria-label="${t('查看大图', 'Open full-size map')}"><img class="world-map" src="./images/atlas/partners-${en ? 'en' : 'zh'}.png" alt="${t('中国 7 家、尼日利亚 5 家，美国、德国、埃塞俄比亚和马来西亚各 1 家。星标标示主席所在的香港和深圳。','Seven partners in China, five in Nigeria, and one each in the United States, Germany, Ethiopia, and Malaysia. The star marks Hong Kong and Shenzhen, the cities of the steering chairs.')}"></a>
-              <p class="atlas-mobile-counts">${t('中国 7 家、尼日利亚 5 家，美国、德国、埃塞俄比亚、马来西亚各 1 家。', 'China 7 · Nigeria 5 · United States, Germany, Ethiopia and Malaysia 1 each.')} <a href="./images/atlas/partners-${en ? 'en' : 'zh'}.png">${t('放大地图', 'Enlarge map')}</a></p>
-              <p class="atlas-key"><span>●</span> ${t('每国标出一家代表机构，数字为该国机构数。','One partner site per country. Numbers give the institution count.')} <b>★</b> ${t('项目主席所在城市','Steering chair locations')}</p>
+              <a href="${atlasImage}" aria-label="${t('查看大图', 'Open full-size map')}"><img class="world-map" src="./images/atlas/partners-${en ? 'en' : 'zh'}.png" alt="${t('中国 7 家、尼日利亚 5 家，美国、德国、埃塞俄比亚和马来西亚各 1 家。星标标示主席所在的香港和深圳。','Seven partners in China, five in Nigeria, and one each in the United States, Germany, Ethiopia, and Malaysia. The star marks Hong Kong and Shenzhen, the cities of the steering chairs.')}"></a>
+              <p class="atlas-mobile-counts">${t('中国 7 家、尼日利亚 5 家，美国、德国、埃塞俄比亚、马来西亚各 1 家。', 'China 7 · Nigeria 5 · United States, Germany, Ethiopia and Malaysia 1 each.')} <a href="${atlasImage}">${t('放大地图', 'Enlarge map')}</a></p>
+              <p class="atlas-key"><span>●</span> ${t('每国标出一家代表机构，数字为该国机构数。','One partner site per country. Numbers give the institution count.')} <b>★</b> ${t('项目主席所在城市：王俊文（香港），金作林、王本友（深圳）。','Steering chair locations: Junwen Wang in Hong Kong, Zuolin Jin and Benyou Wang in Shenzhen.')}</p>
             </div>
-            <aside class="atlas-chairs"><h3>${t('项目主席','Steering chairs')}</h3>
-              ${data.team.filter(person => person.category === 'steering_chair').map(person => {
-                const profile = chairProfiles[person.key];
-                return `<a href="${profile.url}"><img src="${person.photo}" alt="" width="50" height="54"><span><strong>${en ? person.nameEn : person.nameZh}</strong><small>${t(profile.zh, profile.en)}</small></span></a>`;
-              }).join('')}
-            </aside>
+            ${atlasPortraits}
           </div>
         <div class="case-example">
           <img src="./images/atlas/odb-0777.jpg" alt="${t('题目 ODB-0777 的牙根 X 光片','Dental radiograph supplied with item ODB-0777')}" width="86" height="146">
@@ -89,7 +94,7 @@ function render() {
             <small>${t('图像','Image')} · <a href="https://doi.org/10.7759/cureus.86471">Doumari et al. (2025), Fig. 2</a> · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></small>
           </div>
         </div>
-          <figcaption>${t('机构与人员见下方完整名单。底图','Full institution and team directories below. Base map')} · <a href="https://www.naturalearthdata.com/">Natural Earth</a></figcaption>
+          <figcaption>${t('点选头像查看成员及其项目角色。底图','Select a portrait for the member’s name and project role. Base map')} · <a href="https://www.naturalearthdata.com/">Natural Earth</a></figcaption>
         </figure>
         <div class="actions atlas-actions"><a class="button primary" href="${repo}/tree/main/data">${t('探索数据集', 'Explore the dataset')}</a><a class="button secondary" href="#method">${t('查看评分方法', 'How scoring works')}</a></div>
       </section>
@@ -115,7 +120,7 @@ function render() {
         <div class="section-heading"><p class="eyebrow">THE RESEARCH COLLECTIVE</p><div class="heading-row"><h2 id="team-title">${t('项目团队', 'Project team')}</h2><p>${t('74 位项目成员，将临床经验与人工智能研究汇聚为共同的评测实践。', '74 team members connecting clinical expertise with AI research, across steering and specialty committees.')}</p></div></div>
         ${groups.map(([key, z, e], i) => {
           const members = data.team.filter(x => x.category === key);
-          return `<section class="team-group ${i === 0 ? 'leadership' : ''}" id="${key}"><h3 class="group-title">${t(z, e)} <small>${members.length}</small></h3><div class="team-grid ${i === 0 ? 'chairs' : ''}">${members.map(x => `<article class="person"><div class="portrait"><img loading="lazy" src="${x.photo}" alt="${en ? x.nameEn : x.nameZh}" width="400" height="400"></div><div class="person-caption"><h3>${en ? x.nameEn : x.nameZh}</h3>${x.nameEn !== x.nameZh ? `<p>${en ? x.nameZh : x.nameEn}</p>` : ''}</div></article>`).join('')}</div></section>`;
+          return `<section class="team-group ${i === 0 ? 'leadership' : ''}" id="${key}"><h3 class="group-title">${t(z, e)} <small>${members.length}</small></h3><div class="team-grid ${i === 0 ? 'chairs' : ''}">${members.map(x => `<article class="person" id="member-${x.key}" tabindex="-1"><div class="portrait"><img loading="lazy" src="${x.photo}" alt="${en ? x.nameEn : x.nameZh}" width="400" height="400"></div><div class="person-caption"><h3>${en ? x.nameEn : x.nameZh}</h3>${x.nameEn !== x.nameZh ? `<p>${en ? x.nameZh : x.nameEn}</p>` : ''}${chairProfiles[x.key] ? `<a class="chair-affiliation" href="${chairProfiles[x.key].url}">${en ? chairProfiles[x.key].en : chairProfiles[x.key].zh}</a>` : ''}</div></article>`).join('')}</div></section>`;
         }).join('')}
       </section>
 

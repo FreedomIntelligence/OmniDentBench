@@ -396,18 +396,24 @@ html[lang='zh-CN'] .hero-desc { line-height: 1.9; }
 .atlas-heading { display: flex; justify-content: space-between; gap: 12px 24px; align-items: baseline; padding: 18px 24px; border-bottom: 1px solid #cedcdc; }
 .atlas-heading h2, html[lang='zh-CN'] .atlas-heading h2 { font: 600 clamp(1.25rem, 2.1vw, 2rem)/1.2 var(--serif); letter-spacing: -.025em; }
 .atlas-heading > span { font-size: 1rem; font-weight: 600; color: #42696a; }
-.atlas-body { display: grid; grid-template-columns: minmax(0, 3fr) minmax(260px, 1fr); }
+.atlas-people-map {
+  display: grid;
+  grid-template-columns: repeat(14, minmax(0, 1fr));
+  align-items: start;
+  gap: 10px 5px;
+  padding: 14px;
+}
+.atlas-portrait { display: grid; justify-items: center; align-content: start; gap: 4px; min-width: 0; text-align: center; text-decoration: none; }
+.atlas-portrait img { width: min(100%, 70px); height: auto; aspect-ratio: 70 / 76; object-fit: cover; object-position: center 24%; border-radius: 4px; background: #e9f0ef; }
+.atlas-portrait span { font: 600 .71rem/1.2 var(--sans); color: #21414a; overflow-wrap: anywhere; }
+.atlas-portrait:hover span, .atlas-portrait:focus-visible span { text-decoration: underline; }
+.atlas-people-map .atlas-geography { grid-column: 4 / span 8; grid-row: 3 / span 3; height: 100%; border: 1px solid #d2dfdf; border-radius: 6px; overflow: hidden; }
+.chair-affiliation { display: inline-block; margin-top: 8px; font-size: .9rem; text-decoration: underline; }
+.person:target { outline: 2px solid var(--blue); outline-offset: 5px; }
 .atlas-geography { background: #f1f6f6; display: flex; flex-direction: column; justify-content: center; }
 .world-map { width: 100%; height: auto; display: block; }
 .atlas-key, .research-atlas figcaption { padding: 10px 20px; font-size: .875rem; line-height: 1.6; color: #365760; }
 .atlas-key span { color: #00766e; } .atlas-key b { color: #a94e22; padding-left: 8px; }
-.atlas-chairs { border-left: 1px solid #d2dfdf; padding: 14px 18px; display: flex; flex-direction: column; justify-content: center; }
-.atlas-chairs h3 { font-size: 1.125rem; margin: 0 0 10px; }
-.atlas-chairs a { color: inherit; display: flex; align-items: center; gap: 10px; padding: 12px 0; border-top: 1px solid #d2dfdf; }
-.atlas-chairs img { width: 64px; height: 70px; border-radius: 4px; object-fit: cover; object-position: center 18%; flex: none; }
-.atlas-chairs strong, .atlas-chairs small { display: block; line-height: 1.35; }
-.atlas-chairs strong { font-size: 1.0625rem; }
-.atlas-chairs small { font-size: .875rem; margin-top: 5px; color: #426069; }
 .research-atlas figcaption { border-top: 1px solid #d2dfdf; }
 .research-atlas figcaption a, .case-example small a { text-decoration: underline; }
 .atlas-mobile-counts { display: none; }
@@ -424,19 +430,19 @@ html[lang='zh-CN'] .hero-desc { line-height: 1.9; }
 @media (max-width: 850px) {
   .atlas-intro { grid-template-columns: 1fr; gap: 12px; }
   .atlas-heading { flex-wrap: wrap; }
-  .atlas-body { grid-template-columns: 1fr; }
-  .atlas-chairs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 18px; border: 0; }
-  .atlas-chairs h3 { grid-column: 1 / -1; }
-  .atlas-chairs a { flex-direction: column; align-items: start; }
 }
 @media (max-width: 600px) {
   .atlas-mobile-counts { display: block; padding: 8px 12px 0; font-size: .83rem; line-height: 1.5; }
   .atlas-mobile-counts a { text-decoration: underline; }
   .atlas-heading { padding: 14px; gap: 6px; }
-  .atlas-chairs { display: block; padding: 14px; }
-  .atlas-chairs a { flex-direction: row; align-items: center; padding-block: 10px; }
-  .atlas-chairs img { width: 60px; height: 66px; }
   .atlas-key, .research-atlas figcaption { padding-inline: 12px; }
   .case-example { gap: 12px; grid-template-columns: 46px 1fr; }
   .case-example img { width: 46px; }
+}
+@media (max-width: 1050px) {
+  .atlas-people-map { grid-template-columns: repeat(auto-fit, minmax(70px, 1fr)); gap: 12px 6px; }
+  .atlas-people-map .atlas-geography { grid-row: 1; grid-column: 1 / -1; }
+}
+@media (max-width: 600px) {
+  .atlas-people-map { grid-template-columns: repeat(4, minmax(0, 1fr)); padding: 8px; gap: 10px 5px; }
 }
