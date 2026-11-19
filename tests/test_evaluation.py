@@ -6,9 +6,13 @@ import json
 import os
 import tempfile
 import unittest
+from collections import Counter
+from io import BytesIO
 from pathlib import Path
 from unittest.mock import patch
+from urllib.error import HTTPError
 
+from evaluation import client
 from evaluation.__main__ import main
 
 
@@ -94,6 +98,10 @@ def rubric_judgment(flags):
 
 def response(content):
     return {"choices": [{"message": {"content": content}}]}
+
+
+def http_error(url, status, details):
+    return HTTPError(url, status, "", {}, BytesIO(json.dumps({"error": details}).encode()))
 
 
 class OfflineEvaluation(unittest.TestCase):
@@ -237,6 +245,110 @@ class OfflineEvaluation(unittest.TestCase):
         self.assertFalse(summary["complete"])
         self.assertEqual(summary["subjective"]["valid"], 1)
         self.assertIsNone(summary["subjective"]["mean_score"])
+
+    def test_proxy_content_blocks_retry_the_item_and_continue(self):
+        self.write_cases("en", [
+            case(1, "objective_exact", "[recover]"),
+            case(2, "objective_exact", "[exhaust]"),
+            case(3, "objective_exact", "[continue]"),
+        ])
+        attempts = Counter()
+
+        def open_request(req, timeout):
+            payload = json.loads(req.data)
+            messages = json.dumps(payload["messages"])
+            if payload["model"] == "test-model":
+                for marker in ("[recover]", "[exhaust]", "[continue]"):
+                    if marker in messages:
+                        break
+                attempts[marker] += 1
+                if marker == "[exhaust]" or (marker == "[recover]" and attempts[marker] < 3):
+                    inner = json.dumps({"error": {"code": "data_inspection_failed"}})
+                    raise http_error(req.full_url, 400, {
+                        "code": "bad_response_status_code",
+                        "type": "upstream_error",
+                        "message": f"Upstream error: {inner} (request id: offline)",
+                    })
+                result = {"answer": "trial"}
+            else:
+                self.assertNotIn("[exhaust]", messages)
+                result = {"total_score": 100}
+            return BytesIO(json.dumps(response(json.dumps(result))).encode())
+
+        with patch("evaluation.client.request.build_opener") as build:
+            build.return_value.open.side_effect = open_request
+            scores, summary = self.evaluate("en", client.post_json)
+        self.assertEqual(attempts, {"[recover]": 3, "[exhaust]": 3, "[continue]": 1})
+        self.assertEqual([row["status"] for row in scores], ["scored", "model_failed", "scored"])
+        self.assertEqual([row["score"] for row in scores], [100, 0, 100])
+        self.assertTrue(summary["complete"])
+
+    def test_endpoint_errors_still_abort_without_item_retries(self):
+        url = ENV["ODB_MODEL_BASE_URL"] + "/chat/completions"
+        for status, details in (
+            (401, {"code": "invalid_api_key"}),
+            (403, {"code": "permission_denied"}),
+            (400, {"code": "invalid_model", "message": "Documentation mentions content_filter"}),
+        ):
+            with self.subTest(status=status), patch("evaluation.client.request.build_opener") as build:
+                opening = build.return_value.open
+                opening.side_effect = http_error(url, status, details)
+                with self.assertRaises(client.EndpointError):
+                    client.completion((url, "offline-key"), "model", "", "", [], {}, lambda x: x)
+                opening.assert_called_once()
+
+    def test_red_flags_must_identify_one_rubric_entry(self):
+        corrected = case(1, "subjective", "[corrected]")
+        corrected["rubric"]["red_flags"] = []
+        prefix = case(2, "subjective", "[prefix]")
+        prefix["rubric"]["red_flags"] = ["Safety：Selected the forbidden test action"]
+        ambiguous = case(3, "subjective", "[ambiguous]")
+        ambiguous["rubric"]["red_flags"] = ["Safety: First action", "Safety: Second action"]
+        self.write_cases("en", [corrected, prefix, ambiguous])
+        attempts = Counter()
+
+        def reply(url, payload, key):
+            if payload["model"] == "test-model":
+                return response('{"answer": "trial"}')
+            messages = json.dumps(payload["messages"])
+            for marker in ("[corrected]", "[prefix]", "[ambiguous]"):
+                if marker in messages:
+                    break
+            attempts[marker] += 1
+            flags = ["Safety"]
+            if marker == "[corrected]":
+                flags = ["None"] if attempts[marker] == 1 else []
+            return response(json.dumps(rubric_judgment(flags)))
+
+        scores, _ = self.evaluate("en", reply)
+        self.assertEqual(attempts, {"[corrected]": 2, "[prefix]": 1, "[ambiguous]": 3})
+        self.assertEqual([row["status"] for row in scores], ["scored", "scored", "judge_failed"])
+        self.assertEqual([row["score"] for row in scores], [70, 0, None])
+
+    def test_truncated_completions_are_retried_before_parsing(self):
+        self.write_cases("en", [case(1, "objective_exact", "[recover]"),
+                                case(2, "objective_exact", "[truncated-judge]")])
+        attempts = Counter()
+
+        def reply(url, payload, key):
+            messages = json.dumps(payload["messages"])
+            marker = "[recover]" if "[recover]" in messages else "[truncated-judge]"
+            model = payload["model"]
+            attempts[marker, model] += 1
+            if model == "test-model":
+                if marker == "[recover]" and attempts[marker, model] == 1:
+                    return {"choices": [{"finish_reason": "length", "message": {"content": '{"answer":"cut'}}]}
+                return response('{"answer":"complete"}')
+            self.assertIn("complete", messages)
+            if marker == "[truncated-judge]":
+                return {"choices": [{"finish_reason": "length", "message": {"content": '{"total_score":100'}}]}
+            return response('{"total_score":100}')
+
+        scores, _ = self.evaluate("en", reply)
+        self.assertEqual(attempts["[recover]", "test-model"], 2)
+        self.assertEqual(attempts["[truncated-judge]", "test-judge"], 3)
+        self.assertEqual([row["score"] for row in scores], [100, None])
+        self.assertEqual(scores[1]["status"], "judge_failed")
 
     def test_text_only_selects_language_and_excludes_visual_items(self):
         self.write_cases("en", [case(1, "objective_exact", "Unselected language")])

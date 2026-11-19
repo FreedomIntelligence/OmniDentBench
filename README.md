@@ -2,7 +2,20 @@
 
 OmniDentBench (ODB) evaluates dental reasoning across 12 specialties. Each of its eight editions contains the same 1,178 items from 1,020 source articles. There are 605 exact-answer questions, 108 multiple-choice questions and 465 rubric-scored open-ended questions.
 
-This local release candidate includes all **2,141 images** needed to evaluate a complete edition. The eight editions share the same images and item IDs.
+The eight editions share the same item IDs and all **2,141 images**. [Project website](https://freedomintelligence.github.io/OmniDentBench/)
+
+## Repository layout
+
+```text
+OmniDentBench/
+├── data/
+│   ├── <language>/items.json   # Benchmark items for each language
+│   ├── images/                # Shared figures
+│   ├── figures.csv            # Figure sources and licences
+│   └── sources.csv            # Source articles and attribution
+├── evaluation/                # Model inference, judging and scoring
+└── tests/                     # Offline tests
+```
 
 ## Run an evaluation
 
@@ -25,7 +38,7 @@ python -m evaluation --language en --model YOUR_MODEL_ID --judge deepseek-flash 
   --limit 3 --output runs/smoke
 ```
 
-Remove `--limit 3` and choose a new output directory to run all 1,178 items. Both runs send requests to the configured services. For a text model, use `--text-only` to select the 79 items that require no images. Use `--model-options options.json` for model-specific settings such as `{"reasoning_effort":"medium"}`. The judge identifier must resolve at your endpoint. Report the exact model and judge identifiers, inference settings, language and item selection with results.
+Remove `--limit 3` for a full run. Use `--text-only` for the 79 items that require no images. Set `--judge` to the model ID at your judge endpoint. Pass `--model-options options.json` for model-specific settings such as `{"reasoning_effort":"medium"}`.
 
 | Language | CLI value | Language | CLI value |
 |---|---|---|---|
@@ -36,14 +49,9 @@ Remove `--limit 3` and choose a new output directory to run all 1,178 items. Bot
 
 ## Data and figures
 
-The `items` array in each `data/<language>/items.json` contains stable IDs shared across languages, a source PMCID, specialty, question type, task tags, question, options, reference answer, explanation, rubric and ordered attachments. The model sees the question, its options and the ordered local images with their figure labels. The judge receives the model response and the scoring reference. The translated editions underwent machine checks and source-guided revisions, with expert review of a shared sample of 118 items.
+Each `data/<language>/items.json` contains questions, answer options, reference answers, scoring rubrics and image references. Item IDs are shared across languages. The translations were machine-checked and revised against the source text. Experts reviewed a shared sample of 118 items.
 
-Across the 1,099 image-supported items, 2,353 figure references point to 2,141 distinct images. Some items reuse an image or need more than one. All figures are bundled, so `--available-only` selects the same 1,178 items as the default full run.
-
-- Use the figure manifest to look up a figure's expected SHA-256 and source article. Where an individual figure label or licence link is blank, consult the original article and its figure credit line. [Figure manifest](data/figures.csv)
-- Look up article titles, authors and copyright notices by PMCID. The article record also points to the original publication for any material with its own credit line or terms. [Source articles](data/sources.csv)
-- For 254 files, non-rendering metadata was removed and the decoded pixels were verified unchanged. The other 1,887 files retain the benchmark's archived bytes and may include original embedded metadata. The evaluator verifies each image's checksum before inference and records absent or mismatched images as `missing_assets`.
-- To check the files delivered with this candidate, run `shasum -a 256 -c SHA256SUMS` or `sha256sum -c SHA256SUMS` at the repository root.
+The repository includes all figures for the 1,099 image-supported items. The figure manifest maps images to source articles and lists licences where available. Consult the original article for figure-specific credits and reuse terms. Some images retain their original embedded metadata. [Figure manifest](data/figures.csv) · [Source articles](data/sources.csv)
 
 ## Scores and coverage
 
@@ -51,10 +59,10 @@ The judge grades both objective formats as 0 or 100. The objective mean on this 
 
 `scores.jsonl` contains one record per selected item. `summary.json` reports separate objective and open-ended means, selected denominators, valid answer counts, successfully judged counts and failure counts. Invalid or blocked target-model answers receive zero and stay in the selected denominator. Missing or corrupt figures and failed judgments leave the item score unresolved and the affected group mean unavailable. Unassessed red flags remain unknown. Authentication or service configuration failures stop the run. A run that stops before completion has no final summary.
 
-`manifest.json` records the data digest, prompt digest, language, model and judge options, and selection scope. Report the denominator for every estimate. A full run selects 713 objective and 465 open-ended items per language. A text-only run covers 79 items in total.
+`manifest.json` records the language, item selection, and model and judge settings. Include these details and the item denominator when reporting scores.
 
 ## Rights and citation
 
-The originating authors and rights holders retain their rights in source articles and figures. Follow each source's terms and attribution requirements. The software and original benchmark-content licences are pending confirmation by the maintainers. This review candidate carries no new licence grant for those components.
+The evaluation code is available under the [MIT License](LICENSE). Original benchmark content for which the OmniDentBench contributors hold licensing rights is available under [CC BY 4.0](data/LICENSE). Third-party figures and other source material retain their applicable terms. Use the figure manifest and the source article to verify attribution and reuse rights.
 
-For this candidate, identify the resource as *OmniDentBench (ODB)* and record the checkout's commit identifier, the language-file SHA-256 and the item selection. The intended first public repository tag is `v1.0.0`. All editions share the repository tag.
+Cite *OmniDentBench (ODB)* with the release tag or Git commit you used.

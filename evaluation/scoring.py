@@ -1,9 +1,18 @@
 """Convert judge outputs into fixed-denominator benchmark scores."""
 
+import re
 from collections import Counter
 
 from .client import InvalidResponse
 from .prompts import extract_filtering_answer
+
+
+def _normalize_red_flag(text):
+    return re.sub(r"\s+", " ", text).strip().rstrip(".。")
+
+
+def _red_flag_prefix(text):
+    return re.split(r"[:：]", text, maxsplit=1)[0].strip()
 
 
 def extract_answer(parsed):
@@ -49,6 +58,15 @@ def grade(item, judgment):
     flags = judgment.get("red_flags_triggered", judgment.get("triggered_red_flags"))
     if not isinstance(flags, list) or not all(isinstance(f, str) and f.strip() for f in flags):
         raise InvalidResponse("red_flags_triggered must be an array of flag descriptions.")
+    rubric_flags = item["rubric"].get("red_flags") or []
+    for flag in flags:
+        normalized = _normalize_red_flag(flag)
+        matches = [entry for entry in rubric_flags if _normalize_red_flag(entry) == normalized]
+        if not matches:
+            prefix = _red_flag_prefix(flag)
+            matches = [entry for entry in rubric_flags if _red_flag_prefix(entry) == prefix]
+        if len(matches) != 1:
+            raise InvalidResponse("Each red flag must match a unique red flag in the rubric.")
     total = sum(float(c["weight"]) * scores[c["id"]] for c in criteria)
     return 0.0 if flags else round(total, 4), scores, flags
 
