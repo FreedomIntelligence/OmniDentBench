@@ -1,5 +1,7 @@
 const repo = 'https://github.com/FreedomIntelligence/OmniDentBench';
 const data = window.ODB_DATA;
+const specialties = [...data.specialties].sort((a, b) => b.items - a.items);
+const largestSpecialty = Math.max(...specialties.map(specialty => specialty.items));
 const selectedLanguage = new URLSearchParams(location.search).get('lang');
 let en = selectedLanguage ? selectedLanguage !== 'zh' : !location.pathname.endsWith('/zh.html');
 
@@ -17,7 +19,29 @@ const groups = [
   ['specialty_member', '专科委员会', 'Specialty committee']
 ];
 
+let activeInstitution = null;
+let pinnedInstitution = null;
+
+function closeInstitution() {
+  if (!activeInstitution) return;
+  activeInstitution.removeAttribute('data-open');
+  activeInstitution.setAttribute('aria-expanded', 'false');
+  activeInstitution = null;
+}
+
+function showInstitution(button) {
+  if (activeInstitution !== button) {
+    closeInstitution();
+    pinnedInstitution = null;
+  }
+  activeInstitution = button;
+  button.setAttribute('data-open', '');
+  button.setAttribute('aria-expanded', 'true');
+}
+
 function render() {
+  closeInstitution();
+  pinnedInstitution = null;
   const t = (zh, english) => en ? english : zh;
   document.documentElement.lang = en ? 'en' : 'zh-CN';
   document.getElementById('app').innerHTML = `
@@ -39,7 +63,7 @@ function render() {
     <main id="main">
       <section class="hero atlas-hero" aria-labelledby="hero-title">
         <div class="atlas-intro">
-          <div><h1 id="hero-title">OmniDentBench</h1><p class="atlas-deck">${t('牙科 AI 的多语言、多模态评测基准', 'A multilingual benchmark for dental AI reasoning')}</p></div>
+          <div><h1 id="hero-title">OmniDentBench</h1><p class="atlas-deck">${t('口腔医学 AI 的多语言、多模态评测基准', 'A multilingual benchmark for dental AI reasoning')}</p></div>
           <p class="atlas-explainer">${t('让不同模型回答同一组牙科问题，再按同一套规则比较表现。1,178 道题覆盖 12 个专科，其中 1,099 道附有图像。客观题按参考答案判分，开放题按逐题量表评分。', 'Give models the same dental questions and compare their answers under the same scoring rules. Of 1,178 questions across 12 specialties, 1,099 include images. A judge checks objective answers against references and grades open-ended responses against item-specific rubrics.')}</p>
         </div>
         <figure class="research-atlas">
@@ -76,13 +100,13 @@ function render() {
 
       <section id="institutions" class="section institutions-section" aria-labelledby="institutions-title">
         <div class="section-heading"><p class="eyebrow">INTERNATIONAL COLLABORATION</p><div class="heading-row"><h2 id="institutions-title">${t('合作机构', 'Partner institutions')}</h2><p>${t('汇聚大学、牙科学院、医院与人工智能研究团队，共同推进口腔医学 AI 评测。', 'Bringing together universities, dental schools, hospitals and AI researchers around a shared benchmark.')}</p></div></div>
-        <div class="institution-grid">${data.partners.map(x => `<article class="institution"><div class="institution-mark"><img src="${x.logo.replace('/logo/', '/partner-marks/')}" alt="" loading="lazy"></div><h3>${en ? x.nameEn : x.nameZh}</h3></article>`).join('')}</div>
+        <div class="institution-grid">${data.partners.map((x, i) => `<button class="institution" type="button" aria-labelledby="institution-name-${i}" aria-controls="institution-name-${i}" aria-expanded="false"><span class="institution-mark"><img src="${x.logo}" alt="" loading="lazy"></span><span class="institution-tooltip" id="institution-name-${i}" role="tooltip">${en ? x.nameEn : x.nameZh}</span></button>`).join('')}</div>
       </section>
 
       <section id="benchmark" class="section scope-section" aria-labelledby="scope-title">
         <div class="section-heading"><p class="eyebrow">THE BENCHMARK</p><div class="heading-row"><h2 id="scope-title">${t('一个基准。<br><em>十二个专科。</em>', 'One benchmark.<br><em>Twelve specialties.</em>')}</h2><p>${t('覆盖口腔医学的专科问题、视觉证据与临床推理，公开每个专科的实际题量。', 'From visual evidence to clinical reasoning, evaluate dental AI across a broad spectrum of specialist knowledge.')}</p></div></div>
         <div class="scope-content"><div class="evidence-panel"><div class="evidence-number">93.3<span>%</span></div><h3>${t('让推理立足于<br>图像证据。', 'Reasoning grounded<br>in visual evidence.')}</h3><p>${t('1,099 / 1,178 道题包含图像。各题可追溯到对应的图像与来源资料。', '1,099 of 1,178 items include images, with figure references and source attribution available in the release.')}</p><a class="text-link" href="${repo}/blob/main/data/figures.csv">${t('图像来源与许可', 'Figure sources & licences')}</a></div>
-          <div class="scope-grid">${data.specialties.map(({ nameEn, nameZh, items }) => `<div class="specialty"><div class="specialty-label"><h3>${en ? nameEn : nameZh}</h3><strong>${items}</strong></div><div class="bar"><i style="width:${items / data.specialties[0].items * 100}%"></i></div></div>`).join('')}</div>
+          <div class="scope-grid">${specialties.map(({ nameEn, nameZh, items }) => `<div class="specialty"><div class="specialty-label"><h3>${en ? nameEn : nameZh}</h3><strong>${items}</strong></div><div class="bar"><i style="width:${items / largestSpecialty * 100}%"></i></div></div>`).join('')}</div>
         </div>
         <div class="language-panel"><div><h3>${t('同一套题目。八种语言。', 'One shared benchmark. Eight languages.')}</h3><p>${t('语言版本共享同一套 1,178 题；翻译专家审核覆盖共同抽样的 118 题。', 'Eight versions of the same 1,178 items. Expert translation review covers a shared sample of 118 items.')}</p></div><div class="languages">${['English', '简体中文', '繁體中文', 'Español', 'Français', 'Deutsch', '日本語', 'العربية'].map(x => `<span>${x}</span>`).join('')}</div></div>
       </section>
@@ -104,7 +128,7 @@ function render() {
         ].map(([n, z, e, zp, ep]) => `<article class="method-card"><strong>${n}</strong><h3>${t(z, e)}</h3><p>${t(zp, ep)}</p></article>`).join('')}</div>
       </section>
 
-      <section class="section release" aria-labelledby="release-title"><p class="eyebrow">OPEN SCIENCE. SHARED PROGRESS.</p><div class="release-layout"><div><h2 id="release-title">${t('让下一次突破，<br><em>经得起检验。</em>', 'Put your model<br><em>to the test.</em>')}</h2><p>${t('从公开数据、参考答案与评分标准开始。', 'Start with open data, reference answers and transparent evaluation.')}</p></div><div class="release-actions"><a class="button primary" href="${repo}">${t('访问 GitHub 仓库', 'Explore on GitHub')}</a><a class="button secondary" href="${repo}#quick-start">${t('开始评测', 'Get started')}</a></div></div></section>
+      <section class="section release" aria-labelledby="release-title"><p class="eyebrow">OPEN SCIENCE. SHARED PROGRESS.</p><div class="release-layout"><div><h2 id="release-title">${t('用公开基准<br><em>开展模型评测</em>', 'Put your model<br><em>to the test.</em>')}</h2><p>${t('从公开数据、参考答案与评分标准开始。', 'Start with open data, reference answers and transparent evaluation.')}</p></div><div class="release-actions"><a class="button primary" href="${repo}">${t('访问 GitHub 仓库', 'Explore on GitHub')}</a><a class="button secondary" href="${repo}#quick-start">${t('开始评测', 'Get started')}</a></div></div></section>
     </main>
 
     <footer><div class="footer-top"><a class="footer-brand" href="./">OmniDentBench</a><p>${t('面向口腔医学 AI 的<br>多模态、多语言评测基准。', 'A multimodal, multilingual<br>benchmark for dental AI.')}</p><div><a href="${repo}#institutions-and-team">${t('项目团队', 'Project team')}</a><a href="${repo}/issues">${t('反馈与交流', 'Feedback & issues')}</a></div></div><div class="footer-bottom"><p>${t('评测代码：MIT · 原创基准内容：CC BY 4.0', 'Evaluation code: MIT · Original benchmark content: CC BY 4.0')}</p><a href="${repo}/blob/main/data/figures.csv">${t('第三方图像来源与许可', 'Third-party figure credits & licences')}</a></div></footer>
@@ -118,6 +142,43 @@ function render() {
     render();
     document.getElementById('language').focus({ preventScroll: true });
   };
+
+  document.querySelectorAll('.institution').forEach(button => {
+    button.addEventListener('pointerenter', event => {
+      if (event.pointerType !== 'touch') showInstitution(button);
+    });
+    button.addEventListener('pointerleave', () => {
+      if (activeInstitution === button && document.activeElement !== button && pinnedInstitution !== button) closeInstitution();
+    });
+    button.addEventListener('focus', () => showInstitution(button));
+    button.addEventListener('blur', () => {
+      if (activeInstitution === button && pinnedInstitution !== button) closeInstitution();
+    });
+    button.addEventListener('click', () => {
+      if (pinnedInstitution === button) {
+        pinnedInstitution = null;
+        closeInstitution();
+      } else {
+        showInstitution(button);
+        pinnedInstitution = button;
+      }
+    });
+  });
 }
+
+document.addEventListener('pointerdown', event => {
+  if (activeInstitution && !activeInstitution.contains(event.target)) {
+    pinnedInstitution = null;
+    closeInstitution();
+  }
+});
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Escape' && activeInstitution) {
+    pinnedInstitution = null;
+    closeInstitution();
+    event.preventDefault();
+  }
+});
 
 render();
