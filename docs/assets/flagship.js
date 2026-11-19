@@ -3,19 +3,10 @@ const data = window.ODB_DATA;
 const selectedLanguage = new URLSearchParams(location.search).get('lang');
 let en = selectedLanguage ? selectedLanguage !== 'zh' : !location.pathname.endsWith('/zh.html');
 
-const specialtyNames = {
-  'Endodontics': '牙体牙髓病学',
-  'Oral and Maxillofacial Pathology': '口腔颌面病理学',
-  'Orthodontics and Dentofacial Orthopedics': '口腔正畸学',
-  'Oral and Maxillofacial Surgery': '口腔颌面外科学',
-  'Pediatric Dentistry': '儿童口腔医学',
-  'Dental Public Health': '口腔公共卫生',
-  'Prosthodontics': '口腔修复学',
-  'Oral and Maxillofacial Radiology': '口腔颌面影像学',
-  'Periodontics': '牙周病学',
-  'Orofacial Pain': '口腔颌面疼痛',
-  'Oral Medicine': '口腔内科学',
-  'Dental Anesthesiology': '口腔麻醉学'
+const chairProfiles = {
+  '059-junwen-wang': { en: 'HKU Dentistry · Hong Kong', zh: '香港大学牙医学院 · 香港', url: 'https://hub.hku.hk/cris/rp/rp00280' },
+  '060-zuolin-jin': { en: 'Shenzhen Stomatology Hospital (Pingshan) · Shenzhen', zh: '南方医科大学深圳口腔医院（坪山）· 深圳', url: 'https://www.sz.gov.cn/hdjl/ywzsk/wsj/xzsx/content/post_13000002.html' },
+  '061-benyou-wang': { en: 'CUHK-Shenzhen · Shenzhen', zh: '香港中文大学（深圳）· 深圳', url: 'https://sds.cuhk.edu.cn/en/teacher/571' }
 };
 
 const groups = [
@@ -29,26 +20,11 @@ const groups = [
 function render() {
   const t = (zh, english) => en ? english : zh;
   document.documentElement.lang = en ? 'en' : 'zh-CN';
-  const formats = [
-    [605, '精确答案', 'Exact answer'],
-    [108, '选择题', 'Multiple choice'],
-    [465, '开放式回答', 'Open-ended']
-  ];
-  const openGroups = new Set([...document.querySelectorAll('details[open]')].map(el => el.id));
-  const alreadyRendered = !!document.querySelector('main');
-  let offset = 0;
-  const rings = formats.map(([count], i) => {
-    const length = count / 1178 * 100;
-    const circle = `<circle class="ring-segment segment-${i}" cx="210" cy="210" r="178" pathLength="100" stroke-dasharray="${length - 0.7} ${100 - length + 0.7}" stroke-dashoffset="${-offset}"/>`;
-    offset += length;
-    return circle;
-  }).join('');
-
   document.getElementById('app').innerHTML = `
     <a class="skip" href="#main">${t('跳到正文', 'Skip to content')}</a>
     <header class="site-header">
       <a class="brand" href="./" aria-label="OmniDentBench home">
-        <img class="brand-logo" src="./images/logo.png" alt="" width="66" height="48">
+        <img class="brand-logo" src="./images/atlas/odb-mark.png" alt="" width="66" height="48">
         <span>OmniDentBench<small>DENTAL AI BENCHMARK</small></span>
       </a>
       <nav aria-label="${t('主导航', 'Main navigation')}">
@@ -61,33 +37,37 @@ function render() {
     </header>
 
     <main id="main">
-      <section class="hero" aria-labelledby="hero-title">
-        <div class="hero-topline"><p class="eyebrow">OMNIDENTBENCH</p><span>${t('多模态 · 多语言 · 专科深度', 'MULTIMODAL · MULTILINGUAL · CLINICALLY GROUNDED')}</span></div>
-        <div class="hero-layout">
-          <div class="hero-copy">
-            <h1 id="hero-title">${t('挑战人工智能的<br><em>医学巅峰。</em>', 'Challenging<br>the limits of<br><em>dental AI.</em>')}</h1>
-            <p class="hero-sub">${t('以口腔医学的专业深度，检验人工智能的临床推理能力。', 'Clinical expertise meets the next generation of artificial intelligence.')}</p>
-            <p class="hero-desc">${t('以多模态题目、跨语言任务与逐题评分标准，构建可复现的口腔医学 AI 评测基准。', 'A rigorous, open benchmark for dental reasoning — built around multimodal evidence, multilingual questions and item-specific evaluation.')}</p>
-            <div class="actions">
-              <a class="button primary" href="${repo}/tree/main/data">${t('探索数据集', 'Explore the dataset')}</a>
-              <a class="button secondary" href="#method">${t('评测方法', 'Evaluation protocol')}</a>
-            </div>
-          </div>
-          <aside class="benchmark-portrait" aria-label="${t('题型构成', 'Benchmark composition')}">
-            <div class="data-orbit">
-              <svg viewBox="0 0 420 420" aria-hidden="true">
-                <circle class="orbit-guide" cx="210" cy="210" r="204"/>
-                <circle class="orbit-guide inner" cx="210" cy="210" r="148"/>
-                ${rings}
-                <path class="orbit-tick" d="M210 0v12 M210 408v12 M0 210h12 M408 210h12"/>
-              </svg>
-              <div class="orbit-label"><strong>1,178</strong><span>${t('独立评测题目', 'BENCHMARK ITEMS')}</span></div>
-            </div>
-            <div class="format-legend">${formats.map(([n, z, e], i) => `<div><span class="legend-name"><i class="key-${i}"></i>${t(z, e)}</span><strong>${n}</strong></div>`).join('')}</div>
-            <a class="hero-source" href="${repo}/blob/main/data/en/items.json">${t('查看公开题集与参考答案', 'Explore the released questions and answers')}</a>
-          </aside>
+      <section class="hero atlas-hero" aria-labelledby="hero-title">
+        <div class="atlas-intro">
+          <div><h1 id="hero-title">OmniDentBench</h1><p class="atlas-deck">${t('牙科 AI 的多语言、多模态评测基准', 'A multilingual benchmark for dental AI reasoning')}</p></div>
+          <p class="atlas-explainer">${t('让不同模型回答同一组牙科问题，再按同一套规则比较表现。1,178 道题覆盖 12 个专科，其中 1,099 道附有图像。客观题按参考答案判分，开放题按逐题量表评分。', 'Give models the same dental questions and compare their answers under the same scoring rules. Of 1,178 questions across 12 specialties, 1,099 include images. A judge checks objective answers against references and grades open-ended responses against item-specific rubrics.')}</p>
         </div>
-        <div class="hero-bottom"><span>${t('临床专业知识，驱动 AI 评测。', 'CLINICAL EXPERTISE. MEASURABLE INTELLIGENCE.')}</span><a href="#benchmark">${t('认识 OmniDentBench', 'Discover the benchmark')}<span class="scroll-line" aria-hidden="true"></span></a></div>
+        <figure class="research-atlas">
+          <div class="atlas-heading"><h2>${t('六个国家的牙科研究协作', 'Dental research across six countries')}</h2><span>${t('16 家合作机构 · 74 位项目成员', '16 partner institutions · 74 team members')}</span></div>
+          <div class="atlas-body">
+            <div class="atlas-geography">
+              <a href="./images/atlas/partners-${en ? 'en' : 'zh'}.png" aria-label="${t('查看大图', 'Open full-size map')}"><img class="world-map" src="./images/atlas/partners-${en ? 'en' : 'zh'}.png" alt="${t('中国 7 家、尼日利亚 5 家，美国、德国、埃塞俄比亚和马来西亚各 1 家。星标标示主席所在的香港和深圳。','Seven partners in China, five in Nigeria, and one each in the United States, Germany, Ethiopia, and Malaysia. The star marks Hong Kong and Shenzhen, the cities of the steering chairs.')}"></a>
+              <p class="atlas-mobile-counts">${t('中国 7 家、尼日利亚 5 家，美国、德国、埃塞俄比亚、马来西亚各 1 家。', 'China 7 · Nigeria 5 · United States, Germany, Ethiopia and Malaysia 1 each.')} <a href="./images/atlas/partners-${en ? 'en' : 'zh'}.png">${t('放大地图', 'Enlarge map')}</a></p>
+              <p class="atlas-key"><span>●</span> ${t('每国标出一家代表机构，数字为该国机构数。','One partner site per country. Numbers give the institution count.')} <b>★</b> ${t('项目主席所在城市','Steering chair locations')}</p>
+            </div>
+            <aside class="atlas-chairs"><h3>${t('项目主席','Steering chairs')}</h3>
+              ${data.team.filter(person => person.category === 'steering_chair').map(person => {
+                const profile = chairProfiles[person.key];
+                return `<a href="${profile.url}"><img src="${person.photo}" alt="" width="50" height="54"><span><strong>${en ? person.nameEn : person.nameZh}</strong><small>${t(profile.zh, profile.en)}</small></span></a>`;
+              }).join('')}
+            </aside>
+          </div>
+        <div class="case-example">
+          <img src="./images/atlas/odb-0777.jpg" alt="${t('题目 ODB-0777 的牙根 X 光片','Dental radiograph supplied with item ODB-0777')}" width="86" height="146">
+          <div><p class="case-label">${t('牙体牙髓病学 · 精确答案题', 'Endodontics · Exact answer')} · ODB-0777</p>
+            <h2>${t('这张牙片中的根管形态，有什么经典影像学名称？', 'What classic radiographic term describes this canal configuration?')}</h2>
+            <p>${t('模型读片并给出术语。评判模型对照参考答案，判为正确计 100 分，错误计 0 分。','The model reads the radiograph and names the finding. The judge compares its response with the reference answer and awards 100 or 0.')}</p>
+            <small>${t('图像','Image')} · <a href="https://doi.org/10.7759/cureus.86471">Doumari et al. (2025), Fig. 2</a> · <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></small>
+          </div>
+        </div>
+          <figcaption>${t('机构与人员见下方完整名单。底图','Full institution and team directories below. Base map')} · <a href="https://www.naturalearthdata.com/">Natural Earth</a></figcaption>
+        </figure>
+        <div class="actions atlas-actions"><a class="button primary" href="${repo}/tree/main/data">${t('探索数据集', 'Explore the dataset')}</a><a class="button secondary" href="#method">${t('查看评分方法', 'How scoring works')}</a></div>
       </section>
 
       <div class="metrics" aria-label="${t('基准概览', 'Benchmark at a glance')}">
@@ -95,24 +75,23 @@ function render() {
       </div>
 
       <section id="institutions" class="section institutions-section" aria-labelledby="institutions-title">
-        <div class="section-heading"><p class="eyebrow">INTERNATIONAL COLLABORATION</p><div class="heading-row"><h2 id="institutions-title">${t('临床深度。<br><em>全球协作。</em>', 'Clinical expertise.<br><em>Global collaboration.</em>')}</h2><p>${t('汇聚大学、牙科学院、医院与人工智能研究团队，共同推进口腔医学 AI 评测。', 'Bringing together universities, dental schools, hospitals and AI researchers around a shared benchmark.')}</p></div></div>
-        <div class="institution-grid">${data.partners.map(x => `<article class="institution"><div class="institution-mark"><img src="${x.logo}" alt="" loading="lazy"></div><h3>${en ? x.nameEn : x.nameZh}</h3></article>`).join('')}</div>
+        <div class="section-heading"><p class="eyebrow">INTERNATIONAL COLLABORATION</p><div class="heading-row"><h2 id="institutions-title">${t('合作机构', 'Partner institutions')}</h2><p>${t('汇聚大学、牙科学院、医院与人工智能研究团队，共同推进口腔医学 AI 评测。', 'Bringing together universities, dental schools, hospitals and AI researchers around a shared benchmark.')}</p></div></div>
+        <div class="institution-grid">${data.partners.map(x => `<article class="institution"><div class="institution-mark"><img src="${x.logo.replace('/logo/', '/partner-marks/')}" alt="" loading="lazy"></div><h3>${en ? x.nameEn : x.nameZh}</h3></article>`).join('')}</div>
       </section>
 
       <section id="benchmark" class="section scope-section" aria-labelledby="scope-title">
         <div class="section-heading"><p class="eyebrow">THE BENCHMARK</p><div class="heading-row"><h2 id="scope-title">${t('一个基准。<br><em>十二个专科。</em>', 'One benchmark.<br><em>Twelve specialties.</em>')}</h2><p>${t('覆盖口腔医学的专科问题、视觉证据与临床推理，公开每个专科的实际题量。', 'From visual evidence to clinical reasoning, evaluate dental AI across a broad spectrum of specialist knowledge.')}</p></div></div>
         <div class="scope-content"><div class="evidence-panel"><div class="evidence-number">93.3<span>%</span></div><h3>${t('让推理立足于<br>图像证据。', 'Reasoning grounded<br>in visual evidence.')}</h3><p>${t('1,099 / 1,178 道题包含图像。各题可追溯到对应的图像与来源资料。', '1,099 of 1,178 items include images, with figure references and source attribution available in the release.')}</p><a class="text-link" href="${repo}/blob/main/data/figures.csv">${t('图像来源与许可', 'Figure sources & licences')}</a></div>
-          <div class="scope-grid">${Object.entries(data.specialties).sort((a, b) => b[1] - a[1]).map(([name, n]) => `<div class="specialty"><div class="specialty-label"><h3>${en ? name : specialtyNames[name]}</h3><strong>${n}</strong></div><div class="bar"><i style="width:${n / 198 * 100}%"></i></div></div>`).join('')}</div>
+          <div class="scope-grid">${data.specialties.map(({ nameEn, nameZh, items }) => `<div class="specialty"><div class="specialty-label"><h3>${en ? nameEn : nameZh}</h3><strong>${items}</strong></div><div class="bar"><i style="width:${items / data.specialties[0].items * 100}%"></i></div></div>`).join('')}</div>
         </div>
         <div class="language-panel"><div><h3>${t('同一套题目。八种语言。', 'One shared benchmark. Eight languages.')}</h3><p>${t('语言版本共享同一套 1,178 题；翻译专家审核覆盖共同抽样的 118 题。', 'Eight versions of the same 1,178 items. Expert translation review covers a shared sample of 118 items.')}</p></div><div class="languages">${['English', '简体中文', '繁體中文', 'Español', 'Français', 'Deutsch', '日本語', 'العربية'].map(x => `<span>${x}</span>`).join('')}</div></div>
       </section>
 
       <section id="team" class="section people-section" aria-labelledby="team-title">
-        <div class="section-heading"><p class="eyebrow">THE RESEARCH COLLECTIVE</p><div class="heading-row"><h2 id="team-title">${t('专业的背后，<br><em>是每一位参与者。</em>', 'The people behind<br><em>the benchmark.</em>')}</h2><p>${t('74 位项目成员，将临床经验与人工智能研究汇聚为共同的评测实践。', '74 team members connecting clinical expertise with AI research, across steering and specialty committees.')}</p></div></div>
+        <div class="section-heading"><p class="eyebrow">THE RESEARCH COLLECTIVE</p><div class="heading-row"><h2 id="team-title">${t('项目团队', 'Project team')}</h2><p>${t('74 位项目成员，将临床经验与人工智能研究汇聚为共同的评测实践。', '74 team members connecting clinical expertise with AI research, across steering and specialty committees.')}</p></div></div>
         ${groups.map(([key, z, e], i) => {
           const members = data.team.filter(x => x.category === key);
-          const isOpen = alreadyRendered ? openGroups.has(key) : i < 3;
-          return `<details class="team-group ${i === 0 ? 'leadership' : ''}" id="${key}" ${isOpen ? 'open' : ''}><summary><span>${t(z, e)}<small>${members.length} ${t('位成员', 'members')}</small></span><span class="expand-icon" aria-hidden="true"></span></summary><div class="team-grid ${i === 0 ? 'chairs' : ''}">${members.map(x => `<article class="person"><div class="portrait"><img loading="lazy" src="${x.photo}" alt="${en ? x.nameEn : x.nameZh}" width="400" height="400"></div><div class="person-caption"><h3>${en ? x.nameEn : x.nameZh}</h3>${x.nameEn !== x.nameZh ? `<p>${en ? x.nameZh : x.nameEn}</p>` : ''}</div></article>`).join('')}</div></details>`;
+          return `<section class="team-group ${i === 0 ? 'leadership' : ''}" id="${key}"><h3 class="group-title">${t(z, e)} <small>${members.length}</small></h3><div class="team-grid ${i === 0 ? 'chairs' : ''}">${members.map(x => `<article class="person"><div class="portrait"><img loading="lazy" src="${x.photo}" alt="${en ? x.nameEn : x.nameZh}" width="400" height="400"></div><div class="person-caption"><h3>${en ? x.nameEn : x.nameZh}</h3>${x.nameEn !== x.nameZh ? `<p>${en ? x.nameZh : x.nameEn}</p>` : ''}</div></article>`).join('')}</div></section>`;
         }).join('')}
       </section>
 

@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://freedomintelligence.github.io/OmniDentBench/"><img src="docs/images/logo.png" width="92" alt="OmniDentBench logo"></a>
+  <a href="https://freedomintelligence.github.io/OmniDentBench/"><img src="docs/images/atlas/odb-mark.png" width="96" alt="OmniDentBench logo"></a>
 </p>
 
 <h1 align="center">OmniDentBench</h1>
@@ -20,7 +20,11 @@
   <a href="https://github.com/FreedomIntelligence/OmniDentBench/stargazers"><img src="https://img.shields.io/github/stars/FreedomIntelligence/OmniDentBench?style=social" alt="GitHub stars"></a>
 </p>
 
-OmniDentBench (ODB) measures dental reasoning across **12 specialties** and **8 languages**. The public release contains **1,178 items**, including **1,099 with figures**, alongside reference answers, scoring rubrics, and a Python evaluator.
+A **benchmark** gives different AI models the same questions and applies the same scoring rules to their answers. OmniDentBench tests how models interpret dental findings and reason across **12 specialties**. Each of its **8 language editions** contains the same **1,178 items**, including **1,099 with figures**.
+
+[![OmniDentBench partners in six countries, three steering chairs in Hong Kong and Shenzhen, and a dental radiograph from benchmark item ODB-0777](docs/images/atlas/network-overview.png)](https://freedomintelligence.github.io/OmniDentBench/)
+
+**Try reading a benchmark item.** In ODB-0777, the model sees a dental radiograph and names the root canal configuration. A judge compares its answer with the reference and awards 100 or 0. For an open-ended question, the judge scores each criterion in the item's weighted rubric. [Radiograph by Doumari et al., Fig. 2](https://doi.org/10.7759/cureus.86471) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 
 | Question format | Items | Scoring |
 | --- | ---: | --- |
@@ -77,47 +81,38 @@ Report objective accuracy and the open-ended mean separately. A triggered safety
 
 OmniDentBench was developed with dental clinicians and researchers. The [project website](https://freedomintelligence.github.io/OmniDentBench/#institutions) lists **16 partner institutions** and **74 project team members**.
 
-<p align="center">
-  <img src="docs/images/logo/CUHK.webp" alt="The Chinese University of Hong Kong, Shenzhen" width="115">
-  <img src="docs/images/logo/HKU.webp" alt="Faculty of Dentistry, The University of Hong Kong" width="115">
-  <img src="docs/images/logo/peking-university.webp" alt="Peking University" width="115">
-</p>
-<p align="center">
-  <img src="docs/images/logo/the-prince-philip-dentap-hospital.webp" alt="The Prince Philip Dental Hospital" width="115">
-  <img src="docs/images/logo/mayo-clinic-logo.webp" alt="Mayo Clinic" width="115">
-  <img src="docs/images/logo/lmu-klinikum-logo.webp" alt="Ludwig-Maximilians-Universität München Klinikum (LMU Klinikum)" width="115">
-</p>
+<table>
+  <tr>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/CUHK.webp" width="156" alt=""><br>The Chinese University of Hong Kong, Shenzhen</td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/HKU.webp" width="156" alt=""><br>Faculty of Dentistry, The University of Hong Kong</td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/FRD.webp" width="156" alt=""><br>Freedom AI</td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/peking-university.webp" width="156" alt=""><br>Peking University</td>
+  </tr>
+  <tr>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/peking-tesinghua-center-for-life-sciences.webp" width="156" alt=""><br>Peking-Tsinghua Center for Life Sciences</td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/national-biomedical-imaging-center.webp" width="156" alt=""><br>Peking University National Biomedical Imaging Center</td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/the-prince-philip-dentap-hospital.webp" width="156" alt=""><br>The Prince Philip Dental Hospital</td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/mayo-clinic-logo.webp" width="156" alt=""><br>Mayo Clinic</td>
+  </tr>
+  <tr>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/lmu-klinikum-logo.webp" width="156" alt=""><br>Ludwig-Maximilians-Universität München Klinikum (LMU Klinikum)</td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/SEGi.webp" width="156" alt=""><br>SEGi University &amp; Colleges</td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/national-hospital-abuja-logo.webp" width="156" alt=""><br>National Hospital Abuja</td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/cmul-logo.webp" width="156" alt=""><br>College of Medicine, University of Lagos (CMUL)</td>
+  </tr>
+  <tr>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/bayero-university-kano-logo.webp" width="156" alt=""><br>Bayero University Kano</td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/smanu-Danfodiyo-University-Sokoto.webp" width="156" alt=""><br>Usmanu Danfodiyo University Sokoto</td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/university-of-maiduguri-logo.webp" width="156" alt=""><br>University of Maiduguri</td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/madda-walabu-university-logo.webp" width="156" alt=""><br>Madda Walabu University</td>
+  </tr>
+</table>
 
 ### Steering chairs
 
-| Junwen Wang | Zuolin Jin | Benyou Wang |
+| [Junwen Wang](https://hub.hku.hk/cris/rp/rp00280) | [Zuolin Jin](https://www.sz.gov.cn/hdjl/ywzsk/wsj/xzsx/content/post_13000002.html) | [Benyou Wang](https://sds.cuhk.edu.cn/en/teacher/571) |
 | :---: | :---: | :---: |
 | <img src="docs/images/team/team-059-junwen-wang.webp" alt="Junwen Wang" width="74"> | <img src="docs/images/team/team-060-zuolin-jin.webp" alt="Zuolin Jin" width="74"> | <img src="docs/images/team/team-061-benyou-wang.webp" alt="Benyou Wang" width="74"> |
-
-<details>
-<summary>Partner institutions (16)</summary>
-
-- The Chinese University of Hong Kong, Shenzhen
-- Faculty of Dentistry, The University of Hong Kong
-- Freedom AI
-- Peking University
-- Peking-Tsinghua Center for Life Sciences
-- Peking University National Biomedical Imaging Center
-- The Prince Philip Dental Hospital
-- Mayo Clinic
-- Ludwig-Maximilians-Universität München Klinikum (LMU Klinikum)
-- SEGi University & Colleges
-- National Hospital Abuja
-- College of Medicine, University of Lagos (CMUL)
-- Bayero University Kano
-- Usmanu Danfodiyo University Sokoto
-- University of Maiduguri
-- Madda Walabu University
-
-</details>
-
-<details>
-<summary>Steering and specialty committee members</summary>
 
 **Steering committee members (8)**
 
@@ -135,8 +130,6 @@ Ming Zhong · Dayong Liu · Hui Zhang · Mingming Xu · Qing Liu · Weihua Cai �
 
 Bing Liu · Daheng Li · Dongfei Wang · Fangjie Zhou · Fen Liu · Forest Cheng · Fujia Kang · Hao Chunxiu · Jiamin Zhao · Jiaming Zhang · Jinwen Liu · Jinyan Chen · Junting Wang · Kuan Yang · Lei Shi · Lin Zhao · MAO Yilin · Menghong Li · Mengmeng Song · Min Huang · Minghui Wei · Mingxin Zhang · Patricia Ho · Peijuan Wang · Peng Chen · Rui Lu · Shiduo Sun · Shirong He · Shixin Zhang · Shuwei Huang · Siqi Qiu · Tai Pak Chuen Patrick · Wu Songying · XU Leyao · Xiangjie Jin · Xue Qiao · Yang Jiang · Yaqiu Zhang · Yefeng Wu · Yidan Guo · Yifan Zheng · Ying Wang · Yujia Wu · Zhenlai Zhu · Zhiqiang Deng · Zhuoying Li
 
-</details>
-
 ## Repository map
 
 | Path | Contents |
@@ -146,7 +139,7 @@ Bing Liu · Daheng Li · Dongfei Wang · Fangjie Zhou · Fen Liu · Forest Cheng
 | [`tests/`](tests) | Offline evaluator tests |
 | [`docs/`](docs) | Bilingual GitHub Pages site and project assets |
 
-To preview the site locally, run `python -m http.server --directory docs 8000` and open `http://localhost:8000`. GitHub Pages publishes from `main:/docs`. The [showcase data](docs/assets/showcase-data.js) contains the bilingual names, photos, and specialty counts. The [page script](docs/assets/showcase.js) and [stylesheet](docs/assets/showcase.css) control the layout.
+To preview the site locally, run `python -m http.server --directory docs 8000` and open `http://localhost:8000`. GitHub Pages publishes from `main:/docs`. The [showcase data](docs/assets/showcase-data.js) contains the bilingual names, photos, and specialty counts. The [page script](docs/assets/flagship.js) and [stylesheet](docs/assets/flagship.css) control the layout.
 
 ## Citation and licensing
 
