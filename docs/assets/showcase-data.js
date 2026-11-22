@@ -596,13 +596,13 @@ window.ODB_DATA = {
   catMembers: [
     {
       key: "baize",
-      nameZh: "Baize",
+      nameZh: "白泽",
       nameEn: "Baize",
       photo: "./images/team/team-baize.webp",
     },
     {
       key: "paopao",
-      nameZh: "Paopao",
+      nameZh: "泡泡",
       nameEn: "Paopao",
       photo: "./images/team/team-paopao.webp",
     },
