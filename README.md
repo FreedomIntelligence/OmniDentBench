@@ -202,6 +202,15 @@ OmniDentBench brings together **74 team members** and **16 partner institutions*
   </tr>
 </table>
 
+### Cat members
+
+<table>
+  <tr>
+    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-baize"><img src="docs/images/team/team-baize.webp" width="60" alt=""><br><sub>Baize</sub></a></td>
+    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-paopao"><img src="docs/images/team/team-paopao.webp" width="60" alt=""><br><sub>Paopao</sub></a></td>
+  </tr>
+</table>
+
 ### Partner institutions
 
 <table>

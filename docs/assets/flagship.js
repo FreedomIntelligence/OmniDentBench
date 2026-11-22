@@ -101,8 +101,8 @@ function render() {
 
       <section id="team" class="section people-section" aria-labelledby="team-title">
         <div class="section-heading"><p class="eyebrow">THE RESEARCH COLLECTIVE</p><div class="heading-row"><h2 id="team-title">${t('项目团队', 'Project team')}</h2><p>${t('74 位项目成员，将临床经验与人工智能研究汇聚为共同的评测实践。', '74 team members connecting clinical expertise with AI research, across steering and specialty committees.')}</p></div></div>
-        ${groups.map(([key, z, e], i) => {
-          const members = data.team.filter(x => x.category === key);
+        ${[...groups, ['cat_members', '猫咪成员', 'Cat members']].map(([key, z, e], i) => {
+          const members = key === 'cat_members' ? data.catMembers : data.team.filter(x => x.category === key);
           return `<section class="team-group ${i === 0 ? 'leadership' : ''}" id="${key}"><h3 class="group-title">${t(z, e)} <small>${members.length}</small></h3><div class="team-grid ${i === 0 ? 'chairs' : ''}">${members.map(x => `<article class="person" id="member-${x.key}" tabindex="-1"><div class="portrait"><img loading="lazy" src="${x.photo}" alt="${en ? x.nameEn : x.nameZh}" width="400" height="400"></div><div class="person-caption"><h3>${en ? x.nameEn : x.nameZh}</h3>${x.nameEn !== x.nameZh ? `<p>${en ? x.nameZh : x.nameEn}</p>` : ''}${chairProfiles[x.key] ? `<a class="chair-affiliation" href="${chairProfiles[x.key].url}">${en ? chairProfiles[x.key].en : chairProfiles[x.key].zh}</a>` : ''}</div></article>`).join('')}</div></section>`;
         }).join('')}
       </section>

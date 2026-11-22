@@ -593,6 +593,20 @@ window.ODB_DATA = {
       photo: "./images/team/team-074-zhou-su.webp",
     },
   ],
+  catMembers: [
+    {
+      key: "baize",
+      nameZh: "Baize",
+      nameEn: "Baize",
+      photo: "./images/team/team-baize.webp",
+    },
+    {
+      key: "paopao",
+      nameZh: "Paopao",
+      nameEn: "Paopao",
+      photo: "./images/team/team-paopao.webp",
+    },
+  ],
   partners: [
     {
       key: "cuhk",
