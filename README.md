@@ -253,7 +253,7 @@ OmniDentBench brings together **105 team members** and **16 partner institutions
   </tr>
 </table>
 
-### Cat members
+### Cat members (2)
 
 <table>
   <tr>
