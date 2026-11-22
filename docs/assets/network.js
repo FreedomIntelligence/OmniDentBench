@@ -54,7 +54,7 @@
           <div class="network-modes" role="group" aria-label="${t('查看内容', 'Browse content')}"><button type="button" data-mode="institutions" aria-pressed="true">${t('机构', 'Institutions')}</button><button type="button" data-mode="people" aria-pressed="false">${t('成员', 'People')}</button></div>
           <label class="network-search" hidden><span>${t('搜索成员', 'Search people')}</span><input type="search" placeholder="${t('姓名', 'Search by name')}" autocomplete="off"></label>
           <div class="network-panel-content" id="network-results" tabindex="0" aria-label="${t('机构与成员列表', 'Institutions and people')}"></div>
-          <p class="network-profile-note">${t('地区成员按公开机构资料关联。完整名册包含 74 位成员。', 'Regional profiles use public affiliation sources. All 74 members are in the full roster.')}</p>
+          <p class="network-profile-note">${t(`地区成员按公开机构资料关联。完整名册包含 ${data.team.length} 位成员。`, `Regional profiles use public affiliation sources. All ${data.team.length} members are in the full roster.`)}</p>
           <span id="network-status" class="visually-hidden" role="status" aria-live="polite"></span>
         </aside>
       </div>

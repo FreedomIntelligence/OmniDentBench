@@ -16,7 +16,9 @@ const groups = [
   ['steering_member', '指导委员会', 'Steering committee'],
   ['specialty_chair', '专科主席', 'Specialty chairs'],
   ['student_member', '学生委员会', 'Student committee'],
-  ['specialty_member', '专科委员会', 'Specialty committee']
+  ['specialty_member', '专科委员会', 'Specialty committee'],
+  ['overseas_expert', '海外专家', 'Overseas experts'],
+  ['consortium_contributor', '联盟协作者', 'Consortium contributors']
 ];
 
 let activeInstitution = null;
@@ -67,7 +69,7 @@ function render() {
           <p class="atlas-explainer">${t('让不同模型回答同一组牙科问题，再按同一套规则比较表现。1,178 道题覆盖 12 个专科，其中 1,099 道附有图像。客观题按参考答案判分，开放题按逐题量表评分。', 'Give models the same dental questions and compare their answers under the same scoring rules. Of 1,178 questions across 12 specialties, 1,099 include images. A judge checks objective answers against references and grades open-ended responses against item-specific rubrics.')}</p>
         </div>
         <figure class="research-atlas" id="collaboration-map">
-          <div class="atlas-heading"><h2>${t('连接全球牙科研究团队', 'Connecting dental research worldwide')}</h2><span>${t('16 家合作机构 · 74 位项目成员', '16 partner institutions · 74 team members')}</span></div>
+          <div class="atlas-heading"><h2>${t('连接全球牙科研究团队', 'Connecting dental research worldwide')}</h2><span>${t(`16 家合作机构 · ${data.team.length} 位项目成员`, `16 partner institutions · ${data.team.length} team members`)}</span></div>
           ${window.ODBNetwork.render({ en, data, groups })}
         <div class="case-example">
           <img src="./images/atlas/odb-0777.jpg" alt="${t('题目 ODB-0777 的牙根 X 光片','Dental radiograph supplied with item ODB-0777')}" width="86" height="146">
@@ -83,7 +85,7 @@ function render() {
       </section>
 
       <div class="metrics" aria-label="${t('基准概览', 'Benchmark at a glance')}">
-        ${[['12', '口腔医学专科', 'Dental specialties'], ['8', '评测语言', 'Evaluation languages'], ['1,099', '含图题目', 'Image-supported items'], ['74', '项目成员', 'Team members'], ['16', '参与机构', 'Institutions']].map(([n, z, e]) => `<div><strong>${n}</strong><span>${t(z, e)}</span></div>`).join('')}
+        ${[['12', '口腔医学专科', 'Dental specialties'], ['8', '评测语言', 'Evaluation languages'], ['1,099', '含图题目', 'Image-supported items'], [data.team.length, '项目成员', 'Team members'], ['16', '参与机构', 'Institutions']].map(([n, z, e]) => `<div><strong>${n}</strong><span>${t(z, e)}</span></div>`).join('')}
       </div>
 
       <section id="institutions" class="section institutions-section" aria-labelledby="institutions-title">
@@ -100,7 +102,7 @@ function render() {
       </section>
 
       <section id="team" class="section people-section" aria-labelledby="team-title">
-        <div class="section-heading"><p class="eyebrow">THE RESEARCH COLLECTIVE</p><div class="heading-row"><h2 id="team-title">${t('项目团队', 'Project team')}</h2><p>${t('74 位项目成员，将临床经验与人工智能研究汇聚为共同的评测实践。', '74 team members connecting clinical expertise with AI research, across steering and specialty committees.')}</p></div></div>
+        <div class="section-heading"><p class="eyebrow">THE RESEARCH COLLECTIVE</p><div class="heading-row"><h2 id="team-title">${t('项目团队', 'Project team')}</h2><p>${t(`${data.team.length} 位项目成员，将临床经验与人工智能研究汇聚为共同的评测实践。`, `${data.team.length} team members connecting clinical expertise with AI research.`)}</p></div></div>
         ${[...groups, ['cat_members', '猫咪成员', 'Cat members']].map(([key, z, e], i) => {
           const members = key === 'cat_members' ? data.catMembers : data.team.filter(x => x.category === key);
           return `<section class="team-group ${i === 0 ? 'leadership' : ''}" id="${key}"><h3 class="group-title">${t(z, e)} <small>${members.length}</small></h3><div class="team-grid ${i === 0 ? 'chairs' : ''}">${members.map(x => `<article class="person" id="member-${x.key}" tabindex="-1"><div class="portrait"><img loading="lazy" src="${x.photo}" alt="${en ? x.nameEn : x.nameZh}" width="400" height="400"></div><div class="person-caption"><h3>${en ? x.nameEn : x.nameZh}</h3>${x.nameEn !== x.nameZh ? `<p>${en ? x.nameZh : x.nameEn}</p>` : ''}${chairProfiles[x.key] ? `<a class="chair-affiliation" href="${chairProfiles[x.key].url}">${en ? chairProfiles[x.key].en : chairProfiles[x.key].zh}</a>` : ''}</div></article>`).join('')}</div></section>`;

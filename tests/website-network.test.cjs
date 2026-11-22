@@ -35,7 +35,7 @@ test('regional people require source-backed, valid affiliations', () => {
     assert.match(profile.url, /^https:\/\//);
     assert.ok(profile.partners.every(partner => region.partners.includes(partner)));
   }
-  assert.equal(getPeople(data).length, 74);
+  assert.equal(getPeople(data).length, 105);
   assert.equal(getPeople(data, { region: 'hong-kong' }).length, 4);
   assert.equal(getPeople(data, { region: 'mainland' }).length, 2);
   assert.equal(getPeople(data, { region: 'nigeria' }).length, 0);
@@ -52,13 +52,13 @@ test('the complete roster can be searched in either language without assigning m
   assert.equal(getPeople(data, { query: 'no-such-person' }).length, 0);
 });
 
-test('both languages render all seven interactive locations and all 74 portraits', () => {
+test('both languages render all seven interactive locations and all author portraits', () => {
   const groups = [...new Set(data.team.map(person => person.category))].map(category => [category, category, category]);
   for (const en of [true, false]) {
     const html = render({ en, data, groups });
     assert.equal((html.match(/class="network-pin"/g) || []).length, 7);
     assert.equal((html.match(/data-partner="/g) || []).length, 16);
-    assert.equal((html.match(/class="network-portrait"/g) || []).length, 74);
+    assert.equal((html.match(/class="network-portrait"/g) || []).length, data.team.length);
     assert.match(html, en ? /Chinese mainland/ : /中国大陆/);
     assert.match(html, en ? /Hong Kong, China/ : /中国香港/);
     assert.match(html, /aria-haspopup="dialog"/);
