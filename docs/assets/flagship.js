@@ -16,9 +16,9 @@ const groups = [
   ['steering_member', '指导委员会', 'Steering committee'],
   ['specialty_chair', '专科主席', 'Specialty chairs'],
   ['student_member', '学生委员会', 'Student committee'],
-  ['specialty_member', '专科委员会', 'Specialty committee'],
   ['overseas_expert', '海外专家', 'Overseas experts'],
-  ['consortium_contributor', '联盟协作者', 'Consortium contributors']
+  ['consortium_contributor', '联盟协作者', 'Consortium contributors'],
+  ['specialty_member', '专科委员会', 'Specialty committee']
 ];
 
 let activeInstitution = null;
