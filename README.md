@@ -302,6 +302,10 @@ OmniDentBench brings together **105 team members** and **16 partner institutions
 
 To preview the site locally, run `python -m http.server --directory docs 8000` and open `http://localhost:8000`. GitHub Pages publishes from `main:/docs`. The [showcase data](docs/assets/showcase-data.js) contains the bilingual names, photos, and specialty counts. The [page script](docs/assets/flagship.js) and [stylesheet](docs/assets/flagship.css) control the layout.
 
+## Contact & Data Access
+If you have any questions or are interested in collaborating, feel free to reach out via: 📧 junjiezhao@connect.hku.hk or ziiyingsheng@gmail.com
+
+
 ## Citation and licensing
 
 Cite *OmniDentBench (ODB)* with the [benchmark release](https://github.com/FreedomIntelligence/OmniDentBench/releases/tag/v1.0.0) or the exact Git commit used. The [MIT License](LICENSE) covers evaluator code. [CC BY 4.0](data/LICENSE) covers original benchmark content for which contributors hold licensing rights. Third-party figures and source materials retain their applicable terms. Consult the figure manifest and original articles for reuse and credit requirements.
