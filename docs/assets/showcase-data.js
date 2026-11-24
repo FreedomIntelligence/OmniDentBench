@@ -5,7 +5,7 @@ window.ODB_DATA = {
     2: { name: "Beijing Institute of Collaborative Innovation, Beijing, China.", region: "mainland" },
     3: { name: "School of Data Science, The Chinese University of Hong Kong, Shenzhen, Shenzhen, China.", region: "mainland", partners: ["cuhk"] },
     4: { name: "Shenzhen Loop Area Institute, Shenzhen, China.", region: "mainland" },
-    5: { name: "Shenzhen Stomatology Hospital (Pingshan) of Southern Medical University, Shenzhen, China.} % Affiliations shared by the full author front matter and compact consortium list.", region: "mainland" },
+    5: { name: "Shenzhen Stomatology Hospital (Pingshan) of Southern Medical University, Shenzhen, China.", region: "mainland" },
     6: { name: "School of Artificial Intelligence, The Chinese University of Hong Kong, Shenzhen, Shenzhen, China.", region: "mainland", partners: ["cuhk"] },
     7: { name: "New Cornerstone Science Laboratory, National Biomedical Imaging Center, State Key Laboratory of Membrane Biology, Institute of Molecular Medicine, Peking-Tsinghua Center for Life Sciences, College of Future Technology, Peking University, Beijing 100871, China.", region: "mainland", partners: ["pku-biomedical-imaging", "ptcls", "peking-university"] },
     8: { name: "School and Hospital of Stomatology, China Medical University, Shenyang, China.", region: "mainland" },

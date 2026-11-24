@@ -62,23 +62,22 @@
   container-type: size;
   background: var(--collaboration-surface);
 }
-.network-land, .network-leaders { position: absolute; inset: 0; width: 100%; height: 100%; }
-.network-land { opacity: .73; pointer-events: none; }
+.network-land { position: absolute; inset: 50% auto auto 50%; width: min(100cqw, 200cqh); height: auto; aspect-ratio: 2; translate: -50% -50%; opacity: .73; pointer-events: none; }
+.network-leaders { position: absolute; inset: 0; width: 100%; height: 100%; }
 .network-leaders { overflow: visible; pointer-events: none; }
 .network-leaders path { fill: none; stroke: #6d8da4; stroke-width: 1.25; stroke-linecap: round; opacity: .84; }
 .network-leaders circle { fill: #527c9d; stroke: #f6fafd; stroke-width: 1.5; }
 .network-leaders :is(.is-selected, .is-author-open) path { stroke: var(--blue); stroke-width: 2.25; opacity: 1; }
 .network-leaders :is(.is-selected, .is-author-open) circle { fill: var(--blue); r: 4.5px; }
-.network-cluster { position: absolute; z-index: 2; transform: translate(var(--card-x, -50%), var(--card-offset, -50%)); width: min(var(--cluster-width), 190px); background: linear-gradient(145deg, #f8fcffab, #eaf4fb70); border: 1px solid #f9fcffe8; border-radius: 5px; box-shadow: 0 5px 16px #17354e26, inset 0 0 0 1px #789ab348; backdrop-filter: blur(5px) saturate(125%); }
+.network-cluster { position: absolute; top: var(--pin-top); z-index: 2; transform: translate(var(--card-x, -50%), var(--card-offset, -50%)); width: min(var(--cluster-width), 190px); background: linear-gradient(145deg, #f8fcffab, #eaf4fb70); border: 1px solid #f9fcffe8; border-radius: 5px; box-shadow: 0 5px 16px #17354e26, inset 0 0 0 1px #789ab348; backdrop-filter: blur(5px) saturate(125%); }
 .network-cluster[data-card-align='above'] { --card-offset: -100%; }
 .network-cluster[data-card-align='below'] { --card-offset: 0%; }
 .network-cluster[data-card-align='left'] { --card-x: -100%; }
 .network-cluster[data-card-align='right'] { --card-x: 0%; }
 .network-cluster--authors { width: min(var(--cluster-width), 124px); }
 .network-pin { display: flex; align-items: center; justify-content: space-between; gap: 5px; width: 100%; border: 0; padding: 3px 6px; min-height: 28px; background: transparent; border-radius: 4px 4px 0 0; font-size: clamp(.75rem, 1.5cqw, .9375rem); font-weight: 650; line-height: 1.3; white-space: nowrap; }
-.network-pin strong { display: grid; place-content: center; width: 22px; height: 22px; flex-shrink: 0; border-radius: 3px; color: var(--blue); background: #e9f0f8; font-size: .875rem; }
+.network-pin-code { display: none; }
 .network-pin:hover, .network-pin[aria-pressed='true'] { background: var(--blue); color: white; border-color: var(--blue); z-index: 2; }
-.network-pin:hover strong, .network-pin[aria-pressed='true'] strong { color: white; background: #ffffff26; }
 .network-pin:focus-visible { z-index: 3; outline-offset: 3px; }
 .network-cluster:focus-within { z-index: 3; }
 .network-map-marks { display: grid; grid-template-columns: repeat(var(--mark-columns), minmax(0, 1fr)); gap: 3px; padding: 0 4px 4px; }
@@ -91,7 +90,7 @@
 .network-map-portraits small { color: var(--ink); font-size: .6875rem; margin-inline-start: 2px; white-space: nowrap; }
 .network-map-portraits:hover, .network-map-portraits[aria-expanded='true'], .network-author-pin[aria-expanded='true'] { background: #dceaf6; }
 .network-author-pin { flex-wrap: wrap; white-space: normal; text-align: start; }
-.network-author-pin > span:first-child { flex: 1; }
+.network-author-pin > .network-pin-name { flex: 1; }
 .network-author-pin .network-map-portraits { background: transparent; padding: 0; min-height: 25px; }
 .network-map-author-popover { position: absolute; z-index: 3; width: min(18rem, calc(100% - 16px)); left: min(var(--author-left, 8px), max(8px, calc(100% - 18rem - 8px))); top: var(--author-top, 8px); padding: 8px 12px; border-radius: 12px; background: #f9fcfe; box-shadow: 0 6px 24px #102a4333; }
 .network-map-author-popover header { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
@@ -159,26 +158,32 @@
   .specialty-icon { width: 36px; height: 40px; }
   .specialty-icon svg { width: 27px; height: 29px; }
 }
-@media (max-width: 760px) and (min-height: 621px) {
-  .network-map-column { --title-position: calc(50% - var(--map-viewport-height) * .21); --title-light: 34%; }
-  .network-hero-copy { inset-inline: 10px; }
-  .network-hero-copy h1, html[lang='zh-CN'] .network-hero-copy h1 { font-size: clamp(1.9rem, 8.8vw, 4rem); }
-  .network-hero-copy p { font-size: clamp(.7rem, 3.2vw, 1rem); letter-spacing: -.015em; }
-}
 @media (max-height: 790px) {
   .network-map-marks button { height: clamp(32px, 5svh, 40px); }
 }
 @container (max-width: 1100px) or (max-height: 510px) {
   .network-cluster { width: auto; border: 0; background: transparent; box-shadow: none; backdrop-filter: none; }
   .network-cluster[data-card-align='right'] { --card-x: -18%; }
-  .network-map-marks, .network-map-portraits, .network-pin > span { display: none; }
+  .network-map-marks, .network-map-portraits, .network-pin-name { display: none; }
   .network-pin { padding: 0; min-height: 32px; border-radius: 50%; }
-  .network-pin strong { width: 32px; height: 32px; border: 1px solid #8aa9c0; border-radius: 50%; font-size: .9375rem; background: white; }
-  .network-pin[aria-pressed='true'] strong, .network-pin:hover strong { background: var(--blue); color: white; }
-  .network-author-pin strong { border-style: dashed; background: #e9f1f8; }
+  .network-pin-code { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid #8aa9c0; border-radius: 50%; color: var(--blue); background: white; font-size: .6875rem; font-weight: 750; }
+  .network-author-pin .network-pin-code { border-style: dashed; background: #e9f1f8; }
+  .network-pin:is(:hover, [aria-pressed='true'], [aria-expanded='true']) .network-pin-code { background: var(--blue); color: white; }
 }
 @media (max-width: 380px) {
-  .network-pin strong { width: 30px; height: 30px; }
+  .network-pin-code { width: 30px; height: 30px; }
+}
+@media (max-width: 760px) {
+  .network-map-column {
+    --portrait-atlas: 1;
+    --atlas-height: max(13.75rem, 70cqw);
+    --atlas-heading: clamp(1.9rem, 8vw, 3.75rem);
+    --atlas-subtitle: clamp(.72rem, 3.05vw, 1rem);
+    --title-position: calc(50% - var(--atlas-heading) * .68);
+    --title-light: 50%;
+  }
+  .network-hero-copy { inset-inline: 10px; }
+  .network-cluster { top: var(--portrait-pin-top); }
 }
 @media (max-width: 899px) {
   .network-institution-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }

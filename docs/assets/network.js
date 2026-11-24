@@ -2,31 +2,44 @@
   const { regions, profiles } = window.ODB_NETWORK_DATA;
   const state = { region: 'all', partner: null };
   const mapRegions = [...regions,
-    { key: 'japan', en: 'Japan', zh: '日本', anchor: [140.87, 38.27], label: [90, 37.5], cardAlign: 'right' },
-    { key: 'czechia', en: 'Czechia', zh: '捷克', anchor: [14.42, 50.08], label: [73, 15.5], cardAlign: 'above' },
-    { key: 'spain', en: 'Spain', zh: '西班牙', anchor: [2.17, 41.39], label: [43, 15.5], cardAlign: 'above' },
-    { key: 'united-kingdom', en: 'United Kingdom', zh: '英国', anchor: [.12, 52.2], label: [28, 15.5], cardAlign: 'above' }
+    { key: 'japan', code: 'JP', en: 'Japan', zh: '日本', anchor: [140.87, 38.27], label: [90, 37.5], cardAlign: 'right' },
+    { key: 'czechia', code: 'CZ', en: 'Czechia', zh: '捷克', anchor: [14.42, 50.08], label: [73, 15.5], cardAlign: 'above' },
+    { key: 'spain', code: 'ES', en: 'Spain', zh: '西班牙', anchor: [2.17, 41.39], label: [43, 15.5], cardAlign: 'above' },
+    { key: 'united-kingdom', code: 'UK', en: 'United Kingdom', zh: '英国', anchor: [.12, 52.2], label: [28, 15.5], cardAlign: 'above' }
   ];
   const escape = value => String(value).replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]));
   const project = ([longitude, latitude]) => [(longitude + 180) / 360 * 1000, (85 - latitude) / 145 * 500];
   const findRegion = key => regions.find(region => region.key === key);
   const partnerRegion = key => regions.find(region => region.partners.includes(key));
 
-  function renderLeader(region) {
-    const [x, y] = project(region.anchor).map(value => value.toFixed(1));
+  function portraitLabelY(region) {
+    if (region.key === 'mainland') return 22;
+    if (region.cardAlign === 'below') return 72;
+    if (region.cardAlign === 'left' || region.cardAlign === 'right') return 30;
+    return region.label[1];
+  }
+
+  function leaderPath(region, x, y, portrait) {
     const endX = region.label[0] * 10;
-    const endY = region.label[1] * 5;
+    const endY = (portrait ? portraitLabelY(region) : region.label[1]) * 5;
     // The European and southern callouts fan out in longitude order.
-    const corridor = region.cardAlign === 'below' ? 289 : region.cardAlign === 'above' && region.key !== 'mainland' ? 104 : null;
-    let path = `M${x} ${y} L${endX} ${endY}`;
+    const corridor = region.cardAlign === 'below' ? (portrait ? 310 : 289)
+      : region.cardAlign === 'above' && region.key !== 'mainland' ? (portrait ? 112 : 104)
+      : null;
     if (corridor !== null) {
       const bend = (corridor + endY) / 2;
-      path = `M${x} ${y} V${corridor} C${x} ${bend} ${endX} ${bend} ${endX} ${endY}`;
-    } else if (region.cardAlign === 'left') {
-      const bendX = endX + 12;
-      path = `M${x} ${y} H${bendX} C${endX + 7} ${y} ${bendX} ${endY} ${endX} ${endY}`;
+      return `M${x} ${y} V${corridor} C${x} ${bend} ${endX} ${bend} ${endX} ${endY}`;
     }
-    return `<g data-map-line="${region.key}"><path d="${path}"/><circle cx="${x}" cy="${y}" r="3.5"/></g>`;
+    if (region.cardAlign === 'left') {
+      const bendX = endX + 12;
+      return `M${x} ${y} H${bendX} C${endX + 7} ${y} ${bendX} ${endY} ${endX} ${endY}`;
+    }
+    return `M${x} ${y} L${endX} ${endY}`;
+  }
+
+  function renderLeader(region) {
+    const [x, y] = project(region.anchor).map(value => value.toFixed(1));
+    return `<g data-map-line="${region.key}"><path d="${leaderPath(region, x, y, false)}"/><circle cx="${x}" cy="${y}" r="3.5"/></g>`;
   }
 
   let atlasObserver;
@@ -68,7 +81,7 @@
         </div>
         <div class="network-map-frame" role="region" aria-label="${t('全球机构与作者分布', 'Institution and author locations worldwide')}">
           <div class="network-map-canvas">
-            <img class="network-land" src="./images/atlas/world-land.svg?v=full-width" alt="" width="1000" height="500">
+            <img class="network-land" src="./images/atlas/world-land.svg?v=natural-aspect" alt="" width="1000" height="500">
             <svg class="network-leaders" viewBox="0 0 1000 500" preserveAspectRatio="none" aria-hidden="true">
               <defs>
                 <mask id="map-leader-mask" maskUnits="userSpaceOnUse">
@@ -83,20 +96,21 @@
               const partnerKeys = region.partners ?? [];
               const authors = getPeople(data, { region: region.key });
               const label = escape(name(region));
+              const regionHeading = `<span class="network-pin-name">${label}</span><span class="network-pin-code" aria-hidden="true">${region.code}</span>`;
               const authorCount = t(`${authors.length} 位作者`, `${authors.length} ${authors.length === 1 ? 'author' : 'authors'}`);
               const authorControl = 'aria-controls="map-author-popover" aria-expanded="false"';
               const photos = authors.slice(0, 3).map(person => `<img src="${person.photo}" alt="" width="24" height="25" draggable="false">`).join('');
               const width = partnerKeys.length > 2 ? 30 : region.key === 'hong-kong' ? 27 : region.key === 'united-states' ? 23 : partnerKeys.length ? 18 : region.key === 'japan' ? 8.5 : 12;
-              return `<div class="network-cluster${partnerKeys.length ? '' : ' network-cluster--authors'}" data-card-align="${region.cardAlign ?? 'center'}" style="left:${region.label[0]}%;top:${region.label[1]}%;--cluster-width:${width}%;--mark-columns:${Math.min(partnerKeys.length, 3)}">
+              return `<div class="network-cluster${partnerKeys.length ? '' : ' network-cluster--authors'}" data-card-align="${region.cardAlign ?? 'center'}" style="left:${region.label[0]}%;--pin-top:${region.label[1]}%;--portrait-pin-top:${portraitLabelY(region)}%;--cluster-width:${width}%;--mark-columns:${Math.min(partnerKeys.length, 3)}">
                 ${partnerKeys.length
-                  ? `<button class="network-pin" type="button" data-region="${region.key}" aria-pressed="${state.region === region.key}" aria-controls="network-panel map-author-popover" aria-expanded="false" aria-label="${label}: ${institutionCount(partnerKeys.length)}, ${authorCount}"><span>${label}</span><strong>${partnerKeys.length}</strong></button>
+                  ? `<button class="network-pin" type="button" data-region="${region.key}" aria-pressed="${state.region === region.key}" aria-controls="network-panel map-author-popover" aria-expanded="false" aria-label="${label}: ${institutionCount(partnerKeys.length)}, ${authorCount}">${regionHeading}</button>
                     <div class="network-map-marks">${partnerKeys.map(key => {
                       const partner = data.partners.find(item => item.key === key);
                       const partnerLabel = escape(en ? partner.nameEn : partner.nameZh);
                       return `<button type="button" data-partner="${key}" aria-label="${partnerLabel}" title="${partnerLabel}"><img src="${partner.logo}" alt="" draggable="false"></button>`;
                     }).join('')}</div>
                     <button class="network-map-portraits" type="button" data-map-author="${region.key}" ${authorControl} aria-label="${label}: ${authorCount}">${photos}<small>${authorCount}</small></button>`
-                  : `<button class="network-pin network-author-pin" type="button" data-map-author="${region.key}" ${authorControl} aria-label="${label}: ${authorCount}"><span>${label}</span><strong>${authors.length}</strong><span class="network-map-portraits">${photos}</span></button>`}
+                  : `<button class="network-pin network-author-pin" type="button" data-map-author="${region.key}" ${authorControl} aria-label="${label}: ${authorCount}">${regionHeading}<span class="network-map-portraits">${photos}</span></button>`}
               </div>`;
             }).join('')}
           </div>
@@ -145,6 +159,11 @@
     const header = document.querySelector('.site-header');
     const canvas = root.querySelector('.network-map-canvas');
     const copy = root.querySelector('.network-hero-copy');
+    const land = canvas.querySelector('.network-land');
+    const leaders = mapRegions.map(region => {
+      const group = canvas.querySelector(`[data-map-line="${region.key}"]`);
+      return { region, path: group.querySelector('path'), point: group.querySelector('circle') };
+    });
     const cards = [...canvas.querySelectorAll('.network-cluster')];
     const titleClearances = canvas.querySelectorAll('[data-title-clearance]');
     let atlasOffset = 0;
@@ -154,6 +173,17 @@
       if (!mapBounds.width || !mapBounds.height) return;
       const scaleX = 1000 / mapBounds.width;
       const scaleY = 500 / mapBounds.height;
+      const landBounds = land.getBoundingClientRect();
+      const portrait = getComputedStyle(map).getPropertyValue('--portrait-atlas').trim() === '1';
+
+      for (const { region, path, point } of leaders) {
+        const [mapX, mapY] = project(region.anchor);
+        const x = ((landBounds.left - mapBounds.left + mapX / 1000 * landBounds.width) * scaleX).toFixed(1);
+        const y = ((landBounds.top - mapBounds.top + mapY / 500 * landBounds.height) * scaleY).toFixed(1);
+        path.setAttribute('d', leaderPath(region, x, y, portrait));
+        point.setAttribute('cx', x);
+        point.setAttribute('cy', y);
+      }
       const titleBounds = Array.from(copy.children, element => {
         const range = document.createRange();
         range.selectNodeContents(element);
@@ -165,7 +195,7 @@
       const hero = map.getBoundingClientRect();
       const headerBottom = hero.top + header.getBoundingClientRect().height;
       const occupiedHeight = bottom - top;
-      const centeredTop = (hero.top + hero.bottom - occupiedHeight) / 2;
+      const centeredTop = (hero.top + hero.bottom - occupiedHeight) / 2 - (portrait ? hero.height * .09 : 0);
       const clearance = Math.max(0, Math.min(32, (hero.bottom - headerBottom - occupiedHeight) / 2));
       const adjustment = Math.max(headerBottom + clearance, centeredTop) - top;
 
@@ -187,7 +217,7 @@
 
     atlasObserver?.disconnect();
     atlasObserver = new ResizeObserver(layoutAtlas);
-    [map, header, canvas, copy, ...cards].forEach(element => atlasObserver.observe(element));
+    [map, header, canvas, copy, land, ...cards].forEach(element => atlasObserver.observe(element));
     document.fonts.ready.then(() => {
       if (canvas.isConnected) layoutAtlas();
     });

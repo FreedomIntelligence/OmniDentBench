@@ -29,7 +29,7 @@ Use versioned API bases, such as a provider URL ending in `/v1`. The evaluator a
 
 ## Scoring and failure handling
 
-The judge scores exact-answer and multiple-choice items as 0 or 100. Their mean is percentage accuracy. For open-ended items, the evaluator combines criterion scores using the item's rubric weights. A triggered safety red flag sets the item score to zero.
+The judge scores Objective-Exact and Objective-Multiple Choice items as 0 or 100. Their mean is objective accuracy. For Subjective items, the evaluator combines criterion scores using the item's rubric weights. A triggered safety red flag sets the final item score to zero.
 
 Invalid or blocked target-model answers receive zero and stay in the selected denominator. A missing or corrupt figure or a failed judgment leaves the item score unresolved. The affected group mean is unavailable. Unassessed red flags remain unknown. Authentication or service configuration errors stop the run, and a run that stops before completion has no final summary.
 
@@ -37,7 +37,7 @@ Invalid or blocked target-model answers receive zero and stay in the selected de
 | --- | --- |
 | `manifest.json` | Language, selection scope, and model and judge configuration |
 | `scores.jsonl` | One score record for each selected item in a completed run |
-| `summary.json` | Objective and open-ended means, denominators, valid answer counts, judged counts, and failure counts |
+| `summary.json` | Objective accuracy and the mean final score for subjective items, plus denominators, valid answer counts, judged counts, and failure counts |
 
 Use the manifest and summary when reporting results. Compare models on the same language and item set and report the judge used.
 

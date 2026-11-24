@@ -4,7 +4,7 @@
 
 <h1 align="center">OmniDentBench</h1>
 
-<p align="center"><strong>A multilingual, multimodal benchmark for dental AI reasoning</strong></p>
+<p align="center"><strong>A multilingual, multimodal benchmark for dental AI</strong></p>
 
 <p align="center">
   <a href="https://freedomintelligence.github.io/OmniDentBench/">Project website</a> ·
@@ -20,17 +20,49 @@
   <a href="https://github.com/FreedomIntelligence/OmniDentBench/stargazers"><img src="https://img.shields.io/github/stars/FreedomIntelligence/OmniDentBench?style=social" alt="GitHub stars"></a>
 </p>
 
-A **benchmark** gives different AI models the same questions and applies the same scoring rules to their answers. OmniDentBench tests how models interpret dental findings and reason across **12 specialties**. Each of its **8 language editions** contains the same **1,178 items**, including **1,099 with figures**.
+A **benchmark** gives different AI models the same questions and applies the same scoring rules to their answers. OmniDentBench tests how models interpret dental findings and reason across **12 specialties**. Each of its **8 language editions** contains the same **1,178 items**, including **1,099 with figures (93.3%)**. For dataset review, **94 medical experts** worldwide contributed **10,112 review records**. Additional team members carried out and coordinated the study.
 
 [![OmniDentBench homepage map showing partner institutions and author portraits by location](docs/images/atlas/network-overview.png)](https://freedomintelligence.github.io/OmniDentBench/#collaboration-map)
 
-**Try reading a benchmark item.** In ODB-0777, the model sees a dental radiograph and names the root canal configuration. A judge compares its answer with the reference and awards 100 or 0. For an open-ended question, the judge scores each criterion in the item's weighted rubric. [Radiograph by Doumari et al., Fig. 2](https://doi.org/10.7759/cureus.86471) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+**Try reading a benchmark item.** [Browse all three samples on the website](https://freedomintelligence.github.io/OmniDentBench/#sample-item).
+
+<details>
+<summary>Subjective · ODB-0264 · Periodontics</summary>
+
+A 36-year-old man is being prepared for implants in the posterior maxilla. Review Fig. 1, Fig. 2 and Fig. 3 from his preoperative CBCT. What anatomic finding on these images most changes management, and what is your safest treatment strategy for this patient? Base your answer on the imaging and explain whether implant placement can proceed, which maneuver becomes highest risk if augmentation is considered, and how you would minimize and manage the main intraoperative hazard.
+
+[Fig. 1](docs/images/atlas/odb-0264-fig-1.jpg) · [Fig. 2](docs/images/atlas/odb-0264-fig-2.jpg) · [Fig. 3](docs/images/atlas/odb-0264-fig-3.jpg) · [Full item and rubric](docs/assets/items/odb-0264.en.json)
+
+</details>
+
+<details>
+<summary>Objective-Exact · ODB-1164 · Oral and Maxillofacial Radiology</summary>
+
+Review Fig. 1 and Fig. 2. What is the fusion orientation shown?
+
+[Fig. 1](docs/images/atlas/odb-1164-fig-1.jpg) · [Fig. 2](docs/images/atlas/odb-1164-fig-2.jpg) · [Full item and answer](docs/assets/items/odb-1164.en.json)
+
+</details>
+
+<details>
+<summary>Objective-Multiple Choice · ODB-1161 · Oral and Maxillofacial Radiology</summary>
+
+A 19-year-old man undergoing orthodontic workup has no facial asymmetry, no history of trauma or sinus surgery, and no sinonasal complaints. Review Fig. 1. What is the most likely diagnosis?
+
+- A. Silent sinus syndrome
+- B. Congenital maxillary sinus hypoplasia
+- C. Maxillary sinus mucocele
+- D. Chronic odontogenic maxillary sinusitis
+
+[Fig. 1](docs/images/atlas/odb-1161-fig-1.jpg) · [Full item and answer](docs/assets/items/odb-1161.en.json)
+
+</details>
 
 | Question format | Items | Scoring |
 | --- | ---: | --- |
-| Exact answer | 605 | Objective accuracy |
-| Multiple choice | 108 | Objective accuracy |
-| Open-ended | 465 | Weighted item-specific rubrics with safety red flags |
+| Subjective | 465 | Weighted item-specific rubric (0–100). A triggered safety red flag sets the final score to zero. |
+| Objective-Exact | 605 | 100 if the answer matches an accepted variant, otherwise 0. |
+| Objective-Multiple Choice | 108 | 100 if the response matches the full set of correct options, otherwise 0. |
 
 ## Quick start
 
@@ -75,11 +107,13 @@ Remove `--limit 3` to run the full selected language, or add `--text-only` to ev
 
 ### Interpretation and reproducibility
 
-Report objective accuracy and the open-ended mean separately. A triggered safety red flag sets the open-ended item score to zero. When publishing results, include the language, item selection, denominators, model and judge IDs, and the exact tag or commit. [Scoring rules and failure handling](evaluation/README.md#scoring-and-failure-handling)
+Report objective accuracy and the mean final score for subjective items separately. In the study, we compared five judge models against independent ratings from 24 clinicians and selected DeepSeek-Flash to score all three question formats. [Evaluation overview](https://freedomintelligence.github.io/OmniDentBench/#method)
+
+When publishing results, include the language, item selection, denominators, model and judge IDs, and the exact tag or commit. [Scoring rules and failure handling](evaluation/README.md#scoring-and-failure-handling)
 
 ## Institutions and team
 
-OmniDentBench brings together **105 team members** and **16 partner institutions**. [Explore the collaboration map](https://freedomintelligence.github.io/OmniDentBench/#collaboration-map)
+OmniDentBench brings together **16 partner institutions**. [Explore the collaboration map](https://freedomintelligence.github.io/OmniDentBench/#collaboration-map) · [View the research team](https://freedomintelligence.github.io/OmniDentBench/#team)
 
 ### Steering chairs (3)
 
@@ -91,7 +125,7 @@ OmniDentBench brings together **105 team members** and **16 partner institutions
   </tr>
 </table>
 
-### Steering committee members (13)
+### Steering committee (13)
 
 <table>
   <tr>
@@ -110,21 +144,6 @@ OmniDentBench brings together **105 team members** and **16 partner institutions
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-062-liangyi-chen"><img src="docs/images/team/team-062-liangyi-chen.webp" width="60" alt=""><br><sub>Liangyi Chen</sub></a></td>
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-078-gloria-hai-ming-wong"><img src="docs/images/team/team-078-gloria-hai-ming-wong.webp" width="60" alt=""><br><sub>Gloria Hai Ming Wong</sub></a></td>
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-079-lijian-jin"><img src="docs/images/team/team-anonymous.webp" width="60" alt=""><br><sub>Lijian Jin</sub></a></td>
-  </tr>
-</table>
-
-### Steering committee student members (8)
-
-<table>
-  <tr>
-    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-070-junjie-zhao"><img src="docs/images/team/team-070-junjie-zhao.webp" width="60" alt=""><br><sub>Junjie Zhao</sub></a></td>
-    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-071-ziying-sheng"><img src="docs/images/team/team-071-ziying-sheng.webp" width="60" alt=""><br><sub>Ziying Sheng</sub></a></td>
-    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-072-jiajun-you"><img src="docs/images/team/team-072-jiajun-you.webp" width="60" alt=""><br><sub>Jiajun You</sub></a></td>
-    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-073-zhenyang-cai"><img src="docs/images/team/team-073-zhenyang-cai.webp" width="60" alt=""><br><sub>Zhenyang Cai</sub></a></td>
-    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-074-zhou-su"><img src="docs/images/team/team-074-zhou-su.webp" width="60" alt=""><br><sub>Zhou Su</sub></a></td>
-    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-080-jingyi-liang"><img src="docs/images/team/team-anonymous.webp" width="60" alt=""><br><sub>Jingyi Liang</sub></a></td>
-    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-081-zikun-jin"><img src="docs/images/team/team-anonymous.webp" width="60" alt=""><br><sub>Zikun Jin</sub></a></td>
-    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-082-xiang-liu"><img src="docs/images/team/team-anonymous.webp" width="60" alt=""><br><sub>Xiang Liu</sub></a></td>
   </tr>
 </table>
 
@@ -149,7 +168,22 @@ OmniDentBench brings together **105 team members** and **16 partner institutions
   </tr>
 </table>
 
-### Overseas experts (19)
+### Student committee (8)
+
+<table>
+  <tr>
+    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-070-junjie-zhao"><img src="docs/images/team/team-070-junjie-zhao.webp" width="60" alt=""><br><sub>Junjie Zhao</sub></a></td>
+    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-071-ziying-sheng"><img src="docs/images/team/team-071-ziying-sheng.webp" width="60" alt=""><br><sub>Ziying Sheng</sub></a></td>
+    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-072-jiajun-you"><img src="docs/images/team/team-072-jiajun-you.webp" width="60" alt=""><br><sub>Jiajun You</sub></a></td>
+    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-073-zhenyang-cai"><img src="docs/images/team/team-073-zhenyang-cai.webp" width="60" alt=""><br><sub>Zhenyang Cai</sub></a></td>
+    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-074-zhou-su"><img src="docs/images/team/team-074-zhou-su.webp" width="60" alt=""><br><sub>Zhou Su</sub></a></td>
+    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-080-jingyi-liang"><img src="docs/images/team/team-anonymous.webp" width="60" alt=""><br><sub>Jingyi Liang</sub></a></td>
+    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-081-zikun-jin"><img src="docs/images/team/team-anonymous.webp" width="60" alt=""><br><sub>Zikun Jin</sub></a></td>
+    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-082-xiang-liu"><img src="docs/images/team/team-anonymous.webp" width="60" alt=""><br><sub>Xiang Liu</sub></a></td>
+  </tr>
+</table>
+
+### Overseas experts (21)
 
 <table>
   <tr>
@@ -163,7 +197,7 @@ OmniDentBench brings together **105 team members** and **16 partner institutions
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-092-colman-mcgrath"><img src="docs/images/team/team-anonymous.webp" width="60" alt=""><br><sub>Colman McGrath</sub></a></td>
   </tr>
   <tr>
-    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-093-edward-chin-man"><img src="docs/images/team/team-anonymous.webp" width="60" alt=""><br><sub>Edward Chin Man</sub></a></td>
+    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-093-edward-chin-man"><img src="docs/images/team/team-anonymous.webp" width="60" alt=""><br><sub>Edward Chin Man Lo</sub></a></td>
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-094-ekhosuehi-theophilus-agho"><img src="docs/images/team/team-094-ekhosuehi-theophilus-agho.webp" width="60" alt=""><br><sub>Ekhosuehi Theophilus Agho</sub></a></td>
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-095-elabbas-elhussain"><img src="docs/images/team/team-anonymous.webp" width="60" alt=""><br><sub>Elabbas Elhussain</sub></a></td>
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-096-falk-schwendicke"><img src="docs/images/team/team-096-falk-schwendicke.webp" width="60" alt=""><br><sub>Falk Schwendicke</sub></a></td>
@@ -176,10 +210,12 @@ OmniDentBench brings together **105 team members** and **16 partner institutions
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-101-ramat-oyebunmi-braimah"><img src="docs/images/team/team-101-ramat-oyebunmi-braimah.webp" width="60" alt=""><br><sub>Ramat Oyebunmi Braimah</sub></a></td>
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-102-ricardo-palacios-banuelos"><img src="docs/images/team/team-anonymous.webp" width="60" alt=""><br><sub>Ricardo Palacios-Bañuelos</sub></a></td>
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-103-suresh-kandagal-veerabhadrappa"><img src="docs/images/team/team-103-suresh-kandagal-veerabhadrappa.webp" width="60" alt=""><br><sub>Suresh Kandagal Veerabhadrappa</sub></a></td>
+    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-106-yuta-chiba"><img src="docs/images/team/team-anonymous.webp" width="60" alt=""><br><sub>Yuta Chiba</sub></a></td>
+    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-107-lluis-giner-tarrida"><img src="docs/images/team/team-anonymous.webp" width="60" alt=""><br><sub>Lluís Giner Tarrida</sub></a></td>
   </tr>
 </table>
 
-### ODB Consortium contributors (2)
+### Consortium contributors (2)
 
 <table>
   <tr>
@@ -188,7 +224,7 @@ OmniDentBench brings together **105 team members** and **16 partner institutions
   </tr>
 </table>
 
-### Specialty committee members (48)
+### Specialty committee (48)
 
 <table>
   <tr>
@@ -227,7 +263,7 @@ OmniDentBench brings together **105 team members** and **16 partner institutions
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-032-min-huang"><img src="docs/images/team/team-032-min-huang.webp" width="60" alt=""><br><sub>Min Huang</sub></a></td>
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-047-xiangjie-jin"><img src="docs/images/team/team-047-xiangjie-jin.webp" width="60" alt=""><br><sub>Xiangjie Jin</sub></a></td>
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-015-dongfei-wang"><img src="docs/images/team/team-015-dongfei-wang.webp" width="60" alt=""><br><sub>Dongfei Wang</sub></a></td>
-    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-020-hao-chunxiu"><img src="docs/images/team/team-020-hao-chunxiu.webp" width="60" alt=""><br><sub>Hao Chunxiu</sub></a></td>
+    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-020-hao-chunxiu"><img src="docs/images/team/team-020-hao-chunxiu.webp" width="60" alt=""><br><sub>Chunxiu Hao</sub></a></td>
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-043-siqi-qiu"><img src="docs/images/team/team-043-siqi-qiu.webp" width="60" alt=""><br><sub>Siqi Qiu</sub></a></td>
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-049-yang-jiang"><img src="docs/images/team/team-049-yang-jiang.webp" width="60" alt=""><br><sub>Yang Jiang</sub></a></td>
   </tr>
@@ -248,17 +284,8 @@ OmniDentBench brings together **105 team members** and **16 partner institutions
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-018-forest-cheng"><img src="docs/images/team/team-018-forest-cheng.webp" width="60" alt=""><br><sub>Nam Forest Cheng</sub></a></td>
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-029-mao-yilin"><img src="docs/images/team/team-029-mao-yilin.webp" width="60" alt=""><br><sub>Yilin Mao</sub></a></td>
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-035-patricia-ho"><img src="docs/images/team/team-035-patricia-ho.webp" width="60" alt=""><br><sub>Patricia Ho</sub></a></td>
-    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-046-xu-leyao"><img src="docs/images/team/team-046-xu-leyao.webp" width="60" alt=""><br><sub>XU Leyao</sub></a></td>
+    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-046-xu-leyao"><img src="docs/images/team/team-046-xu-leyao.webp" width="60" alt=""><br><sub>Leyao XU</sub></a></td>
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-051-yefeng-wu"><img src="docs/images/team/team-051-yefeng-wu.webp" width="60" alt=""><br><sub>Yefeng Wu</sub></a></td>
-  </tr>
-</table>
-
-### Cat members (2)
-
-<table>
-  <tr>
-    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-baize"><img src="docs/images/team/team-baize.webp" width="60" alt=""><br><sub>Baize</sub></a></td>
-    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-paopao"><img src="docs/images/team/team-paopao.webp" width="60" alt=""><br><sub>Paopao</sub></a></td>
   </tr>
 </table>
 
@@ -266,28 +293,28 @@ OmniDentBench brings together **105 team members** and **16 partner institutions
 
 <table>
   <tr>
-    <td align="center" width="25%"><img src="docs/images/partner-marks/CUHK.webp" width="140" alt="The Chinese University of Hong Kong, Shenzhen"></td>
-    <td align="center" width="25%"><img src="docs/images/partner-marks/HKU.webp" width="140" alt="Faculty of Dentistry, The University of Hong Kong"></td>
-    <td align="center" width="25%"><img src="docs/images/partner-marks/FRD.webp" width="140" alt="Freedom AI"></td>
-    <td align="center" width="25%"><img src="docs/images/partner-marks/peking-university.webp" width="140" alt="Peking University"></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/CUHK.webp" width="140" alt=""><br><sub>The Chinese University of Hong Kong, Shenzhen</sub></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/HKU.webp" width="140" alt=""><br><sub>Faculty of Dentistry, The University of Hong Kong</sub></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/FRD.webp" width="140" alt=""><br><sub>Freedom AI</sub></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/peking-university.webp" width="140" alt=""><br><sub>Peking University</sub></td>
   </tr>
   <tr>
-    <td align="center" width="25%"><img src="docs/images/partner-marks/peking-tesinghua-center-for-life-sciences.webp" width="140" alt="Peking-Tsinghua Center for Life Sciences"></td>
-    <td align="center" width="25%"><img src="docs/images/partner-marks/national-biomedical-imaging-center.webp" width="140" alt="Peking University National Biomedical Imaging Center"></td>
-    <td align="center" width="25%"><img src="docs/images/partner-marks/the-prince-philip-dentap-hospital.webp" width="140" alt="The Prince Philip Dental Hospital"></td>
-    <td align="center" width="25%"><img src="docs/images/partner-marks/mayo-clinic-logo.webp" width="140" alt="Mayo Clinic"></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/peking-tesinghua-center-for-life-sciences.webp" width="140" alt=""><br><sub>Peking-Tsinghua Center for Life Sciences</sub></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/national-biomedical-imaging-center.webp" width="140" alt=""><br><sub>Peking University National Biomedical Imaging Center</sub></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/the-prince-philip-dentap-hospital.webp" width="140" alt=""><br><sub>The Prince Philip Dental Hospital</sub></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/mayo-clinic-logo.webp" width="140" alt=""><br><sub>Mayo Clinic</sub></td>
   </tr>
   <tr>
-    <td align="center" width="25%"><img src="docs/images/partner-marks/lmu-klinikum-logo.webp" width="140" alt="Ludwig-Maximilians-Universität München Klinikum (LMU Klinikum)"></td>
-    <td align="center" width="25%"><img src="docs/images/partner-marks/SEGi.webp" width="140" alt="SEGi University &amp; Colleges"></td>
-    <td align="center" width="25%"><img src="docs/images/partner-marks/national-hospital-abuja-logo.webp" width="140" alt="National Hospital Abuja"></td>
-    <td align="center" width="25%"><img src="docs/images/partner-marks/cmul-logo.webp" width="140" alt="College of Medicine, University of Lagos (CMUL)"></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/lmu-klinikum-logo.webp" width="140" alt=""><br><sub>Ludwig-Maximilians-Universität München Klinikum (LMU Klinikum)</sub></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/SEGi.webp" width="140" alt=""><br><sub>SEGi University</sub></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/national-hospital-abuja-logo.webp" width="140" alt=""><br><sub>National Hospital Abuja</sub></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/cmul-logo.webp" width="140" alt=""><br><sub>College of Medicine, University of Lagos (CMUL)</sub></td>
   </tr>
   <tr>
-    <td align="center" width="25%"><img src="docs/images/partner-marks/bayero-university-kano-logo.webp" width="140" alt="Bayero University Kano"></td>
-    <td align="center" width="25%"><img src="docs/images/partner-marks/smanu-Danfodiyo-University-Sokoto.webp" width="140" alt="Usmanu Danfodiyo University Sokoto"></td>
-    <td align="center" width="25%"><img src="docs/images/partner-marks/university-of-maiduguri-logo.webp" width="140" alt="University of Maiduguri"></td>
-    <td align="center" width="25%"><img src="docs/images/partner-marks/madda-walabu-university-logo.webp" width="140" alt="Madda Walabu University"></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/bayero-university-kano-logo.webp" width="140" alt=""><br><sub>Bayero University Kano</sub></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/smanu-Danfodiyo-University-Sokoto.webp" width="140" alt=""><br><sub>Usmanu Danfodiyo University Sokoto</sub></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/university-of-maiduguri-logo.webp" width="140" alt=""><br><sub>University of Maiduguri</sub></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/madda-walabu-university-logo.webp" width="140" alt=""><br><sub>Madda Walabu University</sub></td>
   </tr>
 </table>
 
@@ -297,10 +324,10 @@ OmniDentBench brings together **105 team members** and **16 partner institutions
 | --- | --- |
 | [`data/`](data) | Benchmark items, shared figures, and source manifests |
 | [`evaluation/`](evaluation) | Python CLI, API client, prompts, and scoring |
-| [`tests/`](tests) | Offline evaluator tests |
+| [`tests/`](tests) | Offline evaluator and website tests |
 | [`docs/`](docs) | Bilingual GitHub Pages site and project assets |
 
-To preview the site locally, run `python -m http.server --directory docs 8000` and open `http://localhost:8000`. GitHub Pages publishes from `main:/docs`. The [showcase data](docs/assets/showcase-data.js) contains the bilingual names, photos, and specialty counts. The [page script](docs/assets/flagship.js) and [stylesheet](docs/assets/flagship.css) control the layout.
+To preview the site locally, run `python -m http.server --directory docs 8000` and open `http://localhost:8000`. GitHub Pages publishes from `main:/docs`. The [showcase data](docs/assets/showcase-data.js) contains the bilingual team roster, affiliations, partner institutions, and specialty counts. The [page script](docs/assets/flagship.js) and [stylesheet](docs/assets/flagship.css) control the layout.
 
 ## Contact & Data Access
 If you have any questions or are interested in collaborating, feel free to reach out via: 📧 junjiezhao@connect.hku.hk or ziiyingsheng@gmail.com

@@ -38,6 +38,8 @@ test('regional people require source-backed, valid affiliations', () => {
   }
   assert.equal(getPeople(data).length, 107);
   assert.equal(Object.keys(data.affiliations).length, 44);
+  assert.equal(data.affiliations[5].name,
+    'Shenzhen Stomatology Hospital (Pingshan) of Southern Medical University, Shenzhen, China.');
   for (const person of data.team) {
     assert.ok(person.affiliationIds.length > 0, person.nameEn);
     assert.ok(person.affiliationIds.every(id => data.affiliations[id]?.name), person.nameEn);
@@ -79,6 +81,10 @@ test('both languages render institution and author locations on the map and the 
     assert.ok(html.indexOf('class="network-roster"') > directoryStart);
     assert.equal((hero.match(/class="network-pin"/g) || []).length, 7);
     assert.equal((hero.match(/class="network-pin network-author-pin"/g) || []).length, 4);
+    const regionCodes = [...hero.matchAll(/class="network-pin-code" aria-hidden="true">([A-Z]{2})<\/span>/g)].map(([, code]) => code);
+    assert.equal(regionCodes.length, 11);
+    assert.equal(new Set(regionCodes).size, 11);
+    assert.doesNotMatch(hero, /<strong>\d+<\/strong>/);
     assert.equal((html.match(/data-partner="/g) || []).length, 16);
     const directory = html.slice(directoryStart);
     assert.equal((directory.match(/class="network-portrait"/g) || []).length, data.team.length);
