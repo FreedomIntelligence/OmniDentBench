@@ -1,7 +1,6 @@
 .visually-hidden { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .network { color: var(--ink); }
 .network button { color: inherit; }
-.research-atlas .atlas-heading { padding: 14px 20px; }
 .network-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; }
 .network-map-column { min-width: 0; display: flex; flex-direction: column; background: #eef4f7; }
 .network-kicker { color: #526d80; font-size: .75rem; font-weight: 750; letter-spacing: .12em; line-height: 1.6; }
@@ -26,25 +25,18 @@
 .network-map-marks button:hover, .network-map-marks button[aria-pressed='true'] { border-color: var(--blue); background: #f0f6fc; }
 .network-map-marks button:focus-visible { outline-offset: 1px; }
 .network-map-marks img { width: 100%; height: 100%; min-height: 0; object-fit: contain; }
-.network-map-controls { display: flex; justify-content: space-between; flex-wrap: wrap; align-items: center; gap: 8px; padding: 8px 16px; }
-.network-map-controls label { display: flex; align-items: center; gap: 8px; font-size: .8125rem; font-weight: 600; }
-.network-map-controls select { max-width: 210px; appearance: none; border: 1px solid #b7cbd9; border-radius: 4px; color: var(--ink); background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='m1 1 5 5 5-5' fill='none' stroke='%23536c7d' stroke-width='1.5'/%3E%3C/svg%3E") right 10px center / 11px 8px no-repeat; font: 500 .8125rem/1.4 var(--sans); padding: 9px 30px 9px 10px; }
+.network-map-controls { display: flex; justify-content: space-between; align-items: center; gap: 6px 12px; padding: 5px 16px; }
+.network-region-filter { display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--line); padding: 8px 16px; font-size: .8125rem; font-weight: 650; }
+.network-location { flex: 1; min-width: 0; min-height: 38px; border: 1px solid #8da4b6; border-radius: 4px; color: var(--ink); background: white; font: 500 .875rem/1.4 var(--sans); padding: 6px 8px; }
 .network-zoom { display: flex; align-items: center; gap: 5px; }
 .network-zoom button { min-width: 34px; min-height: 34px; border: 1px solid #b7cbd9; border-radius: 4px; background: white; font-size: 1rem; padding: 3px 8px; }
 .network-zoom [data-zoom='fit'] { font-size: .8125rem; }
 .network-zoom button:disabled { opacity: .4; cursor: default; }
 .network-scale { font-size: .75rem; min-width: 42px; text-align: center; font-variant-numeric: tabular-nums; }
-.network-map-controls :focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.network-map-controls :focus-visible, .network-location:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
 .network-map-scroll[data-zoomed='true'] { cursor: grab; }
 .network-map-scroll.is-panning { cursor: grabbing; user-select: none; }
-.network-map-note { padding: 0 16px 6px; color: #536c7d; font-size: .8125rem; line-height: 1.6; }
-.network-regions { display: flex; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: thin; gap: 6px; padding: 8px 16px; margin-top: auto; border-top: 1px solid #d4e0e8; background: #e8f0f5; }
-.network-regions button { display: flex; flex-shrink: 0; align-items: center; justify-content: space-between; gap: 9px; padding: 7px 10px; border: 1px solid #c7d6e0; border-radius: 4px; background: transparent; font-size: .875rem; line-height: 1.4; font-weight: 550; }
-.network-regions strong { color: #375d7a; font-variant-numeric: tabular-nums; }
-.network-regions button:hover { border-color: var(--blue); }
-.network-regions [aria-pressed='true'] { background: var(--navy); border-color: var(--navy); color: white; }
-.network-regions [aria-pressed='true'] strong { color: white; }
-.network-regions button:focus-visible { outline-offset: 2px; }
+.network-map-note { color: #536c7d; font-size: .8125rem; line-height: 1.45; }
 .network-panel { min-width: 0; border-left: 1px solid #d4e0e8; display: flex; flex-direction: column; background: white; }
 .network-panel-heading { padding: 12px 16px 8px; }
 .network-panel h3 { font-size: 1.25rem; line-height: 1.25; letter-spacing: -.03em; margin-top: 0; text-wrap: pretty; }
@@ -58,7 +50,7 @@
 .network-search span { display: block; font-size: .75rem; margin-bottom: 4px; color: #536c7d; }
 .network-search input { width: 100%; padding: 7px 9px; color: var(--ink); background: #f4f7fa; border: 1px solid #b9cbd8; border-radius: 3px; font: 400 .875rem/1.4 var(--sans); }
 .network-search input:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
-.network-panel-content { height: 170px; min-height: 0; flex: 1 1 auto; overflow-y: auto; overscroll-behavior-y: contain; scrollbar-width: thin; padding: 4px 16px; }
+.network-panel-content { height: 130px; min-height: 0; flex: 1 1 auto; overflow-y: auto; overscroll-behavior-y: contain; scrollbar-width: thin; padding: 4px 16px; }
 .network-panel-content:focus-visible { outline: 2px solid var(--blue); outline-offset: -3px; }
 .network-institution-row, .network-person-row { display: flex; align-items: center; width: 100%; gap: 10px; padding: 8px 4px; text-align: left; border: 0; border-bottom: 1px solid #e2e9ef; background: white; }
 .network-institution-row:hover, .network-person-row:hover { background: #f1f6fb; }
@@ -84,6 +76,8 @@
 .network-roster summary small { font-size: .875rem; font-weight: 500; color: #536c7d; margin-left: 12px; }
 .network-roster-toggle { width: 14px; height: 14px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: rotate(45deg); flex-shrink: 0; margin: -7px 4px 0; }
 .network-roster[open] .network-roster-toggle { transform: rotate(225deg); margin-top: 7px; }
+.network-roster-skip { display: inline-flex; align-items: center; min-height: 32px; margin-bottom: 6px; color: var(--blue); font-size: .875rem; text-decoration: underline; text-underline-offset: 4px; }
+.network-roster-skip:focus-visible { outline-offset: 2px; }
 .network-roster-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(36px, 1fr)); gap: 6px; padding: 2px 0 12px; }
 .network-portrait { display: grid; place-items: center; min-width: 0; min-height: 36px; padding: 2px; border: 0; border-radius: 3px; background: none; }
 .network-portrait img { width: 28px; height: auto; aspect-ratio: 12/13; object-fit: cover; object-position: center 23%; border-radius: 2px; background: #e9eff4; }
@@ -108,6 +102,10 @@
 .specialty-label { min-height: 76px; gap: 10px; }
 .specialty h3 { font-size: 1.0625rem; }
 .scope-grid { gap: 30px 32px; }
+@media (min-width: 761px) {
+  .network-roster summary > span:first-child { margin-inline-end: 180px; }
+  .network-roster-skip { position: absolute; inset-block-start: 6px; inset-inline-end: 48px; margin: 0; }
+}
 @media (max-width: 1199px) {
   .network-layout { grid-template-columns: minmax(0, 1fr) 290px; }
   .network-panel-heading, .network-profile-note { padding-inline: 16px; }
@@ -119,6 +117,7 @@
 @media (max-width: 760px) {
   .network-layout { grid-template-columns: 1fr; }
   .network-panel { border-left: 0; border-top: 1px solid #d4e0e8; }
+  .network-location { min-height: 44px; font-size: 1rem; }
   .network-panel-content { height: 180px; }
   .network-institution-list, .network-person-list { display: grid; grid-template-columns: 1fr 1fr; gap: 0 20px; }
   .network-empty { grid-column: 1 / -1; }
@@ -135,14 +134,9 @@
   .specialty-label { min-height: 66px; }
 }
 @media (max-width: 600px) {
-  .network-map-note { padding: 0 14px 10px; }
-  .network-map-controls { padding-inline: 16px; }
-  .network-map-controls label { width: 100%; }
-  .network-map-controls select { flex: 1; max-width: none; }
+  .network-map-controls { flex-wrap: wrap; padding-inline: 12px; }
   .network-map-scroll { aspect-ratio: 2; }
   .network-zoom button { min-height: 40px; min-width: 40px; }
-  .network-regions { padding: 8px 14px; gap: 6px; }
-  .network-regions button { font-size: .8125rem; padding: 8px 10px; }
   .network-institution-list, .network-person-list { grid-template-columns: 1fr; }
   .network-panel-heading { padding: 12px 16px 8px; }
   .network-panel-content { padding-inline: 14px; }

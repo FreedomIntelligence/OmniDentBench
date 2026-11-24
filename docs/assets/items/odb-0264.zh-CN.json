@@ -1,0 +1,170 @@
+{
+  "id": "ODB-0264",
+  "source_pmcid": "PMC11987563",
+  "specialty": "Periodontics",
+  "tags": [],
+  "question_type": "subjective",
+  "question_content": "一名36岁男性拟在上颌后牙区接受种植治疗。请查看其术前CBCT图像fig_01.jpg、fig_02.jpg和fig_03.jpg。这些图像中哪项解剖发现对治疗决策的影响最大？对该患者而言，最安全的治疗策略是什么？请根据影像作答，说明是否可以进行种植体植入；若考虑骨增量，哪项操作风险最高；以及如何尽量降低并处理主要的术中风险。",
+  "question_options": null,
+  "golden_answer": {
+    "subjective_answer": "关键发现是双侧牙槽上后动脉管径异常粗大，且沿上颌窦底走行，而非位于通常的上颌窦外侧壁。fig_02.jpg显示双侧管径均较大，右侧大于左侧；fig_03.jpg显示右侧骨管距牙槽嵴顶约15 mm，左侧约17 mm。这意味着，如果计划的种植窝预备范围能够安全地保持在骨管的冠方，且不侵及上颌窦底，仍可能进行种植体植入；若垂直骨量不足，我会优先调整种植方案，例如采用较短种植体、改变植入位置或角度，或分期治疗，而不冒损伤血管的风险。风险最高的操作是上颌窦底骨增量，尤其是在该动脉沿窦底走行区域进行侧壁开窗或窦底提升，因为这些操作可能直接损伤血管。如果无法避免骨增量，必须调整手术入路设计以避开骨管，并应由经验丰富的术者采用压电骨手术等微创技术。主要并发症是明显的动脉出血，导致术野不清，并可能伴有窦黏膜穿孔、血肿及术后出血。我会向患者告知这一增高的风险，备好吸引装置、局部压迫止血用品和止血材料，并做好电凝或结扎止血的准备；只有在方案充分考虑并避让血管走行的情况下才开展手术。",
+    "subjective_directions": "",
+    "objective_exact_answers": [],
+    "objective_multiple_answers": []
+  },
+  "answer_explanation": "",
+  "rubric": {
+    "criteria": [
+      {
+        "id": "criterion-1",
+        "name": "证据整合",
+        "levels": [
+          {
+            "level": 1,
+            "score": 0,
+            "title": "不达标",
+            "description": "未识别CBCT上相关的血管变异，忽略所提供的图像，或依据无关的解剖结构作答。"
+          },
+          {
+            "level": 2,
+            "score": 33,
+            "title": "部分达标",
+            "description": "识别出牙槽上后动脉（PSAA）或血管结构，但未充分利用影像信息；可能遗漏其为双侧、管径异常粗大、位于窦底等特征，或未充分说明测量值的手术意义。"
+          },
+          {
+            "level": 3,
+            "score": 67,
+            "title": "达标",
+            "description": "正确整合fig_01.jpg、fig_02.jpg和fig_03.jpg的信息：双侧牙槽上后动脉（PSAA）骨管位于窦底，管径大于常见情况，右侧大于左侧，牙槽嵴顶至动脉的距离分别约为15 mm和17 mm，并清楚解释这些发现为何会改变种植及上颌窦手术规划。"
+          },
+          {
+            "level": 4,
+            "score": 100,
+            "title": "超出标准",
+            "description": "综合所有影像特征，对解剖因素造成的手术限制进行连贯分析，包括左右侧各自的风险，以及可用于手术规划的实际安全操作范围。"
+          }
+        ],
+        "weight": 0.25,
+        "description": ""
+      },
+      {
+        "id": "criterion-2",
+        "name": "治疗规划",
+        "levels": [
+          {
+            "level": 1,
+            "score": 0,
+            "title": "不达标",
+            "description": "提出常规手术方案，未作有实质意义的调整，或给出不合理或无关的方案。"
+          },
+          {
+            "level": 2,
+            "score": 33,
+            "title": "部分达标",
+            "description": "建议谨慎操作或转诊，但仅提出笼统的方案调整，未结合动脉的位置及测量值制定明确的手术策略。"
+          },
+          {
+            "level": 3,
+            "score": 67,
+            "title": "达标",
+            "description": "提供恰当的方案：只有在种植窝预备范围安全地保持在骨管冠方时，才能进行种植体植入；若骨高度不足，应调整种植体尺寸或植入位置，或分期治疗。正确指出上颌窦底骨增量及其入路设计是需要大幅调整或避免的环节。"
+          },
+          {
+            "level": 4,
+            "score": 100,
+            "title": "超出标准",
+            "description": "给出以解剖条件为依据的分步方案，包括确认拟手术部位的具体尺寸，选择避开骨管的种植策略，重新设计或避免在动脉走行区域实施上颌窦底骨增量，并在适当时交由经验更丰富的手术团队处理。"
+          }
+        ],
+        "weight": 0.4,
+        "description": ""
+      },
+      {
+        "id": "criterion-3",
+        "name": "风险获益分析",
+        "levels": [
+          {
+            "level": 1,
+            "score": 0,
+            "title": "不达标",
+            "description": "未根据血管相关风险权衡治疗应继续、调整还是分期进行。"
+          },
+          {
+            "level": 2,
+            "score": 33,
+            "title": "部分达标",
+            "description": "笼统提及风险，但未将种植体植入的潜在获益与该解剖变异所带来的特定风险进行权衡。"
+          },
+          {
+            "level": 3,
+            "score": 67,
+            "title": "达标",
+            "description": "恰当地权衡牙槽嵴顶至动脉的距离可能仍允许安全植入种植体这一条件，以及在需要进行窦底操作或骨增量时出血风险显著增加这一情况。"
+          },
+          {
+            "level": 4,
+            "score": 100,
+            "title": "超出标准",
+            "description": "进一步分别评估左右侧风险，解释何时应优先选择保守的种植方案而非骨增量，并在决策中纳入知情同意或转诊方面的考虑。"
+          }
+        ],
+        "weight": 0.2,
+        "description": ""
+      },
+      {
+        "id": "criterion-4",
+        "name": "并发症识别与应对",
+        "levels": [
+          {
+            "level": 1,
+            "score": 0,
+            "title": "不达标",
+            "description": "遗漏主要并发症，或重点讨论与该解剖情况无实质关联的并发症。"
+          },
+          {
+            "level": 2,
+            "score": 33,
+            "title": "部分达标",
+            "description": "指出出血风险，但未解释预防方法或实际处理措施。"
+          },
+          {
+            "level": 3,
+            "score": 67,
+            "title": "达标",
+            "description": "指出可能发生的并发症，如动脉出血、术野不清、窦黏膜穿孔、血肿和术后出血，并提出合理的预防或处理措施，如采用微创技术、压迫止血、使用止血材料，以及做好电凝或结扎止血的准备。"
+          },
+          {
+            "level": 4,
+            "score": 100,
+            "title": "超出标准",
+            "description": "提供明确的术中应急方案，优先控制出血，并将各项措施与CBCT所示沿窦底走行、管径粗大的牙槽上后动脉（PSAA）这一特征相联系。"
+          }
+        ],
+        "weight": 0.15,
+        "description": ""
+      }
+    ],
+    "red_flags": [],
+    "global_notes": ""
+  },
+  "attachments": [
+    {
+      "file_name": "fig_01.jpg",
+      "mime_type": "image/jpeg",
+      "sha256": "ff73c6b376b5feebd9d4cb00fd8ca8b0f875e15e3e483753aa2f3ed0a3fff0a8",
+      "path": "data/images/ff73c6b376b5feebd9d4cb00fd8ca8b0f875e15e3e483753aa2f3ed0a3fff0a8.jpg"
+    },
+    {
+      "file_name": "fig_02.jpg",
+      "mime_type": "image/jpeg",
+      "sha256": "8abb15041c2138fe0a43b3788faf0e3d6b62e3a93c5bdeeccd414c457d2d77fe",
+      "path": "data/images/8abb15041c2138fe0a43b3788faf0e3d6b62e3a93c5bdeeccd414c457d2d77fe.jpg"
+    },
+    {
+      "file_name": "fig_03.jpg",
+      "mime_type": "image/jpeg",
+      "sha256": "8d84aa9c9507713c99d390d486f268cb3905d1facf010e31bea477e4d8205bc5",
+      "path": "data/images/8d84aa9c9507713c99d390d486f268cb3905d1facf010e31bea477e4d8205bc5.jpg"
+    }
+  ]
+}

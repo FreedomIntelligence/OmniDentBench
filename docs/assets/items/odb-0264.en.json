@@ -1,0 +1,170 @@
+{
+  "id": "ODB-0264",
+  "source_pmcid": "PMC11987563",
+  "specialty": "Periodontics",
+  "tags": [],
+  "question_type": "subjective",
+  "question_content": "A 36-year-old man is being prepared for implants in the posterior maxilla. Review fig_01.jpg, fig_02.jpg and fig_03.jpg from his preoperative CBCT. What anatomic finding on these images most changes management, and what is your safest treatment strategy for this patient? Base your answer on the imaging and explain whether implant placement can proceed, which maneuver becomes highest risk if augmentation is considered, and how you would minimize and manage the main intraoperative hazard.",
+  "question_options": null,
+  "golden_answer": {
+    "subjective_answer": "The critical finding is a bilateral, unusually large posterior superior alveolar artery coursing on the floor of the maxillary sinus rather than in the usual lateral wall position. fig_02.jpg shows a large caliber on both sides, with the right larger than the left, and fig_03.jpg shows the canal is about 15 mm from the crest on the right and 17 mm on the left. This means implant placement may still be feasible if the planned osteotomy remains safely coronal to the canal and does not violate the sinus floor; if vertical bone is limited, I would favor a modified implant plan such as shorter implants, altered position/angulation, or staged treatment rather than risking the vessel. The highest-risk maneuver is sinus augmentation, especially a lateral-window or sinus-floor-elevation step in the area of this floor-course artery, because it could directly injure the vessel. If augmentation is unavoidable, the access design must be altered to avoid the canal, and an experienced surgeon should use an atraumatic technique such as piezosurgery. The main complication is significant arterial bleeding with impaired visibility, possible membrane perforation, hematoma, and postoperative bleeding. I would counsel the patient about this increased risk, have suction, local pressure, hemostatic agents, and cautery/ligation readiness available, and proceed only with a plan that respects the vessel’s course.",
+    "subjective_directions": "",
+    "objective_exact_answers": [],
+    "objective_multiple_answers": []
+  },
+  "answer_explanation": "",
+  "rubric": {
+    "criteria": [
+      {
+        "id": "criterion-1",
+        "name": "Evidence Integration",
+        "levels": [
+          {
+            "level": 1,
+            "score": 0,
+            "title": "Fails",
+            "description": "Does not identify the relevant vascular variation on the CBCT, ignores the figures, or bases the answer on unrelated anatomy."
+          },
+          {
+            "level": 2,
+            "score": 33,
+            "title": "Partial",
+            "description": "Recognizes a PSAA or vascular structure but incompletely uses the imaging; may miss that it is bilateral, unusually large, on the sinus floor, or inadequately connect the measurements to surgical significance."
+          },
+          {
+            "level": 3,
+            "score": 67,
+            "title": "Meets",
+            "description": "Correctly integrates fig_01.jpg, fig_02.jpg and fig_03.jpg: bilateral PSAA canals on the sinus floor, larger-than-usual caliber, right greater than left, and approximate crest-to-artery distances of 15 mm and 17 mm, with clear explanation of why this changes implant/sinus planning."
+          },
+          {
+            "level": 4,
+            "score": 100,
+            "title": "Exceeds",
+            "description": "Synthesizes all imaging features into a coherent surgical constraint analysis, including side-specific risk and a practical safety corridor for planning."
+          }
+        ],
+        "weight": 0.25,
+        "description": ""
+      },
+      {
+        "id": "criterion-2",
+        "name": "Treatment Planning",
+        "levels": [
+          {
+            "level": 1,
+            "score": 0,
+            "title": "Fails",
+            "description": "Proposes routine surgery without meaningful modification, or gives an implausible/irrelevant plan."
+          },
+          {
+            "level": 2,
+            "score": 33,
+            "title": "Partial",
+            "description": "Advises caution or referral but provides only generic planning changes, without a clear operative strategy tied to the artery’s location and measurements."
+          },
+          {
+            "level": 3,
+            "score": 67,
+            "title": "Meets",
+            "description": "Provides an appropriate plan: implant placement can proceed only if the osteotomy remains safely coronal to the canal; if bone height is inadequate, modify implant dimensions/position or stage care. Correctly identifies sinus augmentation/access design as the step that needs major modification or avoidance."
+          },
+          {
+            "level": 4,
+            "score": 100,
+            "title": "Exceeds",
+            "description": "Gives a stepwise, anatomy-driven plan that includes confirming site-specific dimensions, choosing an implant strategy that avoids the canal, redesigning or avoiding sinus augmentation in the artery’s path, and escalating to a more experienced surgical team when appropriate."
+          }
+        ],
+        "weight": 0.4,
+        "description": ""
+      },
+      {
+        "id": "criterion-3",
+        "name": "Risk-Benefit Analysis",
+        "levels": [
+          {
+            "level": 1,
+            "score": 0,
+            "title": "Fails",
+            "description": "Does not weigh whether treatment should proceed, be modified, or be staged in light of the vascular risk."
+          },
+          {
+            "level": 2,
+            "score": 33,
+            "title": "Partial",
+            "description": "Mentions risk in general terms but does not balance the potential benefit of implant placement against the specific hazard created by this anatomic variant."
+          },
+          {
+            "level": 3,
+            "score": 67,
+            "title": "Meets",
+            "description": "Appropriately weighs the fact that the crest-to-artery distance may still allow safe implant placement against the substantially increased hemorrhage risk if sinus-floor manipulation or augmentation is required."
+          },
+          {
+            "level": 4,
+            "score": 100,
+            "title": "Exceeds",
+            "description": "Adds side-specific risk appraisal, explains when conservative implant choices are preferable to augmentation, and includes informed consent or referral considerations in the decision."
+          }
+        ],
+        "weight": 0.2,
+        "description": ""
+      },
+      {
+        "id": "criterion-4",
+        "name": "Complication Awareness",
+        "levels": [
+          {
+            "level": 1,
+            "score": 0,
+            "title": "Fails",
+            "description": "Misses the main complication or focuses on complications not meaningfully linked to this anatomy."
+          },
+          {
+            "level": 2,
+            "score": 33,
+            "title": "Partial",
+            "description": "Identifies bleeding risk but does not explain prevention or practical management."
+          },
+          {
+            "level": 3,
+            "score": 67,
+            "title": "Meets",
+            "description": "Identifies likely complications such as arterial bleeding, impaired visibility, membrane perforation, hematoma, and postoperative bleeding, and gives reasonable preventive/management measures such as atraumatic technique, pressure, hemostatic materials, and cautery or ligation readiness."
+          },
+          {
+            "level": 4,
+            "score": 100,
+            "title": "Exceeds",
+            "description": "Provides a clear intraoperative contingency plan that prioritizes hemorrhage control and links each measure to the floor-course, large-caliber PSAA seen on the CBCT."
+          }
+        ],
+        "weight": 0.15,
+        "description": ""
+      }
+    ],
+    "red_flags": [],
+    "global_notes": ""
+  },
+  "attachments": [
+    {
+      "file_name": "fig_01.jpg",
+      "mime_type": "image/jpeg",
+      "sha256": "ff73c6b376b5feebd9d4cb00fd8ca8b0f875e15e3e483753aa2f3ed0a3fff0a8",
+      "path": "data/images/ff73c6b376b5feebd9d4cb00fd8ca8b0f875e15e3e483753aa2f3ed0a3fff0a8.jpg"
+    },
+    {
+      "file_name": "fig_02.jpg",
+      "mime_type": "image/jpeg",
+      "sha256": "8abb15041c2138fe0a43b3788faf0e3d6b62e3a93c5bdeeccd414c457d2d77fe",
+      "path": "data/images/8abb15041c2138fe0a43b3788faf0e3d6b62e3a93c5bdeeccd414c457d2d77fe.jpg"
+    },
+    {
+      "file_name": "fig_03.jpg",
+      "mime_type": "image/jpeg",
+      "sha256": "8d84aa9c9507713c99d390d486f268cb3905d1facf010e31bea477e4d8205bc5",
+      "path": "data/images/8d84aa9c9507713c99d390d486f268cb3905d1facf010e31bea477e4d8205bc5.jpg"
+    }
+  ]
+}

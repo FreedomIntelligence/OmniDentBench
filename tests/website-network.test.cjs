@@ -3,6 +3,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
+const { createHash } = require('node:crypto');
 
 const context = { window: {} };
 for (const file of ['showcase-data.js', 'network-data.js', 'network.js', 'specialty-icons.js']) {
@@ -62,6 +63,25 @@ test('both languages render all seven interactive locations and all author portr
     assert.match(html, en ? /Chinese mainland/ : /中国大陆/);
     assert.match(html, en ? /Hong Kong, China/ : /中国香港/);
     assert.match(html, /aria-haspopup="dialog"/);
+    assert.match(html, /<details class="network-roster" open>/);
+    assert.match(html, /class="network-roster-skip" href="#team".*\s+<div class="network-roster-grid">/);
+    assert.equal((html.match(/class="network-location"/g) || []).length, 1);
+  }
+});
+
+test('the website sample exposes the unchanged public ODB-0264 records and figures', () => {
+  const root = path.join(__dirname, '..');
+  const readJson = file => JSON.parse(fs.readFileSync(path.join(root, file), 'utf8'));
+  for (const language of ['en', 'zh-CN']) {
+    const item = readJson(`docs/assets/items/odb-0264.${language}.json`);
+    const release = readJson(`data/${language}/items.json`);
+    assert.deepEqual(item, release.items.find(record => record.id === 'ODB-0264'));
+    assert.equal(item.question_type, 'subjective');
+    assert.equal(item.attachments.length, 3);
+    item.attachments.forEach(({ sha256 }, index) => {
+      const file = path.join(root, `docs/images/atlas/odb-0264-fig-${index + 1}.jpg`);
+      assert.equal(createHash('sha256').update(fs.readFileSync(file)).digest('hex'), sha256);
+    });
   }
 });
 
