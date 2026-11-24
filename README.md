@@ -105,11 +105,18 @@ Remove `--limit 3` to run the full selected language, or add `--text-only` to ev
 
 </details>
 
+### Evaluation
+
+Models answer each question using the supplied text and any accompanying images. A judge model evaluates each response against the item's reference answers or scoring rubric.
+
+- **Objective accuracy** is the percentage of Objective-Exact and Objective-Multiple Choice items that receive 100 points.
+- **Mean final score for Subjective items** averages the item scores after rubric weighting and any safety red-flag adjustments.
+
+The study compared five judge models against independent ratings from 24 clinicians and selected DeepSeek-Flash to score all three question formats. The evaluator defaults to `deepseek-flash`, and `--judge` lets you select a different judge. [Evaluation overview](https://freedomintelligence.github.io/OmniDentBench/#method)
+
 ### Interpretation and reproducibility
 
-Report objective accuracy and the mean final score for subjective items separately. In the study, we compared five judge models against independent ratings from 24 clinicians and selected DeepSeek-Flash to score all three question formats. [Evaluation overview](https://freedomintelligence.github.io/OmniDentBench/#method)
-
-When publishing results, include the language, item selection, denominators, model and judge IDs, and the exact tag or commit. [Scoring rules and failure handling](evaluation/README.md#scoring-and-failure-handling)
+When publishing results, report the two metrics separately and include the language, item selection, denominators, model and judge IDs, and the exact tag or commit. [Scoring rules and failure handling](evaluation/README.md#scoring-and-failure-handling)
 
 ## Institutions and team
 
