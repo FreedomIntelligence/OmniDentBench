@@ -85,9 +85,9 @@ OmniDentBench brings together **105 team members** and **16 partner institutions
 
 <table>
   <tr>
-    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-061-benyou-wang"><img src="docs/images/team/team-061-benyou-wang.webp" width="60" alt=""><br><sub>Benyou Wang</sub></a></td>
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-059-junwen-wang"><img src="docs/images/team/team-059-junwen-wang.webp" width="60" alt=""><br><sub>Junwen Wang</sub></a></td>
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-060-zuolin-jin"><img src="docs/images/team/team-060-zuolin-jin.webp" width="60" alt=""><br><sub>Zuolin Jin</sub></a></td>
+    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-061-benyou-wang"><img src="docs/images/team/team-061-benyou-wang.webp" width="60" alt=""><br><sub>Benyou Wang</sub></a></td>
   </tr>
 </table>
 

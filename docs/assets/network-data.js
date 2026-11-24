@@ -4,8 +4,8 @@ window.ODB_NETWORK_DATA = {
   regions: [
     { key: 'mainland', en: 'Chinese mainland', zh: '中国大陆', partners: ['cuhk', 'frd', 'peking-university', 'ptcls', 'pku-biomedical-imaging'], anchor: [116.4, 39.9], label: [81, 20] },
     { key: 'hong-kong', en: 'Hong Kong, China', zh: '中国香港', partners: ['hku', 'prince-philip-dental-hospital'], anchor: [114.17, 22.3], label: [86, 52] },
-    { key: 'nigeria', en: 'Nigeria', zh: '尼日利亚', partners: ['nha', 'cmul', 'buk', 'udus', 'maiduguri'], anchor: [7.49, 9.07], label: [37, 65] },
-    { key: 'united-states', en: 'United States', zh: '美国', partners: ['mayo'], anchor: [-92.46, 44.01], label: [24, 32] },
+    { key: 'nigeria', en: 'Nigeria', zh: '尼日利亚', partners: ['nha', 'cmul', 'buk', 'udus', 'maiduguri'], anchor: [7.49, 9.07], label: [37, 72] },
+    { key: 'united-states', en: 'United States', zh: '美国', partners: ['mayo'], anchor: [-92.46, 44.01], label: [22, 25] },
     { key: 'germany', en: 'Germany', zh: '德国', partners: ['lmu'], anchor: [11.58, 48.14], label: [53, 16] },
     { key: 'malaysia', en: 'Malaysia', zh: '马来西亚', partners: ['segi'], anchor: [101.7, 3.14], label: [81, 79] },
     { key: 'ethiopia', en: 'Ethiopia', zh: '埃塞俄比亚', partners: ['mwu'], anchor: [39.98, 7.1], label: [62, 84] }

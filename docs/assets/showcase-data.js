@@ -1,17 +1,9 @@
 window.ODB_DATA = {
   team: [
     {
-      key: "061-benyou-wang",
-      category: "steering_chair",
-      sortOrder: 1,
-      nameZh: "王本友",
-      nameEn: "Benyou Wang",
-      photo: "./images/team/team-061-benyou-wang.webp",
-    },
-    {
       key: "059-junwen-wang",
       category: "steering_chair",
-      sortOrder: 2,
+      sortOrder: 1,
       nameZh: "王俊文",
       nameEn: "Junwen Wang",
       photo: "./images/team/team-059-junwen-wang.webp",
@@ -19,10 +11,18 @@ window.ODB_DATA = {
     {
       key: "060-zuolin-jin",
       category: "steering_chair",
-      sortOrder: 3,
+      sortOrder: 2,
       nameZh: "金作林",
       nameEn: "Zuolin Jin",
       photo: "./images/team/team-060-zuolin-jin.webp",
+    },
+    {
+      key: "061-benyou-wang",
+      category: "steering_chair",
+      sortOrder: 3,
+      nameZh: "王本友",
+      nameEn: "Benyou Wang",
+      photo: "./images/team/team-061-benyou-wang.webp",
     },
     {
       key: "063-walter-yu-hang-lam",

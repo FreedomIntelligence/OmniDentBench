@@ -26,43 +26,51 @@
     const name = item => en ? item.en : item.zh;
     const institutionCount = count => t(`${count} 家机构`, `${count} ${count === 1 ? 'institution' : 'institutions'}`);
     const sortedPeople = groups.flatMap(([category]) => data.team.filter(person => person.category === category));
-    return `<section class="network" aria-label="${t('交互式合作地图', 'Interactive collaboration map')}">
-      <div class="network-layout">
-        <div class="network-map-column">
-          <div class="network-map-controls"><p class="network-map-note">${t('点位数字为机构数量。', 'Numbers show institution counts.')}</p><div class="network-zoom"><button type="button" data-zoom="out" aria-label="${t('缩小地图', 'Zoom out')}">−</button><output class="network-scale" aria-label="${t('缩放比例', 'Zoom level')}">100%</output><button type="button" data-zoom="in" aria-label="${t('放大地图', 'Zoom in')}">+</button><button type="button" data-zoom="fit">${t('全图', 'Fit map')}</button></div></div>
-          <div class="network-map-scroll" tabindex="0" role="region" aria-label="${t('全球机构分布', 'Institution locations worldwide')}">
-            <div class="network-map-canvas">
-              <img class="network-land" src="./images/atlas/world-land.svg" alt="" width="1000" height="500">
-              <svg class="network-leaders" viewBox="0 0 1000 500" aria-hidden="true">${regions.map(region => {
-                const [x, y] = project(region.anchor);
-                return `<g data-map-line="${region.key}"><path d="M${x.toFixed(1)} ${y.toFixed(1)} L${region.label[0] * 10} ${region.label[1] * 5}"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="5"/></g>`;
-              }).join('')}</svg>
-              ${regions.map(region => `<div class="network-cluster" style="left:${region.label[0]}%;top:${region.label[1]}%;--cluster-width:${region.partners.length > 2 ? 30 : region.key === 'hong-kong' ? 27 : region.key === 'united-states' ? 23 : 18}%;--mark-columns:${Math.min(region.partners.length, 3)}"><button class="network-pin" type="button" data-region="${region.key}" aria-pressed="${state.region === region.key}" aria-controls="network-panel" aria-label="${escape(name(region))}: ${institutionCount(region.partners.length)}"><span>${name(region)}</span><strong>${region.partners.length}</strong></button><div class="network-map-marks">${region.partners.map(key => {
-                const partner = data.partners.find(item => item.key === key);
-                const label = escape(en ? partner.nameEn : partner.nameZh);
-                return `<button type="button" data-partner="${key}" aria-label="${label}" title="${label}"><img src="${partner.logo}" alt="" draggable="false"></button>`;
-              }).join('')}</div></div>`).join('')}
-            </div>
+    return `<div class="network">
+      <section class="network-map-column" id="collaboration-map" aria-labelledby="hero-title">
+        <div class="network-hero-copy">
+          <h1 id="hero-title">OmniDentBench</h1>
+          <p>${t('口腔医学 AI 的多语言、多模态评测基准', 'A multilingual, multimodal benchmark for dental AI')}</p>
+        </div>
+        <div class="network-map-scroll" tabindex="0" role="region" aria-label="${t('全球机构分布', 'Institution locations worldwide')}">
+          <div class="network-map-canvas">
+            <img class="network-land" src="./images/atlas/world-land.svg" alt="" width="1000" height="500">
+            <svg class="network-leaders" viewBox="0 0 1000 500" aria-hidden="true">${regions.map(region => {
+              const [x, y] = project(region.anchor);
+              return `<g data-map-line="${region.key}"><path d="M${x.toFixed(1)} ${y.toFixed(1)} L${region.label[0] * 10} ${region.label[1] * 5}"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="5"/></g>`;
+            }).join('')}</svg>
+            ${regions.map(region => `<div class="network-cluster" style="left:${region.label[0]}%;top:${region.label[1]}%;--cluster-width:${region.partners.length > 2 ? 30 : region.key === 'hong-kong' ? 27 : region.key === 'united-states' ? 23 : 18}%;--mark-columns:${Math.min(region.partners.length, 3)}"><button class="network-pin" type="button" data-region="${region.key}" aria-pressed="${state.region === region.key}" aria-controls="network-panel" aria-label="${escape(name(region))}: ${institutionCount(region.partners.length)}"><span>${name(region)}</span><strong>${region.partners.length}</strong></button><div class="network-map-marks">${region.partners.map(key => {
+              const partner = data.partners.find(item => item.key === key);
+              const label = escape(en ? partner.nameEn : partner.nameZh);
+              return `<button type="button" data-partner="${key}" aria-label="${label}" title="${label}"><img src="${partner.logo}" alt="" draggable="false"></button>`;
+            }).join('')}</div></div>`).join('')}
           </div>
         </div>
-        <aside id="network-panel" class="network-panel" aria-labelledby="network-panel-title">
-          <label class="network-region-filter">${t('筛选地区', 'Filter by region')}<select class="network-location" aria-controls="network-results"><option value="all">${t('全部地区', 'All regions')}</option>${regions.map(region => `<option value="${region.key}">${name(region)}</option>`).join('')}</select></label>
-          <div class="network-panel-heading"><h3 id="network-panel-title"></h3><p id="network-panel-count"></p></div>
-          <div class="network-modes" role="group" aria-label="${t('查看内容', 'Browse content')}"><button type="button" data-mode="institutions" aria-pressed="true">${t('机构', 'Institutions')}</button><button type="button" data-mode="people" aria-pressed="false">${t('成员', 'People')}</button></div>
-          <label class="network-search" hidden><span>${t('搜索成员', 'Search people')}</span><input type="search" placeholder="${t('姓名', 'Search by name')}" autocomplete="off"></label>
-          <div class="network-panel-content" id="network-results" tabindex="0" aria-label="${t('机构与成员列表', 'Institutions and people')}"></div>
-          <p class="network-profile-note">${t(`地区成员按公开机构资料关联。完整名册包含 ${data.team.length} 位成员。`, `Regional profiles use public affiliation sources. All ${data.team.length} members are in the full roster.`)}</p>
-          <span id="network-status" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></span>
-        </aside>
-      </div>
-      <details class="network-roster" open>
-        <summary><span>${t('认识项目团队', 'Meet the project team')} <small>${data.team.length} ${t('位成员', 'people')}</small></span><span class="network-roster-toggle" aria-hidden="true"></span></summary>
-        <a class="network-roster-skip" href="#team">${t('跳到完整团队名册', 'Skip to the full team roster')}</a>
-        <div class="network-roster-grid">${sortedPeople.map(person => `<button class="network-portrait" type="button" data-person="${person.key}" aria-label="${escape(en ? person.nameEn : person.nameZh)}" aria-haspopup="dialog"><img src="${person.photo}" alt="" width="28" height="30" loading="lazy"></button>`).join('')}</div>
-        <span class="network-roster-tooltip" aria-hidden="true" hidden></span>
-      </details>
+        <div class="network-map-controls"><a class="network-map-directory" href="#institutions">${t('合作机构与成员', 'Institutions and people')}</a><div class="network-zoom"><button type="button" data-zoom="out" aria-label="${t('缩小地图', 'Zoom out')}">−</button><output class="network-scale" aria-label="${t('缩放比例', 'Zoom level')}">100%</output><button type="button" data-zoom="in" aria-label="${t('放大地图', 'Zoom in')}">+</button><button type="button" data-zoom="fit">${t('全图', 'Fit map')}</button></div></div>
+      </section>
+      <section id="institutions" class="section institutions-section" aria-labelledby="institutions-title" tabindex="-1">
+        <div class="section-heading"><h2 id="institutions-title">${t('合作机构', 'Partner institutions')}</h2></div>
+        <div class="research-atlas">
+          <aside id="network-panel" class="network-panel" aria-labelledby="network-panel-title">
+            <div class="network-panel-heading"><h3 id="network-panel-title"></h3><p id="network-panel-count"></p></div>
+            <div class="network-modes" role="group" aria-label="${t('查看内容', 'Browse content')}"><button type="button" data-mode="institutions" aria-pressed="true">${t('机构', 'Institutions')}</button><button type="button" data-mode="people" aria-pressed="false">${t('成员', 'People')}</button></div>
+            <label class="network-search" hidden><span>${t('搜索成员', 'Search people')}</span><input type="search" placeholder="${t('姓名', 'Search by name')}" autocomplete="off"></label>
+            <div class="network-panel-content" id="network-results" tabindex="0" aria-label="${t('机构与成员列表', 'Institutions and people')}"></div>
+            <p class="network-profile-note">${t(`地区成员按公开机构资料关联。完整名册包含 ${data.team.length} 位成员。`, `Regional profiles use public affiliation sources. All ${data.team.length} members are in the full roster.`)}</p>
+            <span id="network-status" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></span>
+          </aside>
+          <details class="network-roster" open>
+            <summary><span>${t('认识项目团队', 'Meet the project team')} <small>${data.team.length} ${t('位成员', 'people')}</small></span><span class="network-roster-toggle" aria-hidden="true"></span></summary>
+            <a class="network-roster-skip" href="#team">${t('跳到完整团队名册', 'Skip to the full team roster')}</a>
+            <div class="network-roster-grid">${sortedPeople.map(person => `<button class="network-portrait" type="button" data-person="${person.key}" aria-label="${escape(en ? person.nameEn : person.nameZh)}" aria-haspopup="dialog"><img src="${person.photo}" alt="" width="28" height="30" loading="lazy"></button>`).join('')}</div>
+            <span class="network-roster-tooltip" aria-hidden="true" hidden></span>
+          </details>
+          <p class="network-attribution">${t('中国大陆与香港分开统计。底图', 'Chinese mainland and Hong Kong are reported separately. Base map')} · <a href="https://www.naturalearthdata.com/">Natural Earth</a></p>
+        </div>
+        <div class="institution-grid">${data.partners.map((partner, index) => `<button class="institution" type="button" aria-labelledby="institution-name-${index}" aria-controls="institution-name-${index}" aria-expanded="false"><span class="institution-mark"><img src="${partner.logo}" alt="" loading="lazy"></span><span class="institution-tooltip" id="institution-name-${index}" role="tooltip">${escape(en ? partner.nameEn : partner.nameZh)}</span></button>`).join('')}</div>
+      </section>
       <dialog class="network-dialog" aria-labelledby="network-person-title"><button class="network-dialog-close" type="button" aria-label="${t('关闭成员资料', 'Close profile')}">×</button><div class="network-dialog-content"></div></dialog>
-    </section>`;
+    </div>`;
   }
 
   function init({ en, data, groups }) {
@@ -87,7 +95,6 @@
     const dialog = root.querySelector('dialog');
     const viewport = root.querySelector('.network-map-scroll');
     const canvas = root.querySelector('.network-map-canvas');
-    const location = root.querySelector('.network-location');
     const roster = root.querySelector('.network-roster');
     const rosterTooltip = root.querySelector('.network-roster-tooltip');
     let dialogTrigger = null;
@@ -126,21 +133,18 @@
     });
 
     function setZoom(next, center) {
-      const x = center ? center[0] : (viewport.scrollLeft + viewport.clientWidth / 2) / canvas.offsetWidth;
-      const y = center ? center[1] : (viewport.scrollTop + viewport.clientHeight / 2) / canvas.offsetHeight;
+      const x = center ? center[0] : (viewport.scrollLeft + viewport.clientWidth / 2 - canvas.offsetLeft) / canvas.offsetWidth;
+      const y = center ? center[1] : (viewport.scrollTop + viewport.clientHeight / 2 - canvas.offsetTop) / canvas.offsetHeight;
       zoom = Math.max(1, Math.min(4, next));
-      canvas.style.width = `${zoom * 100}%`;
+      canvas.style.setProperty('--map-zoom', zoom);
       viewport.dataset.zoomed = String(zoom > 1);
       root.querySelector('.network-scale').textContent = `${Math.round(zoom * 100)}%`;
       root.querySelector('[data-zoom="out"]').disabled = zoom <= 1;
       root.querySelector('[data-zoom="in"]').disabled = zoom >= 4;
-      viewport.scrollTo(x * canvas.offsetWidth - viewport.clientWidth / 2, y * canvas.offsetHeight - viewport.clientHeight / 2);
-    }
-
-    function revealLocation() {
-      const region = findRegion(state.region);
-      const readableZoom = viewport.clientWidth < 680 ? Math.min(3, 800 / viewport.clientWidth) : 1;
-      if (region) setZoom(Math.max(zoom, readableZoom), [region.label[0] / 100, region.label[1] / 100]);
+      viewport.scrollTo(
+        canvas.offsetLeft + x * canvas.offsetWidth - viewport.clientWidth / 2,
+        canvas.offsetTop + y * canvas.offsetHeight - viewport.clientHeight / 2
+      );
     }
 
     const personCard = person => `<button class="network-person-row" type="button" data-person="${person.key}" aria-haspopup="dialog"><img src="${person.photo}" alt="" width="64" height="70" loading="lazy"><span><strong>${escape(personName(person))}</strong><small>${escape(role(person))}</small></span></button>`;
@@ -158,7 +162,6 @@
         : peopleCount(regionPeople)}`;
       root.querySelectorAll('[data-region]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.region === state.region)));
       root.querySelectorAll('[data-map-line]').forEach(line => line.classList.toggle('is-selected', line.dataset.mapLine === state.region));
-      location.value = state.region;
       root.querySelectorAll('.network-map-marks [data-partner]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.partner === state.partner)));
       root.querySelectorAll('[data-mode]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.mode === state.mode)));
       search.hidden = state.mode !== 'people';
@@ -189,7 +192,8 @@
     root.addEventListener('click', event => {
       const button = event.target.closest('button');
       if (button?.hasAttribute('data-region')) {
-        state.region = button.dataset.region;
+        const selected = state.region === button.dataset.region && !state.partner;
+        state.region = selected ? 'all' : button.dataset.region;
         state.partner = null;
         state.query = '';
         update();
@@ -238,14 +242,6 @@
       state.query = input.value;
       update({ resetScroll: false });
     });
-    location.addEventListener('change', () => {
-      state.region = location.value;
-      state.partner = null;
-      state.query = '';
-      update();
-      if (state.region === 'all') setZoom(1, [.5, .5]);
-      else revealLocation();
-    });
     let drag = null;
     viewport.addEventListener('pointerdown', event => {
       if (zoom <= 1 || event.pointerType !== 'mouse' || event.button !== 0 || event.target.closest('button')) return;
@@ -266,7 +262,9 @@
     });
     dialog.addEventListener('close', () => dialogTrigger?.focus({ preventScroll: true }));
     update();
-    setZoom(1, [.5, .5]);
+    const initialZoom = Math.min(1.35, Math.max(1, 560 / viewport.clientWidth));
+    // Keep the eastern and western pins visible in the closer mobile framing.
+    setZoom(initialZoom, [initialZoom > 1 ? .54 : .5, .5]);
   }
 
   window.ODBNetwork = { render, init, getPartners, getPeople, project };

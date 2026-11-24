@@ -57,6 +57,15 @@ test('both languages render all seven interactive locations and all author portr
   const groups = [...new Set(data.team.map(person => person.category))].map(category => [category, category, category]);
   for (const en of [true, false]) {
     const html = render({ en, data, groups });
+    const directoryStart = html.indexOf('id="institutions"');
+    const hero = html.slice(0, directoryStart);
+    assert.ok(directoryStart > 0);
+    assert.match(hero, /id="collaboration-map"/);
+    assert.match(hero, /<h1 id="hero-title">OmniDentBench<\/h1>/);
+    assert.match(hero, en ? /A multilingual, multimodal benchmark/ : /多语言、多模态评测基准/);
+    assert.equal((hero.match(/class="network-map-canvas"/g) || []).length, 1);
+    assert.ok(html.indexOf('id="network-panel"') > directoryStart);
+    assert.ok(html.indexOf('class="network-roster"') > directoryStart);
     assert.equal((html.match(/class="network-pin"/g) || []).length, 7);
     assert.equal((html.match(/data-partner="/g) || []).length, 16);
     assert.equal((html.match(/class="network-portrait"/g) || []).length, data.team.length);
@@ -65,7 +74,9 @@ test('both languages render all seven interactive locations and all author portr
     assert.match(html, /aria-haspopup="dialog"/);
     assert.match(html, /<details class="network-roster" open>/);
     assert.match(html, /class="network-roster-skip" href="#team".*\s+<div class="network-roster-grid">/);
-    assert.equal((html.match(/class="network-location"/g) || []).length, 1);
+    assert.doesNotMatch(html, /<select\b/);
+    const portraits = [...html.matchAll(/class="network-portrait" type="button" data-person="([^"]+)"/g)];
+    assert.deepEqual(portraits.slice(0, 3).map(([, key]) => key), ['059-junwen-wang', '060-zuolin-jin', '061-benyou-wang']);
   }
 });
 

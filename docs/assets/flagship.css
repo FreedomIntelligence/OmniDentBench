@@ -35,7 +35,8 @@ em { font-family: var(--serif); font-weight: 400; }
 .skip { position: absolute; z-index: 20; top: -100px; left: 24px; padding: 12px 20px; background: white; }
 .skip:focus { top: 20px; }
 
-.site-header { min-height: 66px; padding: 8px var(--gutter); display: flex; justify-content: space-between; align-items: center; gap: 24px; color: white; background: var(--navy); border-bottom: 1px solid #ffffff26; }
+#app { position: relative; }
+.site-header { position: absolute; inset: 0 0 auto; z-index: 4; min-height: 66px; padding: 8px var(--gutter); display: flex; justify-content: space-between; align-items: center; gap: 24px; color: white; background: #071d32eb; border-bottom: 1px solid #ffffff26; }
 .brand { display: flex; align-items: center; gap: 12px; font-size: 1.5rem; font-weight: 750; letter-spacing: -.03em; line-height: 1.25; white-space: nowrap; }
 .brand-logo { width: 52px; height: 34px; padding: 4px; border-radius: 4px; background: white; object-fit: contain; }
 nav { display: flex; align-items: center; gap: clamp(16px, 2.4vw, 36px); font-size: 1rem; font-weight: 600; }
@@ -301,7 +302,7 @@ html[lang='zh-CN'] .hero-desc { line-height: 1.9; }
 @media (max-width: 359px) {
   .brand { font-size: 1.25rem; }
   .brand-logo { width: 34px; }
-  nav { column-gap: 6px; }
+  nav { column-gap: 5px; font-size: .8125rem; }
   #language { font-size: .875rem; padding-left: 10px; }
   .team-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .chairs { grid-template-columns: 1fr; }
@@ -315,17 +316,7 @@ html[lang='zh-CN'] .hero-desc { line-height: 1.9; }
 }
 
 
-.benchmark-hero { padding-block: 16px 20px; text-align: center; }
-.benchmark-hero h1, html[lang='zh-CN'] .benchmark-hero h1 {
-  font: 700 clamp(1.95rem, 5vw, 3.625rem)/1.08 var(--serif);
-  letter-spacing: -.03em;
-}
-.benchmark-deck { max-width: 38em; margin: 8px auto 0; font-size: clamp(1rem, 1.8vw, 1.3rem); line-height: 1.5; }
-.benchmark-facts { margin-top: 4px; color: #bdd2e5; font-size: clamp(.875rem, 1.2vw, 1rem); }
-.benchmark-hero .actions { justify-content: center; margin-top: 12px; gap: 10px; }
-.benchmark-hero .button { min-height: 44px; padding: 8px 15px; font-size: .9375rem; }
-.benchmark-hero .primary { background: #2b66c5; border-color: #2b66c5; color: white; }
-.benchmark-hero .primary:hover { background: #2458ac; border-color: #2458ac; }
+.scope-heading { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px 24px; }
 
 .sample-heading { margin-bottom: 22px; }
 .sample-heading p { margin-top: 8px; color: var(--muted); font-size: .9375rem; }
@@ -386,26 +377,21 @@ html[lang='zh-CN'] .sample-prompt { font-family: var(--sans); }
 .atlas-mark:hover, .atlas-mark:focus-visible, .atlas-mark[aria-pressed=true] { border-color: #007f70; box-shadow: inset 0 0 0 1px #007f70; }
 .atlas-result { flex: 1 1 15em; }
 .atlas-readout a { text-decoration: underline; }
-.atlas-key, .research-atlas figcaption { padding: 8px 14px; font-size: .82rem; line-height: 1.5; color: #365760; }
+.atlas-key { padding: 8px 14px; font-size: .82rem; line-height: 1.5; color: #365760; }
 .atlas-key span { color: #00766e; } .atlas-key b { color: #a94e22; padding-left: 8px; }
 .atlas-geography[data-zoomed=true] .atlas-stage { cursor: grab; }
 .atlas-geography.is-panning .atlas-stage { cursor: grabbing; user-select: none; }
 .chair-affiliation { display: inline-block; margin-top: 5px; font-size: .75rem; line-height: 1.45; text-decoration: underline; }
 .person:target { outline: 2px solid var(--blue); outline-offset: 5px; }
-.research-atlas figcaption { border-top: 1px solid #d2dfdf; }
-.research-atlas figcaption a { text-decoration: underline; }
 .group-title { display: flex; align-items: baseline; gap: 10px; font-size: clamp(1.125rem, 1.6vw, 1.375rem); line-height: 1.3; }
 .group-title small { font: 500 .8125rem var(--sans); color: var(--muted); }
 
 @media (max-width: 600px) {
-  .atlas-key, .research-atlas figcaption { padding-inline: 12px; }
+  .atlas-key { padding-inline: 12px; }
   .sample-plate { grid-template-columns: 1fr; }
   .sample-plate figure:first-child { grid-row: auto; }
   .method-grid { grid-template-columns: 1fr; gap: 20px; }
   .method-card, .method-card:first-child { padding-top: 16px; border-top: 1px solid var(--line); }
-}
-@media (max-width: 359px) {
-  .benchmark-hero .button { padding-inline: 9px; font-size: .875rem; }
 }
 @media (max-width: 899px) {
   .sample-layout { grid-template-columns: minmax(0, 1fr); }

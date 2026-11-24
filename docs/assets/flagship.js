@@ -111,26 +111,12 @@ function render() {
     </header>
 
     <main id="main">
-      <section class="hero benchmark-hero" aria-labelledby="hero-title">
-        <h1 id="hero-title">OmniDentBench</h1>
-        <p class="benchmark-deck">${t('口腔医学 AI 的多语言、多模态评测基准', 'A multilingual, multimodal benchmark for dental AI')}</p>
-        <p class="benchmark-facts">${t('1,178 道题 · 12 个口腔专科 · 8 种语言', '1,178 questions · 12 dental specialties · 8 languages')}</p>
-        <div class="actions"><a class="button primary" href="${repo}/tree/main/data">${t('查看数据集', 'View dataset')}</a><a class="button secondary" href="#method">${t('评分方法', 'Scoring methods')}</a></div>
-      </section>
-
-      <section id="institutions" class="section institutions-section" aria-labelledby="institutions-title">
-        <div class="section-heading"><h2 id="institutions-title">${t('合作机构', 'Partner institutions')}</h2></div>
-        <figure class="research-atlas" id="collaboration-map">
-          ${window.ODBNetwork.render({ en, data, groups })}
-          <figcaption>${t('中国大陆与香港分开统计。底图', 'Chinese mainland and Hong Kong are reported separately. Base map')} · <a href="https://www.naturalearthdata.com/">Natural Earth</a></figcaption>
-        </figure>
-        <div class="institution-grid">${data.partners.map((x, i) => `<button class="institution" type="button" aria-labelledby="institution-name-${i}" aria-controls="institution-name-${i}" aria-expanded="false"><span class="institution-mark"><img src="${x.logo}" alt="" loading="lazy"></span><span class="institution-tooltip" id="institution-name-${i}" role="tooltip">${en ? x.nameEn : x.nameZh}</span></button>`).join('')}</div>
-      </section>
+      ${window.ODBNetwork.render({ en, data, groups })}
 
       ${renderSampleItem(t)}
 
       <section id="benchmark" class="section scope-section" aria-labelledby="scope-title">
-        <div class="section-heading"><h2 id="scope-title">${t('数据覆盖', 'Dataset coverage')}</h2></div>
+        <div class="section-heading scope-heading"><h2 id="scope-title">${t('数据覆盖', 'Dataset coverage')}</h2><a class="text-link" href="${repo}/tree/main/data">${t('查看数据集', 'View dataset')}</a></div>
         <div class="scope-content"><div class="evidence-panel"><h3>${t('含图题目', 'Items with images')}</h3><p>${t('1,178 道题中有 1,099 道含图（93.3%）。', '1,099 of 1,178 items (93.3%) include images.')}</p><a class="text-link" href="${repo}/blob/main/data/figures.csv">${t('图像来源与许可', 'Figure sources & licences')}</a></div>
           <div class="scope-grid">${specialties.map(({ nameEn, nameZh, items }) => `<div class="specialty">${window.ODBSpecialtyIcon(nameEn)}<div class="specialty-label"><h3>${en ? nameEn : nameZh}</h3><strong>${items}</strong></div><div class="bar"><i style="width:${items / largestSpecialty * 100}%"></i></div></div>`).join('')}</div>
         </div>
