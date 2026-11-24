@@ -1,23 +1,52 @@
 (() => {
   const { regions, profiles } = window.ODB_NETWORK_DATA;
-  const state = { region: 'all', mode: 'institutions', partner: null, query: '' };
+  const state = { region: 'all', partner: null };
+  const mapRegions = [...regions,
+    { key: 'japan', en: 'Japan', zh: '日本', anchor: [140.87, 38.27], label: [90, 37.5], cardAlign: 'right' },
+    { key: 'czechia', en: 'Czechia', zh: '捷克', anchor: [14.42, 50.08], label: [73, 15.5], cardAlign: 'above' },
+    { key: 'spain', en: 'Spain', zh: '西班牙', anchor: [2.17, 41.39], label: [43, 15.5], cardAlign: 'above' },
+    { key: 'united-kingdom', en: 'United Kingdom', zh: '英国', anchor: [.12, 52.2], label: [28, 15.5], cardAlign: 'above' }
+  ];
   const escape = value => String(value).replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]));
   const project = ([longitude, latitude]) => [(longitude + 180) / 360 * 1000, (85 - latitude) / 145 * 500];
   const findRegion = key => regions.find(region => region.key === key);
   const partnerRegion = key => regions.find(region => region.partners.includes(key));
+
+  function renderLeader(region) {
+    const [x, y] = project(region.anchor).map(value => value.toFixed(1));
+    const endX = region.label[0] * 10;
+    const endY = region.label[1] * 5;
+    // The European and southern callouts fan out in longitude order.
+    const corridor = region.cardAlign === 'below' ? 289 : region.cardAlign === 'above' && region.key !== 'mainland' ? 104 : null;
+    let path = `M${x} ${y} L${endX} ${endY}`;
+    if (corridor !== null) {
+      const bend = (corridor + endY) / 2;
+      path = `M${x} ${y} V${corridor} C${x} ${bend} ${endX} ${bend} ${endX} ${endY}`;
+    } else if (region.cardAlign === 'left') {
+      const bendX = endX + 12;
+      path = `M${x} ${y} H${bendX} C${endX + 7} ${y} ${bendX} ${endY} ${endX} ${endY}`;
+    }
+    return `<g data-map-line="${region.key}"><path d="${path}"/><circle cx="${x}" cy="${y}" r="3.5"/></g>`;
+  }
+
+  let atlasObserver;
 
   function getPartners(data, regionKey = 'all') {
     const region = findRegion(regionKey);
     return regionKey === 'all' ? data.partners : data.partners.filter(partner => region?.partners.includes(partner.key));
   }
 
+  function getAffiliations(data, person) {
+    return person.affiliationIds.map(id => data.affiliations[id]);
+  }
+
   function getPeople(data, { region = 'all', partner = null, query = '' } = {}) {
     const search = query.trim().toLocaleLowerCase();
     return data.team.filter(person => {
-      const profile = profiles[person.key];
-      return (region === 'all' || profile?.region === region)
-        && (!partner || profile?.partners.includes(partner))
-        && (!search || `${person.nameEn} ${person.nameZh}`.toLocaleLowerCase().includes(search));
+      const hasAffiliation = region === 'all' && !partner || getAffiliations(data, person).some(affiliation =>
+        (region === 'all' || affiliation.region === region) && (!partner || affiliation.partners?.includes(partner))
+      );
+      return hasAffiliation && (!search || `${person.nameEn} ${person.nameZh}`.toLocaleLowerCase().includes(search));
     });
   }
 
@@ -26,48 +55,70 @@
     const name = item => en ? item.en : item.zh;
     const institutionCount = count => t(`${count} 家机构`, `${count} ${count === 1 ? 'institution' : 'institutions'}`);
     const sortedPeople = groups.flatMap(([category]) => data.team.filter(person => person.category === category));
+    const rosterLink = t('跳到完整团队名册', 'Skip to the full team roster');
+    const portrait = person => {
+      const label = escape(en ? person.nameEn : person.nameZh);
+      return `<button class="network-portrait" type="button" data-person="${person.key}" aria-label="${label}" aria-haspopup="dialog"><img src="${person.photo}" alt="" width="28" height="30" loading="lazy"></button>`;
+    };
     return `<div class="network">
       <section class="network-map-column" id="collaboration-map" aria-labelledby="hero-title">
         <div class="network-hero-copy">
           <h1 id="hero-title">OmniDentBench</h1>
           <p>${t('口腔医学 AI 的多语言、多模态评测基准', 'A multilingual, multimodal benchmark for dental AI')}</p>
         </div>
-        <div class="network-map-scroll" tabindex="0" role="region" aria-label="${t('全球机构分布', 'Institution locations worldwide')}">
+        <div class="network-map-frame" role="region" aria-label="${t('全球机构与作者分布', 'Institution and author locations worldwide')}">
           <div class="network-map-canvas">
-            <img class="network-land" src="./images/atlas/world-land.svg" alt="" width="1000" height="500">
-            <svg class="network-leaders" viewBox="0 0 1000 500" aria-hidden="true">${regions.map(region => {
-              const [x, y] = project(region.anchor);
-              return `<g data-map-line="${region.key}"><path d="M${x.toFixed(1)} ${y.toFixed(1)} L${region.label[0] * 10} ${region.label[1] * 5}"/><circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="5"/></g>`;
-            }).join('')}</svg>
-            ${regions.map(region => `<div class="network-cluster" style="left:${region.label[0]}%;top:${region.label[1]}%;--cluster-width:${region.partners.length > 2 ? 30 : region.key === 'hong-kong' ? 27 : region.key === 'united-states' ? 23 : 18}%;--mark-columns:${Math.min(region.partners.length, 3)}"><button class="network-pin" type="button" data-region="${region.key}" aria-pressed="${state.region === region.key}" aria-controls="network-panel" aria-label="${escape(name(region))}: ${institutionCount(region.partners.length)}"><span>${name(region)}</span><strong>${region.partners.length}</strong></button><div class="network-map-marks">${region.partners.map(key => {
-              const partner = data.partners.find(item => item.key === key);
-              const label = escape(en ? partner.nameEn : partner.nameZh);
-              return `<button type="button" data-partner="${key}" aria-label="${label}" title="${label}"><img src="${partner.logo}" alt="" draggable="false"></button>`;
-            }).join('')}</div></div>`).join('')}
+            <img class="network-land" src="./images/atlas/world-land.svg?v=full-width" alt="" width="1000" height="500">
+            <svg class="network-leaders" viewBox="0 0 1000 500" preserveAspectRatio="none" aria-hidden="true">
+              <defs>
+                <mask id="map-leader-mask" maskUnits="userSpaceOnUse">
+                  <rect width="1000" height="500" fill="white"/>
+                  <rect data-title-clearance width="0" height="0" fill="black" rx="3"/>
+                  <rect data-title-clearance width="0" height="0" fill="black" rx="3"/>
+                </mask>
+              </defs>
+              <g mask="url(#map-leader-mask)">${mapRegions.map(renderLeader).join('')}</g>
+            </svg>
+            ${mapRegions.map(region => {
+              const partnerKeys = region.partners ?? [];
+              const authors = getPeople(data, { region: region.key });
+              const label = escape(name(region));
+              const authorCount = t(`${authors.length} 位作者`, `${authors.length} ${authors.length === 1 ? 'author' : 'authors'}`);
+              const authorControl = 'aria-controls="map-author-popover" aria-expanded="false"';
+              const photos = authors.slice(0, 3).map(person => `<img src="${person.photo}" alt="" width="24" height="25" draggable="false">`).join('');
+              const width = partnerKeys.length > 2 ? 30 : region.key === 'hong-kong' ? 27 : region.key === 'united-states' ? 23 : partnerKeys.length ? 18 : region.key === 'japan' ? 8.5 : 12;
+              return `<div class="network-cluster${partnerKeys.length ? '' : ' network-cluster--authors'}" data-card-align="${region.cardAlign ?? 'center'}" style="left:${region.label[0]}%;top:${region.label[1]}%;--cluster-width:${width}%;--mark-columns:${Math.min(partnerKeys.length, 3)}">
+                ${partnerKeys.length
+                  ? `<button class="network-pin" type="button" data-region="${region.key}" aria-pressed="${state.region === region.key}" aria-controls="network-panel map-author-popover" aria-expanded="false" aria-label="${label}: ${institutionCount(partnerKeys.length)}, ${authorCount}"><span>${label}</span><strong>${partnerKeys.length}</strong></button>
+                    <div class="network-map-marks">${partnerKeys.map(key => {
+                      const partner = data.partners.find(item => item.key === key);
+                      const partnerLabel = escape(en ? partner.nameEn : partner.nameZh);
+                      return `<button type="button" data-partner="${key}" aria-label="${partnerLabel}" title="${partnerLabel}"><img src="${partner.logo}" alt="" draggable="false"></button>`;
+                    }).join('')}</div>
+                    <button class="network-map-portraits" type="button" data-map-author="${region.key}" ${authorControl} aria-label="${label}: ${authorCount}">${photos}<small>${authorCount}</small></button>`
+                  : `<button class="network-pin network-author-pin" type="button" data-map-author="${region.key}" ${authorControl} aria-label="${label}: ${authorCount}"><span>${label}</span><strong>${authors.length}</strong><span class="network-map-portraits">${photos}</span></button>`}
+              </div>`;
+            }).join('')}
           </div>
         </div>
-        <div class="network-map-controls"><a class="network-map-directory" href="#institutions">${t('合作机构与成员', 'Institutions and people')}</a><div class="network-zoom"><button type="button" data-zoom="out" aria-label="${t('缩小地图', 'Zoom out')}">−</button><output class="network-scale" aria-label="${t('缩放比例', 'Zoom level')}">100%</output><button type="button" data-zoom="in" aria-label="${t('放大地图', 'Zoom in')}">+</button><button type="button" data-zoom="fit">${t('全图', 'Fit map')}</button></div></div>
+        <section class="network-map-author-popover" id="map-author-popover" aria-labelledby="map-author-title" hidden>
+          <header><h2 id="map-author-title"></h2><button class="network-map-author-close" type="button" aria-label="${t('收起当地作者', 'Collapse local authors')}">×</button></header>
+          <div class="network-map-author-list"></div>
+        </section>
       </section>
-      <section id="institutions" class="section institutions-section" aria-labelledby="institutions-title" tabindex="-1">
-        <div class="section-heading"><h2 id="institutions-title">${t('合作机构', 'Partner institutions')}</h2></div>
-        <div class="research-atlas">
-          <aside id="network-panel" class="network-panel" aria-labelledby="network-panel-title">
-            <div class="network-panel-heading"><h3 id="network-panel-title"></h3><p id="network-panel-count"></p></div>
-            <div class="network-modes" role="group" aria-label="${t('查看内容', 'Browse content')}"><button type="button" data-mode="institutions" aria-pressed="true">${t('机构', 'Institutions')}</button><button type="button" data-mode="people" aria-pressed="false">${t('成员', 'People')}</button></div>
-            <label class="network-search" hidden><span>${t('搜索成员', 'Search people')}</span><input type="search" placeholder="${t('姓名', 'Search by name')}" autocomplete="off"></label>
-            <div class="network-panel-content" id="network-results" tabindex="0" aria-label="${t('机构与成员列表', 'Institutions and people')}"></div>
-            <p class="network-profile-note">${t(`地区成员按公开机构资料关联。完整名册包含 ${data.team.length} 位成员。`, `Regional profiles use public affiliation sources. All ${data.team.length} members are in the full roster.`)}</p>
-            <span id="network-status" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></span>
-          </aside>
-          <details class="network-roster" open>
-            <summary><span>${t('认识项目团队', 'Meet the project team')} <small>${data.team.length} ${t('位成员', 'people')}</small></span><span class="network-roster-toggle" aria-hidden="true"></span></summary>
-            <a class="network-roster-skip" href="#team">${t('跳到完整团队名册', 'Skip to the full team roster')}</a>
-            <div class="network-roster-grid">${sortedPeople.map(person => `<button class="network-portrait" type="button" data-person="${person.key}" aria-label="${escape(en ? person.nameEn : person.nameZh)}" aria-haspopup="dialog"><img src="${person.photo}" alt="" width="28" height="30" loading="lazy"></button>`).join('')}</div>
-            <span class="network-roster-tooltip" aria-hidden="true" hidden></span>
-          </details>
-          <p class="network-attribution">${t('中国大陆与香港分开统计。底图', 'Chinese mainland and Hong Kong are reported separately. Base map')} · <a href="https://www.naturalearthdata.com/">Natural Earth</a></p>
+      <section id="institutions" class="section institutions-section" aria-labelledby="collaboration-directory-title" tabindex="-1">
+        <h2 class="visually-hidden" id="collaboration-directory-title">${t('合作机构与成员', 'Institutions and people')}</h2>
+        <div id="network-panel" class="network-panel">
+          <p id="network-panel-count"></p>
+          <div class="network-panel-content" id="network-results" role="region" aria-label="${t('机构与成员列表', 'Institutions and people')}"></div>
+          <span id="network-status" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></span>
         </div>
-        <div class="institution-grid">${data.partners.map((partner, index) => `<button class="institution" type="button" aria-labelledby="institution-name-${index}" aria-controls="institution-name-${index}" aria-expanded="false"><span class="institution-mark"><img src="${partner.logo}" alt="" loading="lazy"></span><span class="institution-tooltip" id="institution-name-${index}" role="tooltip">${escape(en ? partner.nameEn : partner.nameZh)}</span></button>`).join('')}</div>
+        <div class="network-roster" role="group" aria-label="${t('项目团队头像', 'Project team portraits')}">
+          <a class="network-roster-skip network-roster-shortcut visually-hidden" href="#team">${rosterLink}</a>
+          <div class="network-roster-grid">${sortedPeople.map(person => portrait(person)).join('')}</div>
+          <a class="network-roster-skip" href="#team">${rosterLink}</a>
+          <span class="network-roster-tooltip" aria-hidden="true" hidden></span>
+        </div>
       </section>
       <dialog class="network-dialog" aria-labelledby="network-person-title"><button class="network-dialog-close" type="button" aria-label="${t('关闭成员资料', 'Close profile')}">×</button><div class="network-dialog-content"></div></dialog>
     </div>`;
@@ -87,18 +138,131 @@
       return group ? group[en ? 2 : 1] : '';
     };
     const content = root.querySelector('#network-results');
-    const panelTitle = root.querySelector('#network-panel-title');
     const panelCount = root.querySelector('#network-panel-count');
     const status = root.querySelector('#network-status');
-    const search = root.querySelector('.network-search');
-    const input = search.querySelector('input');
     const dialog = root.querySelector('dialog');
-    const viewport = root.querySelector('.network-map-scroll');
+    const map = root.querySelector('#collaboration-map');
+    const header = document.querySelector('.site-header');
     const canvas = root.querySelector('.network-map-canvas');
+    const copy = root.querySelector('.network-hero-copy');
+    const cards = [...canvas.querySelectorAll('.network-cluster')];
+    const titleClearances = canvas.querySelectorAll('[data-title-clearance]');
+    let atlasOffset = 0;
+
+    function layoutAtlas() {
+      const mapBounds = canvas.getBoundingClientRect();
+      if (!mapBounds.width || !mapBounds.height) return;
+      const scaleX = 1000 / mapBounds.width;
+      const scaleY = 500 / mapBounds.height;
+      const titleBounds = Array.from(copy.children, element => {
+        const range = document.createRange();
+        range.selectNodeContents(element);
+        return range.getBoundingClientRect();
+      });
+      const occupied = [...titleBounds, ...cards.map(card => card.getBoundingClientRect())];
+      const top = Math.min(...occupied.map(bounds => bounds.top));
+      const bottom = Math.max(...occupied.map(bounds => bounds.bottom));
+      const hero = map.getBoundingClientRect();
+      const headerBottom = hero.top + header.getBoundingClientRect().height;
+      const occupiedHeight = bottom - top;
+      const centeredTop = (hero.top + hero.bottom - occupiedHeight) / 2;
+      const clearance = Math.max(0, Math.min(32, (hero.bottom - headerBottom - occupiedHeight) / 2));
+      const adjustment = Math.max(headerBottom + clearance, centeredTop) - top;
+
+      if (Math.abs(adjustment) > .1) {
+        atlasOffset += adjustment;
+        map.style.setProperty('--atlas-offset', `${atlasOffset}px`);
+      }
+
+      titleBounds.forEach((bounds, index) => {
+        const clearance = titleClearances[index];
+        const horizontalPadding = 8;
+        const verticalPadding = 2;
+        clearance.setAttribute('x', (bounds.left - mapBounds.left - horizontalPadding) * scaleX);
+        clearance.setAttribute('y', (bounds.top - mapBounds.top - verticalPadding) * scaleY);
+        clearance.setAttribute('width', (bounds.width + 2 * horizontalPadding) * scaleX);
+        clearance.setAttribute('height', (bounds.height + 2 * verticalPadding) * scaleY);
+      });
+    }
+
+    atlasObserver?.disconnect();
+    atlasObserver = new ResizeObserver(layoutAtlas);
+    [map, header, canvas, copy, ...cards].forEach(element => atlasObserver.observe(element));
+    document.fonts.ready.then(() => {
+      if (canvas.isConnected) layoutAtlas();
+    });
     const roster = root.querySelector('.network-roster');
     const rosterTooltip = root.querySelector('.network-roster-tooltip');
+    const authorPopover = root.querySelector('#map-author-popover');
+    const authorList = authorPopover.querySelector('.network-map-author-list');
+    const closeAuthors = authorPopover.querySelector('.network-map-author-close');
+    let activeAuthorRegion = null;
+    let authorTrigger = null;
+
+    function setAuthorExpanded(region, expanded) {
+      map.querySelectorAll(`[data-region="${region}"], [data-map-author="${region}"]`).forEach(button => {
+        button.setAttribute('aria-expanded', String(expanded));
+      });
+      canvas.querySelector(`[data-map-line="${region}"]`).classList.toggle('is-author-open', expanded);
+    }
+
+    function hideMapAuthors(restoreFocus = false) {
+      if (!activeAuthorRegion) return;
+      setAuthorExpanded(activeAuthorRegion, false);
+      authorPopover.hidden = true;
+      activeAuthorRegion = null;
+      if (restoreFocus) authorTrigger.focus({ preventScroll: true });
+      authorTrigger = null;
+    }
+
+    function toggleMapAuthors(regionKey, trigger) {
+      if (regionKey === activeAuthorRegion) {
+        hideMapAuthors();
+        return;
+      }
+      hideMapAuthors();
+      const region = mapRegions.find(item => item.key === regionKey);
+      const people = getPeople(data, { region: regionKey });
+      authorPopover.querySelector('h2').textContent = name(region);
+      authorList.innerHTML = people.map(person => {
+        const label = escape(personName(person));
+        return `<button class="network-portrait" type="button" data-person="${person.key}" aria-label="${label}" aria-haspopup="dialog" title="${label}"><img src="${person.photo}" alt="" width="28" height="30"></button>`;
+      }).join('');
+      authorList.scrollTop = 0;
+      authorPopover.hidden = false;
+      activeAuthorRegion = regionKey;
+      authorTrigger = trigger;
+      setAuthorExpanded(regionKey, true);
+
+      const bounds = map.getBoundingClientRect();
+      const point = trigger.getBoundingClientRect();
+      const width = authorPopover.offsetWidth;
+      const height = authorPopover.offsetHeight;
+      const left = Math.max(8, Math.min(point.left - bounds.left + (point.width - width) / 2, bounds.width - width - 8));
+      const below = point.bottom - bounds.top + 8;
+      const above = point.top - bounds.top - height - 8;
+      const top = below + height > bounds.height - 8 && above >= 8 ? above : below;
+      authorPopover.style.setProperty('--author-left', `${left}px`);
+      authorPopover.style.setProperty('--author-top', `${Math.max(8, Math.min(top, bounds.height - height - 8))}px`);
+    }
+
+    map.addEventListener('pointerdown', event => {
+      if (!event.target.closest('#map-author-popover, [data-region], [data-map-author]')) hideMapAuthors();
+    });
+    map.addEventListener('keydown', event => {
+      if (!activeAuthorRegion) return;
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        hideMapAuthors(true);
+      } else if (event.key === 'Tab' && !event.shiftKey && event.target === authorTrigger) {
+        event.preventDefault();
+        closeAuthors.focus({ preventScroll: true });
+      } else if (event.key === 'Tab' && event.shiftKey && event.target === closeAuthors) {
+        event.preventDefault();
+        authorTrigger.focus({ preventScroll: true });
+      }
+    });
     let dialogTrigger = null;
-    let zoom = 1;
 
     function hideRosterName() {
       rosterTooltip.hidden = true;
@@ -127,56 +291,34 @@
       if (button) showRosterName(button);
     });
     roster.addEventListener('focusout', hideRosterName);
-    roster.addEventListener('toggle', hideRosterName);
     roster.addEventListener('keydown', event => {
       if (event.key === 'Escape') hideRosterName();
     });
 
-    function setZoom(next, center) {
-      const x = center ? center[0] : (viewport.scrollLeft + viewport.clientWidth / 2 - canvas.offsetLeft) / canvas.offsetWidth;
-      const y = center ? center[1] : (viewport.scrollTop + viewport.clientHeight / 2 - canvas.offsetTop) / canvas.offsetHeight;
-      zoom = Math.max(1, Math.min(4, next));
-      canvas.style.setProperty('--map-zoom', zoom);
-      viewport.dataset.zoomed = String(zoom > 1);
-      root.querySelector('.network-scale').textContent = `${Math.round(zoom * 100)}%`;
-      root.querySelector('[data-zoom="out"]').disabled = zoom <= 1;
-      root.querySelector('[data-zoom="in"]').disabled = zoom >= 4;
-      viewport.scrollTo(
-        canvas.offsetLeft + x * canvas.offsetWidth - viewport.clientWidth / 2,
-        canvas.offsetTop + y * canvas.offsetHeight - viewport.clientHeight / 2
-      );
+    const personCard = person => `<button class="network-person-row" type="button" data-person="${person.key}" aria-haspopup="dialog"><img src="${person.photo}" alt="" width="64" height="70" loading="lazy"><span><strong>${escape(personName(person))}</strong><small>${escape(role(person))}</small></span></button>`;
+    function renderLinkedPeople(people) {
+      return `<h3 class="network-subheading">${t('关联成员', 'Linked people')} <span>${people.length}</span></h3><div class="network-person-list">${people.map(personCard).join('')}</div>`;
     }
 
-    const personCard = person => `<button class="network-person-row" type="button" data-person="${person.key}" aria-haspopup="dialog"><img src="${person.photo}" alt="" width="64" height="70" loading="lazy"><span><strong>${escape(personName(person))}</strong><small>${escape(role(person))}</small></span></button>`;
-    const emptyPeople = () => `<div class="network-empty"><p>${state.query ? t('没有找到匹配的成员。', 'No people match your search.') : t('此处暂无已关联的成员资料。', 'No profiles are linked to this location yet.')}</p><button type="button" data-all-people>${t('浏览完整团队', 'Browse the full team')}</button></div>`;
-
-    function update({ resetScroll = true } = {}) {
+    function update() {
       const region = findRegion(state.region);
       const partners = getPartners(data, state.region);
-      const people = getPeople(data, state);
       const partner = partners.find(item => item.key === state.partner);
-      panelTitle.textContent = region ? name(region) : t('所有地区', 'All regions');
-      const regionPeople = region ? getPeople(data, { region: state.region }).length : data.team.length;
-      panelCount.textContent = `${institutionCount(partners.length)} · ${region
-        ? t(`${regionPeople} 位已关联成员`, `${regionPeople} linked people`)
-        : peopleCount(regionPeople)}`;
+      const people = region ? data.team.filter(person => profiles[person.key]?.region === region.key) : data.team;
+      const regionLabel = region ? name(region) : '';
+      panelCount.textContent = `${regionLabel ? `${regionLabel} · ` : ''}${institutionCount(partners.length)} · ${region
+        ? t(`${people.length} 位已关联成员`, `${people.length} linked ${people.length === 1 ? 'person' : 'people'}`)
+        : peopleCount(people.length)}`;
       root.querySelectorAll('[data-region]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.region === state.region)));
       root.querySelectorAll('[data-map-line]').forEach(line => line.classList.toggle('is-selected', line.dataset.mapLine === state.region));
       root.querySelectorAll('.network-map-marks [data-partner]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.partner === state.partner)));
-      root.querySelectorAll('[data-mode]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.mode === state.mode)));
-      search.hidden = state.mode !== 'people';
-      input.value = state.query;
-
-      if (state.mode === 'people') {
-        content.innerHTML = `<div class="network-person-list">${people.length ? people.map(personCard).join('') : emptyPeople()}</div>`;
-      } else if (partner) {
-        const linkedPeople = getPeople(data, { partner: state.partner });
-        content.innerHTML = `<button class="network-back" type="button" data-back>${t('查看本地区全部机构', 'All institutions in this location')}</button><div class="network-institution-detail"><img src="${partner.logo}" alt=""><h4>${escape(partnerName(partner))}</h4><p>${name(partnerRegion(partner.key))}</p></div><h4 class="network-subheading">${t('关联成员', 'Linked people')} <span>${linkedPeople.length}</span></h4>${linkedPeople.length ? linkedPeople.map(personCard).join('') : `<p class="network-empty-copy">${t('尚未补充该机构与项目成员的关联资料。可在完整团队中浏览全部成员。', 'Member affiliations for this institution have not yet been linked. Explore all members in the full team.')}</p>`}`;
+      if (partner) {
+        const linkedPeople = people.filter(person => profiles[person.key].partners.includes(partner.key));
+        content.innerHTML = `<button class="network-back" type="button" data-back>${t('查看本地区全部机构', 'All institutions in this location')}</button><div class="network-institution-detail"><img src="${partner.logo}" alt=""><h3>${escape(partnerName(partner))}</h3><p>${name(partnerRegion(partner.key))}</p></div>${linkedPeople.length ? renderLinkedPeople(linkedPeople) : `<p class="network-empty-copy">${t('尚未补充该机构与项目成员的关联资料。可在完整团队中浏览全部成员。', 'Member affiliations for this institution have not yet been linked. Explore all members in the full team.')}</p>`}`;
       } else {
-        content.innerHTML = `<div class="network-institution-list">${partners.map(partner => `<button class="network-institution-row" type="button" data-partner="${partner.key}"><img src="${partner.logo}" alt="" loading="lazy"><span><strong>${escape(partnerName(partner))}</strong><small>${name(partnerRegion(partner.key))}</small></span></button>`).join('')}</div>${region && people.length ? `<h4 class="network-subheading">${t('关联成员', 'Linked people')} <span>${people.length}</span></h4>${people.map(personCard).join('')}` : ''}`;
+        content.innerHTML = `<div class="network-institution-list">${partners.map(partner => `<button class="network-institution-row" type="button" data-partner="${partner.key}"><img src="${partner.logo}" alt="" loading="lazy"><span><strong>${escape(partnerName(partner))}</strong><small>${name(partnerRegion(partner.key))}</small></span></button>`).join('')}</div>${region && people.length ? renderLinkedPeople(people) : ''}`;
       }
-      if (resetScroll) content.scrollTop = 0;
-      status.textContent = `${panelTitle.textContent}${t('。', '. ')}${partner ? partnerName(partner) : state.mode === 'people' ? peopleCount(people.length) : institutionCount(partners.length)}`;
+      status.textContent = partner ? partnerName(partner) : panelCount.textContent;
     }
 
     function openPerson(key, trigger) {
@@ -184,8 +326,10 @@
       if (!person) return;
       hideRosterName();
       const profile = profiles[key];
+      const affiliations = getAffiliations(data, person);
+      const inTeamRoster = Boolean(trigger.closest('#team'));
       dialogTrigger = trigger;
-      dialog.querySelector('.network-dialog-content').innerHTML = `<img class="network-profile-photo" src="${person.photo}" alt="${escape(personName(person))}" width="160" height="176"><p class="network-kicker">${escape(role(person))}</p><h3 id="network-person-title">${escape(personName(person))}</h3>${person.nameEn !== person.nameZh ? `<p class="network-profile-other-name">${escape(en ? person.nameZh : person.nameEn)}</p>` : ''}${profile ? `<p class="network-profile-affiliation">${escape(name(profile))}</p><p class="network-profile-region">${name(findRegion(profile.region))}</p><a class="network-profile-source" href="${profile.url}" target="_blank" rel="noopener noreferrer">${t('机构公开资料', 'Institutional profile')}</a>` : ''}<a class="network-profile-team" href="#member-${person.key}">${t('在团队名册中查看', 'View in the team roster')}</a>`;
+      dialog.querySelector('.network-dialog-content').innerHTML = `<img class="network-profile-photo" src="${person.photo}" alt="${escape(personName(person))}" width="160" height="176"><p class="network-kicker">${escape(role(person))}</p><h3 id="network-person-title">${escape(personName(person))}</h3>${person.nameEn !== person.nameZh ? `<p class="network-profile-other-name">${escape(en ? person.nameZh : person.nameEn)}</p>` : ''}<div class="network-profile-affiliations"><h4>${t('机构', 'Affiliations')}</h4><ul>${affiliations.map(affiliation => `<li>${escape(affiliation.name)}</li>`).join('')}</ul></div>${profile ? `<a class="network-profile-source" href="${profile.url}" target="_blank" rel="noopener noreferrer">${t('机构公开资料', 'Institutional profile')}</a>` : ''}${inTeamRoster ? '' : `<a class="network-profile-team" href="#member-${person.key}">${t('在团队名册中查看', 'View in the team roster')}</a>`}`;
       dialog.showModal();
     }
 
@@ -195,18 +339,15 @@
         const selected = state.region === button.dataset.region && !state.partner;
         state.region = selected ? 'all' : button.dataset.region;
         state.partner = null;
-        state.query = '';
         update();
-      } else if (button?.hasAttribute('data-mode')) {
-        state.mode = button.dataset.mode;
-        state.partner = null;
-        state.query = '';
-        update();
+        toggleMapAuthors(button.dataset.region, button);
+      } else if (button?.hasAttribute('data-map-author')) {
+        toggleMapAuthors(button.dataset.mapAuthor, button);
+      } else if (button === closeAuthors) {
+        hideMapAuthors(true);
       } else if (button?.hasAttribute('data-partner')) {
         state.partner = button.dataset.partner;
         state.region = partnerRegion(state.partner).key;
-        state.mode = 'institutions';
-        state.query = '';
         update();
         if (!button.closest('.network-map-marks')) content.querySelector('[data-back]').focus();
       } else if (button?.hasAttribute('data-back')) {
@@ -214,19 +355,10 @@
         state.partner = null;
         update();
         content.querySelector(`[data-partner="${key}"]`)?.focus({ preventScroll: true });
-      } else if (button?.hasAttribute('data-all-people')) {
-        state.region = 'all';
-        state.partner = null;
-        state.mode = 'people';
-        state.query = '';
-        update();
-        input.focus({ preventScroll: true });
       } else if (button?.hasAttribute('data-person')) {
         openPerson(button.dataset.person, button);
       } else if (button?.classList.contains('network-dialog-close')) {
         dialog.close();
-      } else if (button?.hasAttribute('data-zoom')) {
-        setZoom(button.dataset.zoom === 'fit' ? 1 : zoom * (button.dataset.zoom === 'in' ? 1.5 : 1 / 1.5), button.dataset.zoom === 'fit' ? [.5, .5] : undefined);
       }
       const teamLink = event.target.closest('.network-profile-team');
       if (teamLink) {
@@ -238,23 +370,9 @@
         destination?.focus({ preventScroll: true });
       }
     });
-    input.addEventListener('input', () => {
-      state.query = input.value;
-      update({ resetScroll: false });
-    });
-    let drag = null;
-    viewport.addEventListener('pointerdown', event => {
-      if (zoom <= 1 || event.pointerType !== 'mouse' || event.button !== 0 || event.target.closest('button')) return;
-      drag = { x: event.clientX, y: event.clientY, left: viewport.scrollLeft, top: viewport.scrollTop };
-      viewport.setPointerCapture(event.pointerId);
-      viewport.classList.add('is-panning');
-    });
-    viewport.addEventListener('pointermove', event => {
-      if (drag) viewport.scrollTo(drag.left + drag.x - event.clientX, drag.top + drag.y - event.clientY);
-    });
-    viewport.addEventListener('lostpointercapture', () => {
-      drag = null;
-      viewport.classList.remove('is-panning');
+    document.getElementById('team').addEventListener('click', event => {
+      const button = event.target.closest('button[data-person]');
+      if (button) openPerson(button.dataset.person, button);
     });
     dialog.addEventListener('click', event => {
       const rect = dialog.getBoundingClientRect();
@@ -262,9 +380,7 @@
     });
     dialog.addEventListener('close', () => dialogTrigger?.focus({ preventScroll: true }));
     update();
-    const initialZoom = Math.min(1.35, Math.max(1, 560 / viewport.clientWidth));
-    // Keep the eastern and western pins visible in the closer mobile framing.
-    setZoom(initialZoom, [initialZoom > 1 ? .54 : .5, .5]);
+    layoutAtlas();
   }
 
   window.ODBNetwork = { render, init, getPartners, getPeople, project };

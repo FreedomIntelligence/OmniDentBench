@@ -36,14 +36,25 @@ test('regional people require source-backed, valid affiliations', () => {
     assert.match(profile.url, /^https:\/\//);
     assert.ok(profile.partners.every(partner => region.partners.includes(partner)));
   }
-  assert.equal(getPeople(data).length, 105);
-  assert.equal(getPeople(data, { region: 'hong-kong' }).length, 4);
-  assert.equal(getPeople(data, { region: 'mainland' }).length, 2);
-  assert.equal(getPeople(data, { region: 'nigeria' }).length, 0);
-  assert.equal(getPeople(data, { partner: 'hku' }).length, 4);
-  assert.equal(getPeople(data, { partner: 'frd' }).length, 0);
+  assert.equal(getPeople(data).length, 107);
+  assert.equal(Object.keys(data.affiliations).length, 44);
+  for (const person of data.team) {
+    assert.ok(person.affiliationIds.length > 0, person.nameEn);
+    assert.ok(person.affiliationIds.every(id => data.affiliations[id]?.name), person.nameEn);
+  }
+  for (const affiliation of Object.values(data.affiliations)) {
+    const region = regions.find(item => item.key === affiliation.region);
+    assert.ok(!affiliation.partners || affiliation.partners.every(partner => region?.partners.includes(partner)));
+  }
+  assert.ok(getPeople(data, { region: 'hong-kong' }).some(person => person.key === '059-junwen-wang'));
+  assert.ok(getPeople(data, { region: 'mainland' }).some(person => person.key === '059-junwen-wang'));
+  assert.ok(getPeople(data, { region: 'nigeria' }).length > 0);
+  assert.deepEqual(Array.from(getPeople(data, { partner: 'segi' }), person => person.key), ['103-suresh-kandagal-veerabhadrappa']);
+  assert.match(data.affiliations[25].name, /SEGi University.*Malaysia/);
   assert.equal(getPeople(data, { partner: 'cuhk' })[0].key, '061-benyou-wang');
   assert.equal(getPeople(data, { region: 'mainland', partner: 'hku' }).length, 0);
+  assert.equal(getPeople(data, { region: 'japan', query: 'Yuta Chiba' })[0].key, '106-yuta-chiba');
+  assert.equal(getPeople(data, { region: 'spain', query: 'Lluís Giner Tarrida' })[0].key, '107-lluis-giner-tarrida');
 });
 
 test('the complete roster can be searched in either language without assigning missing affiliations', () => {
@@ -53,7 +64,7 @@ test('the complete roster can be searched in either language without assigning m
   assert.equal(getPeople(data, { query: 'no-such-person' }).length, 0);
 });
 
-test('both languages render all seven interactive locations and all author portraits', () => {
+test('both languages render institution and author locations on the map and the full roster below', () => {
   const groups = [...new Set(data.team.map(person => person.category))].map(category => [category, category, category]);
   for (const en of [true, false]) {
     const html = render({ en, data, groups });
@@ -66,33 +77,54 @@ test('both languages render all seven interactive locations and all author portr
     assert.equal((hero.match(/class="network-map-canvas"/g) || []).length, 1);
     assert.ok(html.indexOf('id="network-panel"') > directoryStart);
     assert.ok(html.indexOf('class="network-roster"') > directoryStart);
-    assert.equal((html.match(/class="network-pin"/g) || []).length, 7);
+    assert.equal((hero.match(/class="network-pin"/g) || []).length, 7);
+    assert.equal((hero.match(/class="network-pin network-author-pin"/g) || []).length, 4);
     assert.equal((html.match(/data-partner="/g) || []).length, 16);
-    assert.equal((html.match(/class="network-portrait"/g) || []).length, data.team.length);
+    const directory = html.slice(directoryStart);
+    assert.equal((directory.match(/class="network-portrait"/g) || []).length, data.team.length);
     assert.match(html, en ? /Chinese mainland/ : /中国大陆/);
     assert.match(html, en ? /Hong Kong, China/ : /中国香港/);
     assert.match(html, /aria-haspopup="dialog"/);
-    assert.match(html, /<details class="network-roster" open>/);
-    assert.match(html, /class="network-roster-skip" href="#team".*\s+<div class="network-roster-grid">/);
-    assert.doesNotMatch(html, /<select\b/);
+    assert.match(html, /<div class="network-roster" role="group"/);
+    assert.match(html, /class="network-roster-skip network-roster-shortcut visually-hidden" href="#team"/);
+    assert.ok(html.lastIndexOf('class="network-portrait"') < html.indexOf('class="network-roster-skip" href="#team"'));
+    assert.doesNotMatch(html, /<select\b|network-map-directory|data-mode=/);
+    assert.doesNotMatch(html, /institutions-title|network-panel-title|network-profile-note|network-attribution|institution-grid/);
     const portraits = [...html.matchAll(/class="network-portrait" type="button" data-person="([^"]+)"/g)];
-    assert.deepEqual(portraits.slice(0, 3).map(([, key]) => key), ['059-junwen-wang', '060-zuolin-jin', '061-benyou-wang']);
+    assert.equal(new Set(portraits.map(([, key]) => key)).size, data.team.length);
+    assert.match(hero, /id="map-author-popover" aria-labelledby="map-author-title" hidden/);
+    assert.doesNotMatch(hero, /data-zoom=|network-map-controls/);
+    assert.doesNotMatch(hero, /class="network-map-authors"|class="network-map-controls"[^]*data-map-author=/);
+    assert.doesNotMatch(directory, /data-map-author=|map-author-popover/);
+    assert.equal((directory.match(/class="network-roster-grid"/g) || []).length, 1);
+    for (const region of ['japan', 'czechia', 'spain', 'united-kingdom', ...regions.map(item => item.key)]) {
+      assert.ok(hero.includes(`data-map-author="${region}"`));
+      assert.ok(hero.includes(`data-map-line="${region}"`));
+    }
+    assert.deepEqual(Array.from(data.team.filter(person => person.category === 'steering_chair'), person => person.key), ['059-junwen-wang', '060-zuolin-jin', '061-benyou-wang']);
   }
 });
 
-test('the website sample exposes the unchanged public ODB-0264 records and figures', () => {
+test('all three website samples preserve their bilingual public records and figures', () => {
   const root = path.join(__dirname, '..');
   const readJson = file => JSON.parse(fs.readFileSync(path.join(root, file), 'utf8'));
   for (const language of ['en', 'zh-CN']) {
-    const item = readJson(`docs/assets/items/odb-0264.${language}.json`);
     const release = readJson(`data/${language}/items.json`);
-    assert.deepEqual(item, release.items.find(record => record.id === 'ODB-0264'));
-    assert.equal(item.question_type, 'subjective');
-    assert.equal(item.attachments.length, 3);
-    item.attachments.forEach(({ sha256 }, index) => {
-      const file = path.join(root, `docs/images/atlas/odb-0264-fig-${index + 1}.jpg`);
-      assert.equal(createHash('sha256').update(fs.readFileSync(file)).digest('hex'), sha256);
-    });
+    for (const [id, type, figures] of [
+      ['ODB-0264', 'subjective', 3],
+      ['ODB-1164', 'objective_exact', 2],
+      ['ODB-1161', 'objective_multiple', 1]
+    ]) {
+      const key = id.toLowerCase();
+      const item = readJson(`docs/assets/items/${key}.${language}.json`);
+      assert.deepEqual(item, release.items.find(record => record.id === id));
+      assert.equal(item.question_type, type);
+      assert.equal(item.attachments.length, figures);
+      item.attachments.forEach(({ sha256 }, index) => {
+        const file = path.join(root, `docs/images/atlas/${key}-fig-${index + 1}.jpg`);
+        assert.equal(createHash('sha256').update(fs.readFileSync(file)).digest('hex'), sha256);
+      });
+    }
   }
 });
 

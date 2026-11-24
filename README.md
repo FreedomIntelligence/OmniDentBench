@@ -22,7 +22,7 @@
 
 A **benchmark** gives different AI models the same questions and applies the same scoring rules to their answers. OmniDentBench tests how models interpret dental findings and reason across **12 specialties**. Each of its **8 language editions** contains the same **1,178 items**, including **1,099 with figures**.
 
-[![Collaboration map with 16 partner institutions, portraits for 105 team members and a sample dental radiograph](docs/images/atlas/network-overview.png)](https://freedomintelligence.github.io/OmniDentBench/#collaboration-map)
+[![OmniDentBench homepage map showing partner institutions and author portraits by location](docs/images/atlas/network-overview.png)](https://freedomintelligence.github.io/OmniDentBench/#collaboration-map)
 
 **Try reading a benchmark item.** In ODB-0777, the model sees a dental radiograph and names the root canal configuration. A judge compares its answer with the reference and awards 100 or 0. For an open-ended question, the judge scores each criterion in the item's weighted rubric. [Radiograph by Doumari et al., Fig. 2](https://doi.org/10.7759/cureus.86471) · [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 

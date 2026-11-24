@@ -22,76 +22,135 @@ const groups = [
 ];
 
 function renderSampleItem(t) {
-  const record = `./assets/items/odb-0264.${t('zh-CN', 'en')}.json`;
-  const article = 'https://pmc.ncbi.nlm.nih.gov/articles/PMC11987563/';
-  const license = 'https://creativecommons.org/licenses/by-nc-nd/4.0/';
-  const prompt = t(
-    '一名36岁男性拟在上颌后牙区接受种植治疗。请查看其术前CBCT图像（图 1、图 2 和图 3）。这些图像中哪项解剖发现对治疗决策的影响最大？对该患者而言，最安全的治疗策略是什么？请根据影像作答，说明是否可以进行种植体植入；若考虑骨增量，哪项操作风险最高；以及如何尽量降低并处理主要的术中风险。',
-    'A 36-year-old man is being prepared for implants in the posterior maxilla. Review Fig. 1, Fig. 2 and Fig. 3 from his preoperative CBCT. What anatomic finding on these images most changes management, and what is your safest treatment strategy for this patient? Base your answer on the imaging and explain whether implant placement can proceed, which maneuver becomes highest risk if augmentation is considered, and how you would minimize and manage the main intraoperative hazard.'
-  );
-  const figures = [
-    [1, 699, 565, t('双侧上颌窦的连续 CBCT 切片', 'Sequential CBCT sections of the maxillary sinuses on both sides')],
-    [2, 687, 359, t('带数字测量标注的两幅 CBCT 切片', 'Two CBCT sections with numerical measurement labels')],
-    [3, 675, 359, t('带垂直测量标注的两幅 CBCT 切片', 'Two CBCT sections with vertical measurement labels')]
-  ];
-  const criteria = [
-    [t('证据整合', 'Evidence Integration'), 25],
-    [t('治疗规划', 'Treatment Planning'), 40],
-    [t('风险获益分析', 'Risk-Benefit Analysis'), 20],
-    [t('并发症识别与应对', 'Complication Awareness'), 15]
+  const language = t('zh-CN', 'en');
+  const objective = window.ODB_SAMPLE_ITEMS;
+  const radiology = t('口腔颌面放射学', 'Oral and Maxillofacial Radiology');
+  const samples = [
+    {
+      id: 'ODB-0264',
+      label: t('主观题', 'Subjective'),
+      specialty: t('牙周病学', 'Periodontics'),
+      prompt: t(
+        '一名36岁男性拟在上颌后牙区接受种植治疗。请查看其术前CBCT图像（图 1、图 2 和图 3）。这些图像中哪项解剖发现对治疗决策的影响最大？对该患者而言，最安全的治疗策略是什么？请根据影像作答，说明是否可以进行种植体植入；若考虑骨增量，哪项操作风险最高；以及如何尽量降低并处理主要的术中风险。',
+        'A 36-year-old man is being prepared for implants in the posterior maxilla. Review Fig. 1, Fig. 2 and Fig. 3 from his preoperative CBCT. What anatomic finding on these images most changes management, and what is your safest treatment strategy for this patient? Base your answer on the imaging and explain whether implant placement can proceed, which maneuver becomes highest risk if augmentation is considered, and how you would minimize and manage the main intraoperative hazard.'
+      ),
+      article: 'PMC11987563',
+      credit: 'Hosseinzadeh et al. (2025)',
+      license: ['CC BY-NC-ND 4.0', 'by-nc-nd/4.0'],
+      figures: [
+        [699, 565, 'fig0001', t('双侧上颌窦的连续 CBCT 切片', 'Sequential CBCT sections of the maxillary sinuses on both sides')],
+        [687, 359, 'fig0002', t('带数字测量标注的两幅 CBCT 切片', 'Two CBCT sections with numerical measurement labels')],
+        [675, 359, 'fig0003', t('带垂直测量标注的两幅 CBCT 切片', 'Two CBCT sections with vertical measurement labels')]
+      ],
+      criteria: [
+        [t('证据整合', 'Evidence Integration'), 25],
+        [t('治疗规划', 'Treatment Planning'), 40],
+        [t('风险获益分析', 'Risk-Benefit Analysis'), 20],
+        [t('并发症识别与应对', 'Complication Awareness'), 15]
+      ]
+    },
+    {
+      id: 'ODB-1164',
+      label: t('客观题 · 精确答案', 'Objective-Exact'),
+      specialty: radiology,
+      ...objective['ODB-1164'][language],
+      article: 'PMC10814903',
+      credit: 'Akitomo et al. (2024)',
+      license: ['CC BY 4.0', 'by/4.0'],
+      figures: [
+        [718, 675, 'children-11-00006-f004', t('从牙冠到牙根的连续 CBCT 切片', 'Sequential CBCT sections from crown to root')],
+        [756, 548, 'children-11-00006-f005', t('CBCT 切片与三维牙体重建图', 'CBCT sections and three-dimensional tooth reconstructions')]
+      ]
+    },
+    {
+      id: 'ODB-1161',
+      label: t('客观题 · 选择题', 'Objective-Multiple Choice'),
+      specialty: radiology,
+      ...objective['ODB-1161'][language],
+      article: 'PMC7758263',
+      credit: 'Manila et al. (2020)',
+      license: ['CC BY-NC 3.0', 'by-nc/3.0'],
+      figures: [
+        [683, 273, 'F3', t('双侧上颌窦的轴位及冠状位 CBCT 图像', 'Axial and coronal CBCT views of the maxillary sinuses')]
+      ]
+    }
   ];
 
   return `
     <section id="sample-item" class="section sample-item" aria-labelledby="sample-title">
-      <header class="sample-heading">
-        <h2 id="sample-title">${t('主观题示例', 'Sample open-ended question')}</h2>
-        <p>ODB-0264 · ${t('牙周病学', 'Periodontics')}</p>
-      </header>
-      <div class="sample-layout">
-        <p class="sample-prompt">${prompt}</p>
-        <div class="sample-plate">
-          ${figures.map(([number, width, height, caption]) => {
-            const image = `./images/atlas/odb-0264-fig-${number}.jpg`;
-            const label = t(`图 ${number}`, `Fig. ${number}`);
-            return `<figure>
-              <a class="sample-image" href="${image}" aria-label="${t(`查看图 ${number} 原图`, `View full-size figure ${number}`)}"><img src="${image}" alt="${caption}" width="${width}" height="${height}" loading="lazy"></a>
-              <figcaption><strong>${label}.</strong> ${caption}<br><a href="${article}#fig000${number}">Hosseinzadeh et al. (2025)</a> · <a href="${license}">CC BY-NC-ND 4.0</a></figcaption>
-            </figure>`;
-          }).join('')}
-        </div>
+      <h2 id="sample-title">${t('题目示例', 'Sample questions')}</h2>
+      <div class="sample-tabs" role="tablist" aria-labelledby="sample-title">
+        ${samples.map(({ id, label }, index) => `<button type="button" role="tab" id="sample-tab-${id}" aria-controls="sample-panel-${id}" aria-selected="${index === 0}" tabindex="${index === 0 ? 0 : -1}">${label}</button>`).join('')}
       </div>
-      <details class="sample-rubric">
-        <summary>${t('查看评分规则', 'View scoring rubric')}</summary>
-        <dl>${criteria.map(([name, weight]) => `<div><dt>${name}</dt><dd>${weight}%</dd></div>`).join('')}</dl>
-        <p>${t('本题总分为四项得分的加权和。', 'The item score is the weighted sum of the four criteria.')}</p>
-        <a class="text-link" href="${record}">${t('查看完整条目、参考答案与量表', 'View the full item, reference answer and rubric')}</a>
-      </details>
+      ${samples.map(({ id, specialty, prompt, article, credit, license, figures, criteria, options, answers }, index) => `
+        <div class="sample-panel" role="tabpanel" id="sample-panel-${id}" aria-labelledby="sample-tab-${id}" tabindex="0"${index === 0 ? '' : ' hidden'}>
+          <p class="sample-meta">${id} · ${specialty}</p>
+          <div class="sample-layout">
+            <div>
+              <p class="sample-prompt">${prompt}</p>
+              ${options ? `<ol class="sample-options" type="A">${options.map(({ text }) => `<li>${text}</li>`).join('')}</ol>` : ''}
+            </div>
+            <div class="sample-plate" data-figures="${figures.length}">
+              ${figures.map(([width, height, anchor, caption], figureIndex) => {
+                const number = figureIndex + 1;
+                const image = `./images/atlas/${id.toLowerCase()}-fig-${number}.jpg`;
+                return `<figure>
+                  <a class="sample-image" href="${image}" aria-label="${t(`查看图 ${number} 原图`, `View full-size figure ${number}`)}"><img src="${image}" alt="${caption}" width="${width}" height="${height}" loading="lazy"></a>
+                  <figcaption><strong>${t(`图 ${number}`, `Fig. ${number}`)}.</strong> ${caption}<br><a href="https://pmc.ncbi.nlm.nih.gov/articles/${article}/#${anchor}">${credit}</a> · <a href="https://creativecommons.org/licenses/${license[1]}/">${license[0]}</a></figcaption>
+                </figure>`;
+              }).join('')}
+            </div>
+          </div>
+          <details class="sample-rubric">
+            <summary>${criteria ? t('查看评分规则', 'View scoring rubric') : t('查看答案', 'View answer')}</summary>
+            ${criteria ? `<dl>${criteria.map(([name, weight]) => `<div><dt>${name}</dt><dd>${weight}%</dd></div>`).join('')}</dl>
+              <p>${t('本题总分为四项得分的加权和。', 'The item score is the weighted sum of the four criteria.')}</p>` : `<p>${answers.join(t('、', ' / '))}</p>`}
+            <a class="text-link" href="./assets/items/${id.toLowerCase()}.${language}.json">${criteria ? t('查看完整条目、参考答案与量表', 'View the full item, reference answer and rubric') : t('查看完整条目', 'View the full item')}</a>
+          </details>
+        </div>`).join('')}
     </section>`;
 }
 
-let activeInstitution = null;
-let pinnedInstitution = null;
+function initSampleTabs() {
+  const tablist = document.querySelector('.sample-tabs');
+  const tabs = [...tablist.querySelectorAll('[role="tab"]')];
 
-function closeInstitution() {
-  if (!activeInstitution) return;
-  activeInstitution.removeAttribute('data-open');
-  activeInstitution.setAttribute('aria-expanded', 'false');
-  activeInstitution = null;
+  function selectTab(selected) {
+    tabs.forEach(tab => {
+      const active = tab === selected;
+      tab.setAttribute('aria-selected', String(active));
+      tab.tabIndex = active ? 0 : -1;
+      document.getElementById(tab.getAttribute('aria-controls')).hidden = !active;
+    });
+  }
+
+  tablist.addEventListener('click', event => {
+    const tab = event.target.closest('[role="tab"]');
+    if (tab) selectTab(tab);
+  });
+
+  tablist.addEventListener('keydown', event => {
+    const current = tabs.indexOf(event.target);
+    const next = {
+      ArrowLeft: (current + tabs.length - 1) % tabs.length,
+      ArrowRight: (current + 1) % tabs.length,
+      Home: 0,
+      End: tabs.length - 1
+    }[event.key];
+    if (next === undefined) return;
+    event.preventDefault();
+    selectTab(tabs[next]);
+    tabs[next].focus();
+  });
 }
 
-function showInstitution(button) {
-  if (activeInstitution !== button) {
-    closeInstitution();
-    pinnedInstitution = null;
-  }
-  activeInstitution = button;
-  button.setAttribute('data-open', '');
-  button.setAttribute('aria-expanded', 'true');
+function renderPortrait(person, t) {
+  const name = en ? person.nameEn : person.nameZh;
+  const image = `<img loading="lazy" src="${person.photo}" alt="" width="400" height="400">`;
+  return `<button class="portrait" type="button" data-person="${person.key}" aria-haspopup="dialog" aria-label="${t(`查看 ${name} 的资料`, `View profile for ${name}`)}">${image}</button>`;
 }
 
 function render() {
-  closeInstitution();
-  pinnedInstitution = null;
   const t = (zh, english) => en ? english : zh;
   document.documentElement.lang = en ? 'en' : 'zh-CN';
   document.getElementById('app').innerHTML = `
@@ -102,9 +161,9 @@ function render() {
         <span>OmniDentBench</span>
       </a>
       <nav aria-label="${t('主导航', 'Main navigation')}">
-        <a href="#benchmark">${t('数据覆盖', 'Data coverage')}</a>
-        <a href="#method">${t('评分方法', 'Scoring')}</a>
-        <a href="#institutions">${t('合作机构', 'Institutions')}</a>
+        <a href="#sample-item">${t('题目示例', 'Sample')}</a>
+        <a href="#benchmark">${t('数据覆盖', 'Dataset')}</a>
+        <a href="#method">${t('评测', 'Evaluation')}</a>
         <a href="#team">${t('研究团队', 'Team')}</a>
       </nav>
       <button id="language" aria-label="${t('Switch to English', '切换到中文')}">${t('English', '中文')}<span aria-hidden="true"> / ${t('中', 'EN')}</span></button>
@@ -124,28 +183,32 @@ function render() {
       </section>
 
       <section id="method" class="section method-section" aria-labelledby="method-title">
-        <div class="section-heading"><h2 id="method-title">${t('评分方法', 'Scoring methods')}</h2></div>
+        <div class="section-heading">
+          <h2 id="method-title">${t('评测', 'Evaluation')}</h2>
+          <p class="method-intro">${t('模型根据所给题干及随题提供的图像作答。评测分别报告客观题准确率和主观题最终得分的平均值。', 'Models answer dental questions using the supplied text and any accompanying images. We report objective accuracy and the mean final score for subjective items separately.')}</p>
+        </div>
         <div class="method-grid">${[
-          ['713', '客观题', 'Objective items', '605 道精确答案题与 108 道选择题，由评判模型按 0 / 100 评分；均分对应百分比准确率。', '605 exact-answer and 108 multiple-choice items, judge-scored as 0 or 100. The mean corresponds to percentage accuracy.'],
-          ['465', '开放式题目', 'Open-ended items', '采用逐题加权评分标准。触发题目定义的安全红线时，该题最终得分为零。', 'Item-specific, weighted rubrics assess open-ended responses. A triggered safety red flag sets the final item score to zero.'],
-          ['', '运行与报告', 'Running and reporting', '记录待测模型与评判模型的配置，分别报告客观题准确率和开放题平均分。', 'Record the model and judge settings. Report objective accuracy and the open-ended mean separately.']
+          ['713', '客观题', 'Objective items', '包含 605 道精确答案题和 108 道选择题。精确答案题按预设的可接受答案判定，选择题要求所选选项与正确选项集合完全一致。完全正确得 100 分，其余得 0 分。', 'The benchmark includes 605 exact-answer items and 108 multiple-choice items. An exact answer must match an accepted variant. A multiple-choice response must match the full set of correct options. Each response earns 100 points if fully correct and zero otherwise.'],
+          ['465', '主观题', 'Subjective items', '评判模型依据每道题的评分量表逐项评分，再按权重汇总为 0 至 100 分。若回答触发该题预设的安全红线，最终得分为 0。', 'The judge scores each response against a case-specific rubric. The weighted criterion scores yield an item score from 0 to 100. If the response triggers a prespecified safety red flag, the final item score is zero.'],
+          ['', '评判模型', 'Judge Model', '论文研究以 24 位临床专家的独立评定为参照，比较了 5 个评判模型，最终选用 DeepSeek-Flash 为三种题型评分。', 'In the study, we compared 5 judge models against independent ratings from 24 clinicians and selected DeepSeek-Flash to score all three question formats.']
         ].map(([n, z, e, zp, ep]) => `<article class="method-card"><h3>${t(z, e)}${n ? ` <span>${n}</span>` : ''}</h3><p>${t(zp, ep)}</p></article>`).join('')}</div>
-        <div class="method-actions"><a class="button method-run" href="${repo}#quick-start">${t('运行评测', 'Run the evaluation')}</a><a class="text-link" href="${repo}#dataset-and-scoring">${t('阅读评测说明', 'Read the methodology')}</a></div>
+        <div class="method-actions"><a class="button method-run" href="${repo}#quick-start">${t('运行评测', 'Run the evaluation')}</a><a class="text-link" href="${repo}/blob/main/evaluation/README.md#scoring-and-failure-handling">${t('评分规则', 'Scoring protocol')}</a></div>
       </section>
 
       <section id="team" class="section people-section" aria-labelledby="team-title" tabindex="-1">
         <div class="section-heading"><h2 id="team-title">${t('研究团队', 'Research team')}</h2></div>
-        ${[...groups, ['cat_members', '猫咪成员', 'Cat members']].map(([key, z, e], i) => {
-          const members = key === 'cat_members' ? data.catMembers : data.team.filter(x => x.category === key);
-          return `<section class="team-group ${i === 0 ? 'leadership' : ''}" id="${key}"><h3 class="group-title">${t(z, e)} <small>${members.length}</small></h3><div class="team-grid ${i === 0 ? 'chairs' : ''}">${members.map(x => `<article class="person" id="member-${x.key}" tabindex="-1"><div class="portrait"><img loading="lazy" src="${x.photo}" alt="${en ? x.nameEn : x.nameZh}" width="400" height="400"></div><div class="person-caption"><h4>${en ? x.nameEn : x.nameZh}</h4>${x.nameEn !== x.nameZh ? `<p>${en ? x.nameZh : x.nameEn}</p>` : ''}${chairProfiles[x.key] ? `<a class="chair-affiliation" href="${chairProfiles[x.key].url}">${en ? chairProfiles[x.key].en : chairProfiles[x.key].zh}</a>` : ''}</div></article>`).join('')}</div></section>`;
+        ${groups.map(([key, z, e], i) => {
+          const members = data.team.filter(x => x.category === key);
+          return `<section class="team-group ${i === 0 ? 'leadership' : ''}" id="${key}"><h3 class="group-title">${t(z, e)} <small>${members.length}</small></h3><div class="team-grid ${i === 0 ? 'chairs' : ''}">${members.map(x => `<article class="person" id="member-${x.key}" tabindex="-1">${renderPortrait(x, t)}<div class="person-caption"><h4>${en ? x.nameEn : x.nameZh}</h4>${x.nameEn !== x.nameZh ? `<p>${en ? x.nameZh : x.nameEn}</p>` : ''}${chairProfiles[x.key] ? `<a class="chair-affiliation" href="${chairProfiles[x.key].url}">${en ? chairProfiles[x.key].en : chairProfiles[x.key].zh}</a>` : ''}</div></article>`).join('')}</div></section>`;
         }).join('')}
       </section>
     </main>
 
-    <footer><div class="footer-top"><a class="footer-brand" href="./">OmniDentBench</a><div><a href="${repo}">GitHub</a><a href="${repo}/issues">${t('反馈与交流', 'Feedback & issues')}</a></div></div><div class="footer-bottom"><p>${t('评测代码：MIT · 原创基准内容：CC BY 4.0', 'Evaluation code: MIT · Original benchmark content: CC BY 4.0')}</p><a href="${repo}/blob/main/data/figures.csv">${t('第三方图像来源与许可', 'Third-party figure credits & licences')}</a></div></footer>
+    <footer><div class="footer-top"><a class="footer-brand" href="./">OmniDentBench</a><div><a href="${repo}">GitHub</a><a href="${repo}/issues">${t('反馈与交流', 'Feedback & issues')}</a></div></div><div class="footer-bottom"><p>${t('评测代码：MIT · 原创基准内容：CC BY 4.0', 'Evaluation code: MIT · Original benchmark content: CC BY 4.0')}</p></div></footer>
   `;
 
   window.ODBNetwork.init({ en, data, groups });
+  initSampleTabs();
 
   document.getElementById('language').onclick = () => {
     en = !en;
@@ -155,44 +218,7 @@ function render() {
     render();
     document.getElementById('language').focus({ preventScroll: true });
   };
-
-  document.querySelectorAll('.institution').forEach(button => {
-    button.addEventListener('pointerenter', event => {
-      if (event.pointerType !== 'touch') showInstitution(button);
-    });
-    button.addEventListener('pointerleave', () => {
-      if (activeInstitution === button && document.activeElement !== button && pinnedInstitution !== button) closeInstitution();
-    });
-    button.addEventListener('focus', () => showInstitution(button));
-    button.addEventListener('blur', () => {
-      if (activeInstitution === button && pinnedInstitution !== button) closeInstitution();
-    });
-    button.addEventListener('click', () => {
-      if (pinnedInstitution === button) {
-        pinnedInstitution = null;
-        closeInstitution();
-      } else {
-        showInstitution(button);
-        pinnedInstitution = button;
-      }
-    });
-  });
 }
-
-document.addEventListener('pointerdown', event => {
-  if (activeInstitution && !activeInstitution.contains(event.target)) {
-    pinnedInstitution = null;
-    closeInstitution();
-  }
-});
-
-document.addEventListener('keydown', event => {
-  if (event.key === 'Escape' && activeInstitution) {
-    pinnedInstitution = null;
-    closeInstitution();
-    event.preventDefault();
-  }
-});
 
 render();
 document.getElementById(location.hash.slice(1))?.scrollIntoView({ behavior: 'instant' });

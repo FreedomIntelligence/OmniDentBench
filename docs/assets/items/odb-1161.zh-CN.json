@@ -1,0 +1,46 @@
+{
+  "id": "ODB-1161",
+  "source_pmcid": "PMC7758263",
+  "specialty": "Oral and Maxillofacial Radiology",
+  "tags": [
+    "Differential Diagnosis"
+  ],
+  "question_type": "objective_multiple",
+  "question_content": "一名19岁男性正在接受正畸检查，无面部不对称，无创伤或鼻窦手术史，也无鼻腔鼻窦症状。请查看 fig_01.jpg。最可能的诊断是什么？",
+  "question_options": [
+    {
+      "key": "A",
+      "text": "静默鼻窦综合征"
+    },
+    {
+      "key": "B",
+      "text": "先天性上颌窦发育不全"
+    },
+    {
+      "key": "C",
+      "text": "上颌窦黏液囊肿"
+    },
+    {
+      "key": "D",
+      "text": "慢性牙源性上颌窦炎"
+    }
+  ],
+  "golden_answer": {
+    "subjective_answer": "",
+    "subjective_directions": "Fig2显示静默鼻窦综合征的典型内陷型表现：单侧上颌窦容积减小并呈混浊，窦壁向内回缩，眶底向下移位，而患者无相关症状。先天性发育不全属于发育异常，而非后天获得性改变。黏液囊肿通常会导致膨胀性骨改建，而非鼻窦塌陷。牙源性鼻窦炎可能导致鼻窦混浊，但通常不会造成窦壁向内弯曲或眶底下移。",
+    "objective_exact_answers": [],
+    "objective_multiple_answers": [
+      "A"
+    ]
+  },
+  "answer_explanation": "Fig2显示静默鼻窦综合征的典型内陷型表现：单侧上颌窦容积减小并呈混浊，窦壁向内回缩，眶底向下移位，而患者无相关症状。先天性发育不全属于发育异常，而非后天获得性改变。黏液囊肿通常会导致膨胀性骨改建，而非鼻窦塌陷。牙源性鼻窦炎可能导致鼻窦混浊，但通常不会造成窦壁向内弯曲或眶底下移。",
+  "rubric": null,
+  "attachments": [
+    {
+      "file_name": "fig_01.jpg",
+      "mime_type": "image/jpeg",
+      "sha256": "c725ad0622a123e0c06be0de127939dd89c39f3d5af0fc0f5fbd05e8c04c017f",
+      "path": "data/images/c725ad0622a123e0c06be0de127939dd89c39f3d5af0fc0f5fbd05e8c04c017f.jpg"
+    }
+  ]
+}

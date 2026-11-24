@@ -1,0 +1,38 @@
+{
+  "id": "ODB-1164",
+  "source_pmcid": "PMC10814903",
+  "specialty": "Oral and Maxillofacial Radiology",
+  "tags": [
+    "Diagnostic Accuracy"
+  ],
+  "question_type": "objective_exact",
+  "question_content": "Review fig_01.jpg and fig_02.jpg. What is the fusion orientation shown?",
+  "question_options": null,
+  "golden_answer": {
+    "subjective_answer": "",
+    "subjective_directions": "The accessory tooth structure is attached on the palatal aspect of the maxillary lateral incisor rather than mesially or distally. That spatial relationship classifies the anomaly as labiopalatal fusion.",
+    "objective_exact_answers": [
+      "labiopalatal",
+      "labio-palatal",
+      "labiopalatal fusion",
+      "labio-palatal fusion"
+    ],
+    "objective_multiple_answers": []
+  },
+  "answer_explanation": "The accessory tooth structure is attached on the palatal aspect of the maxillary lateral incisor rather than mesially or distally. That spatial relationship classifies the anomaly as labiopalatal fusion.",
+  "rubric": null,
+  "attachments": [
+    {
+      "file_name": "fig_01.jpg",
+      "mime_type": "image/jpeg",
+      "sha256": "abfd8f115628b949ef6c63ec24a776ebf4909d3b3762be7bc9c2e1ad0b1ada64",
+      "path": "data/images/abfd8f115628b949ef6c63ec24a776ebf4909d3b3762be7bc9c2e1ad0b1ada64.jpg"
+    },
+    {
+      "file_name": "fig_02.jpg",
+      "mime_type": "image/jpeg",
+      "sha256": "6c7e84b3b364594fe969fa0dd5433029a70449bd4684c33a3cae6b8750246673",
+      "path": "data/images/6c7e84b3b364594fe969fa0dd5433029a70449bd4684c33a3cae6b8750246673.jpg"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "id": "ODB-1164",
+  "source_pmcid": "PMC10814903",
+  "specialty": "Oral and Maxillofacial Radiology",
+  "tags": [
+    "Diagnostic Accuracy"
+  ],
+  "question_type": "objective_exact",
+  "question_content": "查看 fig_01.jpg 和 fig_02.jpg。图中所示的融合方向是什么？",
+  "question_options": null,
+  "golden_answer": {
+    "subjective_answer": "",
+    "subjective_directions": "该额外牙体结构附着于上颌侧切牙的腭侧，而非近中侧或远中侧。这种空间关系将该异常归类为唇腭融合。",
+    "objective_exact_answers": [
+      "唇腭",
+      "唇腭",
+      "唇腭融合",
+      "唇腭融合"
+    ],
+    "objective_multiple_answers": []
+  },
+  "answer_explanation": "该额外牙体结构附着于上颌侧切牙的腭侧，而非近中侧或远中侧。这种空间关系将该异常归类为唇腭融合。",
+  "rubric": null,
+  "attachments": [
+    {
+      "file_name": "fig_01.jpg",
+      "mime_type": "image/jpeg",
+      "sha256": "abfd8f115628b949ef6c63ec24a776ebf4909d3b3762be7bc9c2e1ad0b1ada64",
+      "path": "data/images/abfd8f115628b949ef6c63ec24a776ebf4909d3b3762be7bc9c2e1ad0b1ada64.jpg"
+    },
+    {
+      "file_name": "fig_02.jpg",
+      "mime_type": "image/jpeg",
+      "sha256": "6c7e84b3b364594fe969fa0dd5433029a70449bd4684c33a3cae6b8750246673",
+      "path": "data/images/6c7e84b3b364594fe969fa0dd5433029a70449bd4684c33a3cae6b8750246673.jpg"
+    }
+  ]
+}

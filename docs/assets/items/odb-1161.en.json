@@ -1,0 +1,46 @@
+{
+  "id": "ODB-1161",
+  "source_pmcid": "PMC7758263",
+  "specialty": "Oral and Maxillofacial Radiology",
+  "tags": [
+    "Differential Diagnosis"
+  ],
+  "question_type": "objective_multiple",
+  "question_content": "A 19-year-old man undergoing orthodontic workup has no facial asymmetry, no history of trauma or sinus surgery, and no sinonasal complaints. Review fig_01.jpg. What is the most likely diagnosis?",
+  "question_options": [
+    {
+      "key": "A",
+      "text": "Silent sinus syndrome"
+    },
+    {
+      "key": "B",
+      "text": "Congenital maxillary sinus hypoplasia"
+    },
+    {
+      "key": "C",
+      "text": "Maxillary sinus mucocele"
+    },
+    {
+      "key": "D",
+      "text": "Chronic odontogenic maxillary sinusitis"
+    }
+  ],
+  "golden_answer": {
+    "subjective_answer": "",
+    "subjective_directions": "Fig2 shows the classic implosive pattern of silent sinus syndrome: unilateral maxillary sinus volume loss with opacification, inward wall retraction, and inferior displacement of the orbital floor in an otherwise asymptomatic patient. Congenital hypoplasia is developmental rather than acquired. Mucocele typically causes expansile remodeling, not sinus collapse. Odontogenic sinusitis may opacify the sinus but usually does not produce inward bowing of the walls or orbital floor descent.",
+    "objective_exact_answers": [],
+    "objective_multiple_answers": [
+      "A"
+    ]
+  },
+  "answer_explanation": "Fig2 shows the classic implosive pattern of silent sinus syndrome: unilateral maxillary sinus volume loss with opacification, inward wall retraction, and inferior displacement of the orbital floor in an otherwise asymptomatic patient. Congenital hypoplasia is developmental rather than acquired. Mucocele typically causes expansile remodeling, not sinus collapse. Odontogenic sinusitis may opacify the sinus but usually does not produce inward bowing of the walls or orbital floor descent.",
+  "rubric": null,
+  "attachments": [
+    {
+      "file_name": "fig_01.jpg",
+      "mime_type": "image/jpeg",
+      "sha256": "c725ad0622a123e0c06be0de127939dd89c39f3d5af0fc0f5fbd05e8c04c017f",
+      "path": "data/images/c725ad0622a123e0c06be0de127939dd89c39f3d5af0fc0f5fbd05e8c04c017f.jpg"
+    }
+  ]
+}

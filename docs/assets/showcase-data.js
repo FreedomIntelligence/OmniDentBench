@@ -1,4 +1,51 @@
 window.ODB_DATA = {
+  // Author superscripts and affiliation text from the manuscript’s generated author list.
+  affiliations: {
+    1: { name: "Division of Applied Oral Sciences & Community Dental Care, Faculty of Dentistry, The University of Hong Kong, Hong Kong SAR, China.", region: "hong-kong", partners: ["hku"] },
+    2: { name: "Beijing Institute of Collaborative Innovation, Beijing, China.", region: "mainland" },
+    3: { name: "School of Data Science, The Chinese University of Hong Kong, Shenzhen, Shenzhen, China.", region: "mainland", partners: ["cuhk"] },
+    4: { name: "Shenzhen Loop Area Institute, Shenzhen, China.", region: "mainland" },
+    5: { name: "Shenzhen Stomatology Hospital (Pingshan) of Southern Medical University, Shenzhen, China.} % Affiliations shared by the full author front matter and compact consortium list.", region: "mainland" },
+    6: { name: "School of Artificial Intelligence, The Chinese University of Hong Kong, Shenzhen, Shenzhen, China.", region: "mainland", partners: ["cuhk"] },
+    7: { name: "New Cornerstone Science Laboratory, National Biomedical Imaging Center, State Key Laboratory of Membrane Biology, Institute of Molecular Medicine, Peking-Tsinghua Center for Life Sciences, College of Future Technology, Peking University, Beijing 100871, China.", region: "mainland", partners: ["pku-biomedical-imaging", "ptcls", "peking-university"] },
+    8: { name: "School and Hospital of Stomatology, China Medical University, Shenyang, China.", region: "mainland" },
+    9: { name: "Stomatological Hospital of Chongqing Medical University, Chongqing, China.", region: "mainland" },
+    10: { name: "School of Stomatology, The Fourth Military Medical University, Xi'an, China.", region: "mainland" },
+    11: { name: "Peking University School and Hospital of Stomatology, Beijing, China.", region: "mainland", partners: ["peking-university"] },
+    12: { name: "School and Hospital of Stomatology, Shanxi Medical University, Taiyuan, China.", region: "mainland" },
+    13: { name: "Department of Periodontology, Shenzhen Stomatology Hospital (Pingshan) of Southern Medical University, Shenzhen, China.", region: "mainland" },
+    14: { name: "Division of Oral & Maxillofacial Surgery, Faculty of Dentistry, The University of Hong Kong, Hong Kong SAR, China.", region: "hong-kong", partners: ["hku"] },
+    15: { name: "School of Stomatology, Xi'an Jiaotong University, Xi'an, China.", region: "mainland" },
+    16: { name: "College of Medicine, University of Lagos, Lagos, Nigeria.", region: "nigeria", partners: ["cmul"] },
+    17: { name: "Madda Walabu University, Robe, Ethiopia.", region: "ethiopia", partners: ["mwu"] },
+    18: { name: "Bayero University, Kano, Nigeria.", region: "nigeria", partners: ["buk"] },
+    19: { name: "LMU University Hospital, LMU Munich, Munich, Germany.", region: "germany", partners: ["lmu"] },
+    20: { name: "Bernard and Gloria Pepper Katz Department of Oral and Maxillofacial Surgery, UTHealth Houston School of Dentistry, Houston, TX 77054, USA.", region: "united-states" },
+    21: { name: "Oral Medicine/Oral Diagnosis Unit, Dental and Maxillofacial Surgery Department, National Hospital Abuja, Abuja, Nigeria.", region: "nigeria", partners: ["nha"] },
+    22: { name: "University of Maiduguri, Maiduguri, Nigeria.", region: "nigeria", partners: ["maiduguri"] },
+    23: { name: "University of Lagos, Lagos, Nigeria.", region: "nigeria" },
+    24: { name: "Usmanu Danfodiyo University Sokoto, Sokoto, Nigeria.", region: "nigeria", partners: ["udus"] },
+    25: { name: "Faculty of Dentistry, SEGi University, Kota Damansara, Petaling Jaya, Selangor, Malaysia.", region: "malaysia", partners: ["segi"] },
+    26: { name: "Division of Restorative Dental Sciences, Faculty of Dentistry, The University of Hong Kong, Hong Kong SAR, China.", region: "hong-kong", partners: ["hku"] },
+    27: { name: "Division of Paediatric Dentistry & Orthodontics, Faculty of Dentistry, The University of Hong Kong, Hong Kong SAR, China.", region: "hong-kong", partners: ["hku"] },
+    28: { name: "Division of Periodontology & Implant Dentistry, Faculty of Dentistry, The University of Hong Kong, Hong Kong SAR, China.", region: "hong-kong", partners: ["hku"] },
+    29: { name: "IDG/McGovern Institute for Brain Research, Peking University, Beijing 100871, China.", region: "mainland", partners: ["peking-university"] },
+    30: { name: "The Affiliated Hospital of Qingdao University, Qingdao, China.", region: "mainland" },
+    31: { name: "Shenzhen Research Institute of Big Data, Shenzhen, China.", region: "mainland" },
+    32: { name: "Shenzhen FreedomAI Technology Inc., Shenzhen, China.", region: "mainland", partners: ["frd"] },
+    33: { name: "Chongqing Medical University, Chongqing, China.", region: "mainland" },
+    34: { name: "Stomatological Hospital, Tianjin Medical University, Tianjin, China.", region: "mainland" },
+    35: { name: "China Medical University, Shenyang, China.", region: "mainland" },
+    36: { name: "Ningxia Medical University, Yinchuan, China.", region: "mainland" },
+    37: { name: "Shenzhen People's Hospital, Shenzhen, China.", region: "mainland" },
+    38: { name: "Shanghai Stomatological Hospital and School of Stomatology, Fudan University, Shanghai, China.", region: "mainland" },
+    39: { name: "Division of Pediatric Dentistry, Department of Community Social Dentistry, Tohoku University Graduate School of Dentistry.", region: "japan" },
+    40: { name: "Institute of Dental Medicine, First Faculty of Medicine, Charles University, Prague, Czech Republic.", region: "czechia" },
+    41: { name: "Department of Restorative Dentistry, Faculty of Dentistry, International University of Catalunya, Barcelona, Spain.", region: "spain" },
+    42: { name: "Faculty of Dentistry, International University of Catalunya, Barcelona, Spain.", region: "spain" },
+    43: { name: "MRC Biostatistics Unit, University of Cambridge, Cambridge, United Kingdom.", region: "united-kingdom" },
+    44: { name: "Clinic for Conservative Dentistry, Periodontology and Digital Dentistry, LMU University Hospital, LMU Medicine, Munich, Germany.", region: "germany", partners: ["lmu"] },
+  },
   team: [
     {
       key: "059-junwen-wang",
@@ -6,6 +53,7 @@ window.ODB_DATA = {
       sortOrder: 1,
       nameZh: "王俊文",
       nameEn: "Junwen Wang",
+      affiliationIds: [1, 2],
       photo: "./images/team/team-059-junwen-wang.webp",
     },
     {
@@ -14,6 +62,7 @@ window.ODB_DATA = {
       sortOrder: 2,
       nameZh: "金作林",
       nameEn: "Zuolin Jin",
+      affiliationIds: [5],
       photo: "./images/team/team-060-zuolin-jin.webp",
     },
     {
@@ -22,6 +71,7 @@ window.ODB_DATA = {
       sortOrder: 3,
       nameZh: "王本友",
       nameEn: "Benyou Wang",
+      affiliationIds: [3, 4],
       photo: "./images/team/team-061-benyou-wang.webp",
     },
     {
@@ -30,6 +80,7 @@ window.ODB_DATA = {
       sortOrder: 1,
       nameZh: "林宇恒",
       nameEn: "Walter Yu Hang Lam",
+      affiliationIds: [26],
       photo: "./images/team/team-063-walter-yu-hang-lam.webp",
     },
     {
@@ -38,6 +89,7 @@ window.ODB_DATA = {
       sortOrder: 2,
       nameZh: "喬威",
       nameEn: "Will Wei Qiao",
+      affiliationIds: [26],
       photo: "./images/team/team-064-will-wei-qiao.webp",
     },
     {
@@ -46,6 +98,7 @@ window.ODB_DATA = {
       sortOrder: 3,
       nameZh: "John Adeoye",
       nameEn: "John Adeoye",
+      affiliationIds: [1],
       photo: "./images/team/team-065-john-adeoye.webp",
     },
     {
@@ -54,6 +107,7 @@ window.ODB_DATA = {
       sortOrder: 4,
       nameZh: "單知一",
       nameEn: "Zhiyi Shan",
+      affiliationIds: [27],
       photo: "./images/team/team-066-shan-zhiyi.webp",
     },
     {
@@ -62,6 +116,7 @@ window.ODB_DATA = {
       sortOrder: 5,
       nameZh: "楊偉發",
       nameEn: "Wei-fa Yang",
+      affiliationIds: [14],
       photo: "./images/team/team-067-teddy-weifa-yang.webp",
     },
     {
@@ -70,6 +125,7 @@ window.ODB_DATA = {
       sortOrder: 6,
       nameZh: "李新",
       nameEn: "Xin Li",
+      affiliationIds: [26],
       photo: "./images/team/team-068-xin-li.webp",
     },
     {
@@ -78,6 +134,7 @@ window.ODB_DATA = {
       sortOrder: 7,
       nameZh: "唐中元",
       nameEn: "Zhongyuan Tang",
+      affiliationIds: [27],
       photo: "./images/team/team-069-zhongyuan-tang.webp",
     },
     {
@@ -86,6 +143,7 @@ window.ODB_DATA = {
       sortOrder: 8,
       nameZh: "Andrew Nalley",
       nameEn: "Andrew Nalley",
+      affiliationIds: [1],
       photo: "./images/team/team-075-andrew-nalley.webp",
     },
     {
@@ -94,6 +152,7 @@ window.ODB_DATA = {
       sortOrder: 9,
       nameZh: "George Pelekos",
       nameEn: "George Pelekos",
+      affiliationIds: [28],
       photo: "./images/team/team-076-george-pelekos.webp",
     },
     {
@@ -102,6 +161,7 @@ window.ODB_DATA = {
       sortOrder: 10,
       nameZh: "Pradeep Singh",
       nameEn: "Pradeep Singh",
+      affiliationIds: [1],
       photo: "./images/team/team-077-pradeep-singh.webp",
     },
     {
@@ -110,6 +170,7 @@ window.ODB_DATA = {
       sortOrder: 11,
       nameZh: "陈良怡",
       nameEn: "Liangyi Chen",
+      affiliationIds: [2, 7, 29],
       photo: "./images/team/team-062-liangyi-chen.webp",
     },
     {
@@ -118,6 +179,7 @@ window.ODB_DATA = {
       sortOrder: 12,
       nameZh: "Gloria Hai Ming Wong",
       nameEn: "Gloria Hai Ming Wong",
+      affiliationIds: [27],
       photo: "./images/team/team-078-gloria-hai-ming-wong.webp",
     },
     {
@@ -126,6 +188,7 @@ window.ODB_DATA = {
       sortOrder: 13,
       nameZh: "Lijian Jin",
       nameEn: "Lijian Jin",
+      affiliationIds: [28],
       photo: "./images/team/team-anonymous.webp",
     },
     {
@@ -134,6 +197,7 @@ window.ODB_DATA = {
       sortOrder: 1,
       nameZh: "钟鸣",
       nameEn: "Ming Zhong",
+      affiliationIds: [8],
       photo: "./images/team/team-001-ming-zhong.webp",
     },
     {
@@ -142,6 +206,7 @@ window.ODB_DATA = {
       sortOrder: 2,
       nameZh: "刘大勇",
       nameEn: "Dayong Liu",
+      affiliationIds: [9],
       photo: "./images/team/team-002-dayong-liu.webp",
     },
     {
@@ -150,6 +215,7 @@ window.ODB_DATA = {
       sortOrder: 3,
       nameZh: "张惠",
       nameEn: "Hui Zhang",
+      affiliationIds: [10],
       photo: "./images/team/team-003-hui-zhang.webp",
     },
     {
@@ -158,6 +224,7 @@ window.ODB_DATA = {
       sortOrder: 4,
       nameZh: "徐明明",
       nameEn: "Mingming Xu",
+      affiliationIds: [11],
       photo: "./images/team/team-004-mingming-xu.webp",
     },
     {
@@ -166,6 +233,7 @@ window.ODB_DATA = {
       sortOrder: 5,
       nameZh: "刘青",
       nameEn: "Qing Liu",
+      affiliationIds: [10],
       photo: "./images/team/team-005-qing-liu.webp",
     },
     {
@@ -174,6 +242,7 @@ window.ODB_DATA = {
       sortOrder: 6,
       nameZh: "蔡伟华",
       nameEn: "Weihua Cai",
+      affiliationIds: [5],
       photo: "./images/team/team-006-weihua-cai.webp",
     },
     {
@@ -182,6 +251,7 @@ window.ODB_DATA = {
       sortOrder: 7,
       nameZh: "王小竞",
       nameEn: "Xiaojing Wang",
+      affiliationIds: [10],
       photo: "./images/team/team-007-xiaojing-wang.webp",
     },
     {
@@ -190,6 +260,7 @@ window.ODB_DATA = {
       sortOrder: 8,
       nameZh: "马艳宁",
       nameEn: "Yanning Ma",
+      affiliationIds: [12],
       photo: "./images/team/team-008-yanning-ma.webp",
     },
     {
@@ -198,6 +269,7 @@ window.ODB_DATA = {
       sortOrder: 9,
       nameZh: "江山",
       nameEn: "Shan Jiang",
+      affiliationIds: [13],
       photo: "./images/team/team-009-shan-jiang.webp",
     },
     {
@@ -206,6 +278,7 @@ window.ODB_DATA = {
       sortOrder: 10,
       nameZh: "王凤",
       nameEn: "Feng Wang",
+      affiliationIds: [14],
       photo: "./images/team/team-010-feng-wang.webp",
     },
     {
@@ -214,6 +287,7 @@ window.ODB_DATA = {
       sortOrder: 11,
       nameZh: "亓坤",
       nameEn: "Kun Qi",
+      affiliationIds: [15],
       photo: "./images/team/team-011-kun-qi.webp",
     },
     {
@@ -222,6 +296,7 @@ window.ODB_DATA = {
       sortOrder: 12,
       nameZh: "方彦成",
       nameEn: "Yancheng Fang",
+      affiliationIds: [5],
       photo: "./images/team/team-012-yancheng-fang.webp",
     },
     {
@@ -230,6 +305,7 @@ window.ODB_DATA = {
       sortOrder: 1,
       nameZh: "赵俊杰",
       nameEn: "Junjie Zhao",
+      affiliationIds: [1, 2],
       photo: "./images/team/team-070-junjie-zhao.webp",
     },
     {
@@ -238,6 +314,7 @@ window.ODB_DATA = {
       sortOrder: 2,
       nameZh: "盛孜莹",
       nameEn: "Ziying Sheng",
+      affiliationIds: [3, 4],
       photo: "./images/team/team-071-ziying-sheng.webp",
     },
     {
@@ -246,6 +323,7 @@ window.ODB_DATA = {
       sortOrder: 3,
       nameZh: "游佳君",
       nameEn: "Jiajun You",
+      affiliationIds: [3, 4],
       photo: "./images/team/team-072-jiajun-you.webp",
     },
     {
@@ -254,6 +332,7 @@ window.ODB_DATA = {
       sortOrder: 4,
       nameZh: "蔡镇阳",
       nameEn: "Zhenyang Cai",
+      affiliationIds: [4, 6],
       photo: "./images/team/team-073-zhenyang-cai.webp",
     },
     {
@@ -262,6 +341,7 @@ window.ODB_DATA = {
       sortOrder: 5,
       nameZh: "苏周",
       nameEn: "Zhou Su",
+      affiliationIds: [3],
       photo: "./images/team/team-074-zhou-su.webp",
     },
     {
@@ -270,6 +350,7 @@ window.ODB_DATA = {
       sortOrder: 6,
       nameZh: "Jingyi Liang",
       nameEn: "Jingyi Liang",
+      affiliationIds: [3],
       photo: "./images/team/team-anonymous.webp",
     },
     {
@@ -278,6 +359,7 @@ window.ODB_DATA = {
       sortOrder: 7,
       nameZh: "Zikun Jin",
       nameEn: "Zikun Jin",
+      affiliationIds: [1],
       photo: "./images/team/team-anonymous.webp",
     },
     {
@@ -286,6 +368,7 @@ window.ODB_DATA = {
       sortOrder: 8,
       nameZh: "Xiang Liu",
       nameEn: "Xiang Liu",
+      affiliationIds: [7],
       photo: "./images/team/team-anonymous.webp",
     },
     {
@@ -294,6 +377,7 @@ window.ODB_DATA = {
       sortOrder: 1,
       nameZh: "Abdul-Warith Akinshipo",
       nameEn: "Abdul-Warith Akinshipo",
+      affiliationIds: [16],
       photo: "./images/team/team-085-abdul-warith-akinshipo.webp",
     },
     {
@@ -302,6 +386,7 @@ window.ODB_DATA = {
       sortOrder: 2,
       nameZh: "Abreham Ayele",
       nameEn: "Abreham Ayele",
+      affiliationIds: [17],
       photo: "./images/team/team-086-abreham-ayele.webp",
     },
     {
@@ -310,6 +395,7 @@ window.ODB_DATA = {
       sortOrder: 3,
       nameZh: "Adetayo Aborisade",
       nameEn: "Adetayo Aborisade",
+      affiliationIds: [18],
       photo: "./images/team/team-087-adetayo-aborisade.webp",
     },
     {
@@ -318,6 +404,7 @@ window.ODB_DATA = {
       sortOrder: 4,
       nameZh: "Antonin Tichy",
       nameEn: "Antonin Tichy",
+      affiliationIds: [19, 40],
       photo: "./images/team/team-088-antonin-tichy.webp",
     },
     {
@@ -326,6 +413,7 @@ window.ODB_DATA = {
       sortOrder: 5,
       nameZh: "Aylin Barthelmé",
       nameEn: "Aylin Barthelmé",
+      affiliationIds: [40],
       photo: "./images/team/team-anonymous.webp",
     },
     {
@@ -334,6 +422,7 @@ window.ODB_DATA = {
       sortOrder: 6,
       nameZh: "Brandon C. Key",
       nameEn: "Brandon C. Key",
+      affiliationIds: [20],
       photo: "./images/team/team-090-brandon-c-key.webp",
     },
     {
@@ -342,6 +431,7 @@ window.ODB_DATA = {
       sortOrder: 7,
       nameZh: "Chizoba Okolo",
       nameEn: "Chizoba Okolo",
+      affiliationIds: [18],
       photo: "./images/team/team-091-chizoba-okolo.webp",
     },
     {
@@ -350,14 +440,16 @@ window.ODB_DATA = {
       sortOrder: 8,
       nameZh: "Colman McGrath",
       nameEn: "Colman McGrath",
+      affiliationIds: [1],
       photo: "./images/team/team-anonymous.webp",
     },
     {
       key: "093-edward-chin-man",
       category: "overseas_expert",
       sortOrder: 9,
-      nameZh: "Edward Chin Man",
-      nameEn: "Edward Chin Man",
+      nameZh: "Edward Chin Man Lo",
+      nameEn: "Edward Chin Man Lo",
+      affiliationIds: [1],
       photo: "./images/team/team-anonymous.webp",
     },
     {
@@ -366,6 +458,7 @@ window.ODB_DATA = {
       sortOrder: 10,
       nameZh: "Ekhosuehi Theophilus Agho",
       nameEn: "Ekhosuehi Theophilus Agho",
+      affiliationIds: [21],
       photo: "./images/team/team-094-ekhosuehi-theophilus-agho.webp",
     },
     {
@@ -374,6 +467,7 @@ window.ODB_DATA = {
       sortOrder: 11,
       nameZh: "Elabbas Elhussain",
       nameEn: "Elabbas Elhussain",
+      affiliationIds: [42],
       photo: "./images/team/team-anonymous.webp",
     },
     {
@@ -382,6 +476,7 @@ window.ODB_DATA = {
       sortOrder: 12,
       nameZh: "Falk Schwendicke",
       nameEn: "Falk Schwendicke",
+      affiliationIds: [44],
       photo: "./images/team/team-096-falk-schwendicke.webp",
     },
     {
@@ -390,6 +485,7 @@ window.ODB_DATA = {
       sortOrder: 13,
       nameZh: "Ibrahim Kayode Suleiman",
       nameEn: "Ibrahim Kayode Suleiman",
+      affiliationIds: [22],
       photo: "./images/team/team-anonymous.webp",
     },
     {
@@ -398,6 +494,7 @@ window.ODB_DATA = {
       sortOrder: 14,
       nameZh: "Miguel Roig Cayón",
       nameEn: "Miguel Roig Cayón",
+      affiliationIds: [41],
       photo: "./images/team/team-anonymous.webp",
     },
     {
@@ -406,6 +503,7 @@ window.ODB_DATA = {
       sortOrder: 15,
       nameZh: "Nasir Bashir",
       nameEn: "Nasir Bashir",
+      affiliationIds: [1, 43],
       photo: "./images/team/team-anonymous.webp",
     },
     {
@@ -414,6 +512,7 @@ window.ODB_DATA = {
       sortOrder: 16,
       nameZh: "Olabisi Hajarat Oderinu",
       nameEn: "Olabisi Hajarat Oderinu",
+      affiliationIds: [23],
       photo: "./images/team/team-100-olabisi-hajarat-oderinu.webp",
     },
     {
@@ -422,6 +521,7 @@ window.ODB_DATA = {
       sortOrder: 17,
       nameZh: "Ramat Oyebunmi Braimah",
       nameEn: "Ramat Oyebunmi Braimah",
+      affiliationIds: [24],
       photo: "./images/team/team-101-ramat-oyebunmi-braimah.webp",
     },
     {
@@ -430,6 +530,7 @@ window.ODB_DATA = {
       sortOrder: 18,
       nameZh: "Ricardo Palacios-Bañuelos",
       nameEn: "Ricardo Palacios-Bañuelos",
+      affiliationIds: [41],
       photo: "./images/team/team-anonymous.webp",
     },
     {
@@ -438,7 +539,26 @@ window.ODB_DATA = {
       sortOrder: 19,
       nameZh: "Suresh Kandagal Veerabhadrappa",
       nameEn: "Suresh Kandagal Veerabhadrappa",
+      affiliationIds: [25],
       photo: "./images/team/team-103-suresh-kandagal-veerabhadrappa.webp",
+    },
+    {
+      key: "106-yuta-chiba",
+      category: "overseas_expert",
+      sortOrder: 20,
+      nameZh: "Yuta Chiba",
+      nameEn: "Yuta Chiba",
+      affiliationIds: [39],
+      photo: "./images/team/team-anonymous.webp",
+    },
+    {
+      key: "107-lluis-giner-tarrida",
+      category: "overseas_expert",
+      sortOrder: 21,
+      nameZh: "Lluís Giner Tarrida",
+      nameEn: "Lluís Giner Tarrida",
+      affiliationIds: [42],
+      photo: "./images/team/team-anonymous.webp",
     },
     {
       key: "104-xiangbo-wu",
@@ -446,6 +566,7 @@ window.ODB_DATA = {
       sortOrder: 1,
       nameZh: "Xiangbo Wu",
       nameEn: "Xiangbo Wu",
+      affiliationIds: [31],
       photo: "./images/team/team-anonymous.webp",
     },
     {
@@ -454,6 +575,7 @@ window.ODB_DATA = {
       sortOrder: 2,
       nameZh: "Jianquan Li",
       nameEn: "Jianquan Li",
+      affiliationIds: [32],
       photo: "./images/team/team-anonymous.webp",
     },
     {
@@ -462,6 +584,7 @@ window.ODB_DATA = {
       sortOrder: 1,
       nameZh: "郑依凡",
       nameEn: "Yifan Zheng",
+      affiliationIds: [5],
       photo: "./images/team/team-053-yifan-zheng.webp",
     },
     {
@@ -470,6 +593,7 @@ window.ODB_DATA = {
       sortOrder: 2,
       nameZh: "黄舒蔚",
       nameEn: "Shuwei Huang",
+      affiliationIds: [33],
       photo: "./images/team/team-042-shuwei-huang.webp",
     },
     {
@@ -478,6 +602,7 @@ window.ODB_DATA = {
       sortOrder: 3,
       nameZh: "周芳洁",
       nameEn: "Fangjie Zhou",
+      affiliationIds: [9],
       photo: "./images/team/team-016-fangjie-zhou.webp",
     },
     {
@@ -486,6 +611,7 @@ window.ODB_DATA = {
       sortOrder: 4,
       nameZh: "乔雪",
       nameEn: "Xue Qiao",
+      affiliationIds: [8],
       photo: "./images/team/team-048-xue-qiao.webp",
     },
     {
@@ -494,6 +620,7 @@ window.ODB_DATA = {
       sortOrder: 5,
       nameZh: "孙仕铎",
       nameEn: "Shiduo Sun",
+      affiliationIds: [34],
       photo: "./images/team/team-039-shiduo-sun.webp",
     },
     {
@@ -502,6 +629,7 @@ window.ODB_DATA = {
       sortOrder: 6,
       nameZh: "张仕鑫",
       nameEn: "Shixin Zhang",
+      affiliationIds: [5],
       photo: "./images/team/team-041-shixin-zhang.webp",
     },
     {
@@ -510,6 +638,7 @@ window.ODB_DATA = {
       sortOrder: 7,
       nameZh: "王珺婷",
       nameEn: "Junting Wang",
+      affiliationIds: [35],
       photo: "./images/team/team-025-junting-wang.webp",
     },
     {
@@ -518,6 +647,7 @@ window.ODB_DATA = {
       sortOrder: 8,
       nameZh: "邓志强",
       nameEn: "Zhiqiang Deng",
+      affiliationIds: [5],
       photo: "./images/team/team-057-zhiqiang-deng.webp",
     },
     {
@@ -526,6 +656,7 @@ window.ODB_DATA = {
       sortOrder: 9,
       nameZh: "张明欣",
       nameEn: "Mingxin Zhang",
+      affiliationIds: [5],
       photo: "./images/team/team-034-mingxin-zhang.webp",
     },
     {
@@ -534,6 +665,7 @@ window.ODB_DATA = {
       sortOrder: 10,
       nameZh: "陈金妍",
       nameEn: "Jinyan Chen",
+      affiliationIds: [14],
       photo: "./images/team/team-024-jinyan-chen.webp",
     },
     {
@@ -542,6 +674,7 @@ window.ODB_DATA = {
       sortOrder: 11,
       nameZh: "刘芬",
       nameEn: "Fen Liu",
+      affiliationIds: [15],
       photo: "./images/team/team-017-fen-liu.webp",
     },
     {
@@ -550,6 +683,7 @@ window.ODB_DATA = {
       sortOrder: 12,
       nameZh: "赵家敏",
       nameEn: "Jiamin Zhao",
+      affiliationIds: [15],
       photo: "./images/team/team-021-jiamin-zhao.webp",
     },
     {
@@ -558,6 +692,7 @@ window.ODB_DATA = {
       sortOrder: 13,
       nameZh: "张佳明",
       nameEn: "Jiaming Zhang",
+      affiliationIds: [13],
       photo: "./images/team/team-022-jiaming-zhang.webp",
     },
     {
@@ -566,6 +701,7 @@ window.ODB_DATA = {
       sortOrder: 14,
       nameZh: "李梦红",
       nameEn: "Menghong Li",
+      affiliationIds: [15],
       photo: "./images/team/team-030-menghong-li.webp",
     },
     {
@@ -574,6 +710,7 @@ window.ODB_DATA = {
       sortOrder: 15,
       nameZh: "赵琳",
       nameEn: "Lin Zhao",
+      affiliationIds: [36],
       photo: "./images/team/team-028-lin-zhao.webp",
     },
     {
@@ -582,6 +719,7 @@ window.ODB_DATA = {
       sortOrder: 16,
       nameZh: "何世荣",
       nameEn: "Shirong He",
+      affiliationIds: [5],
       photo: "./images/team/team-040-shirong-he.webp",
     },
     {
@@ -590,6 +728,7 @@ window.ODB_DATA = {
       sortOrder: 17,
       nameZh: "郭一丹",
       nameEn: "Yidan Guo",
+      affiliationIds: [12],
       photo: "./images/team/team-052-yidan-guo.webp",
     },
     {
@@ -598,6 +737,7 @@ window.ODB_DATA = {
       sortOrder: 18,
       nameZh: "卫明慧",
       nameEn: "Minghui Wei",
+      affiliationIds: [10],
       photo: "./images/team/team-033-minghui-wei.webp",
     },
     {
@@ -606,6 +746,7 @@ window.ODB_DATA = {
       sortOrder: 19,
       nameZh: "朱振来",
       nameEn: "Zhenlai Zhu",
+      affiliationIds: [10],
       photo: "./images/team/team-056-zhenlai-zhu.webp",
     },
     {
@@ -614,6 +755,7 @@ window.ODB_DATA = {
       sortOrder: 20,
       nameZh: "Songying Wu",
       nameEn: "Songying Wu",
+      affiliationIds: [14],
       photo: "./images/team/team-045-wu-songying.webp",
     },
     {
@@ -622,6 +764,7 @@ window.ODB_DATA = {
       sortOrder: 21,
       nameZh: "王莹",
       nameEn: "Ying Wang",
+      affiliationIds: [11],
       photo: "./images/team/team-054-ying-wang.webp",
     },
     {
@@ -630,6 +773,7 @@ window.ODB_DATA = {
       sortOrder: 22,
       nameZh: "石磊",
       nameEn: "Lei Shi",
+      affiliationIds: [37],
       photo: "./images/team/team-027-lei-shi.webp",
     },
     {
@@ -638,6 +782,7 @@ window.ODB_DATA = {
       sortOrder: 23,
       nameZh: "Pak Chuen Patrick Tai",
       nameEn: "Pak Chuen Patrick Tai",
+      affiliationIds: [14],
       photo: "./images/team/team-044-tai-pak-chuen-patrick.webp",
     },
     {
@@ -646,6 +791,7 @@ window.ODB_DATA = {
       sortOrder: 24,
       nameZh: "张亚秋",
       nameEn: "Yaqiu Zhang",
+      affiliationIds: [10],
       photo: "./images/team/team-050-yaqiu-zhang.webp",
     },
     {
@@ -654,6 +800,7 @@ window.ODB_DATA = {
       sortOrder: 25,
       nameZh: "陈鹏",
       nameEn: "Peng Chen",
+      affiliationIds: [10],
       photo: "./images/team/team-037-peng-chen.webp",
     },
     {
@@ -662,6 +809,7 @@ window.ODB_DATA = {
       sortOrder: 26,
       nameZh: "康芙嘉",
       nameEn: "Fujia Kang",
+      affiliationIds: [15],
       photo: "./images/team/team-019-fujia-kang.webp",
     },
     {
@@ -670,6 +818,7 @@ window.ODB_DATA = {
       sortOrder: 27,
       nameZh: "黄敏",
       nameEn: "Min Huang",
+      affiliationIds: [5],
       photo: "./images/team/team-032-min-huang.webp",
     },
     {
@@ -678,6 +827,7 @@ window.ODB_DATA = {
       sortOrder: 28,
       nameZh: "金相杰",
       nameEn: "Xiangjie Jin",
+      affiliationIds: [5],
       photo: "./images/team/team-047-xiangjie-jin.webp",
     },
     {
@@ -686,6 +836,7 @@ window.ODB_DATA = {
       sortOrder: 29,
       nameZh: "王侗飞",
       nameEn: "Dongfei Wang",
+      affiliationIds: [5],
       photo: "./images/team/team-015-dongfei-wang.webp",
     },
     {
@@ -693,7 +844,8 @@ window.ODB_DATA = {
       category: "specialty_member",
       sortOrder: 30,
       nameZh: "郝春秀",
-      nameEn: "Hao Chunxiu",
+      nameEn: "Chunxiu Hao",
+      affiliationIds: [5],
       photo: "./images/team/team-020-hao-chunxiu.webp",
     },
     {
@@ -702,6 +854,7 @@ window.ODB_DATA = {
       sortOrder: 31,
       nameZh: "邱思齐",
       nameEn: "Siqi Qiu",
+      affiliationIds: [14],
       photo: "./images/team/team-043-siqi-qiu.webp",
     },
     {
@@ -710,6 +863,7 @@ window.ODB_DATA = {
       sortOrder: 32,
       nameZh: "蒋旸",
       nameEn: "Yang Jiang",
+      affiliationIds: [38],
       photo: "./images/team/team-049-yang-jiang.webp",
     },
     {
@@ -718,6 +872,7 @@ window.ODB_DATA = {
       sortOrder: 33,
       nameZh: "王沛娟",
       nameEn: "Peijuan Wang",
+      affiliationIds: [10],
       photo: "./images/team/team-036-peijuan-wang.webp",
     },
     {
@@ -726,6 +881,7 @@ window.ODB_DATA = {
       sortOrder: 34,
       nameZh: "宋萌萌",
       nameEn: "Mengmeng Song",
+      affiliationIds: [10],
       photo: "./images/team/team-031-mengmeng-song.webp",
     },
     {
@@ -734,6 +890,7 @@ window.ODB_DATA = {
       sortOrder: 35,
       nameZh: "杨宽",
       nameEn: "Kuan Yang",
+      affiliationIds: [30],
       photo: "./images/team/team-026-kuan-yang.webp",
     },
     {
@@ -742,6 +899,7 @@ window.ODB_DATA = {
       sortOrder: 36,
       nameZh: "李卓盈",
       nameEn: "Zhuoying Li",
+      affiliationIds: [27],
       photo: "./images/team/team-058-zhuoying-li.webp",
     },
     {
@@ -750,6 +908,7 @@ window.ODB_DATA = {
       sortOrder: 37,
       nameZh: "焦剑",
       nameEn: "Jian Jiao",
+      affiliationIds: [11],
       photo: "./images/team/team-083-jian-jiao.webp",
     },
     {
@@ -758,6 +917,7 @@ window.ODB_DATA = {
       sortOrder: 38,
       nameZh: "黄婉菁",
       nameEn: "Wanjing Huang",
+      affiliationIds: [13],
       photo: "./images/team/team-084-wanjing-huang.webp",
     },
     {
@@ -766,6 +926,7 @@ window.ODB_DATA = {
       sortOrder: 39,
       nameZh: "吴宇佳",
       nameEn: "Yujia Wu",
+      affiliationIds: [11],
       photo: "./images/team/team-055-yujia-wu.webp",
     },
     {
@@ -774,6 +935,7 @@ window.ODB_DATA = {
       sortOrder: 40,
       nameZh: "李大桁",
       nameEn: "Daheng Li",
+      affiliationIds: [5],
       photo: "./images/team/team-014-daheng-li.webp",
     },
     {
@@ -782,6 +944,7 @@ window.ODB_DATA = {
       sortOrder: 41,
       nameZh: "刘荩文",
       nameEn: "Jinwen Liu",
+      affiliationIds: [8],
       photo: "./images/team/team-023-jinwen-liu.webp",
     },
     {
@@ -790,6 +953,7 @@ window.ODB_DATA = {
       sortOrder: 42,
       nameZh: "芦睿",
       nameEn: "Rui Lu",
+      affiliationIds: [10],
       photo: "./images/team/team-038-rui-lu.webp",
     },
     {
@@ -798,6 +962,7 @@ window.ODB_DATA = {
       sortOrder: 43,
       nameZh: "刘冰",
       nameEn: "Bing Liu",
+      affiliationIds: [10],
       photo: "./images/team/team-013-bing-liu.webp",
     },
     {
@@ -806,6 +971,7 @@ window.ODB_DATA = {
       sortOrder: 44,
       nameZh: "Nam Forest Cheng",
       nameEn: "Nam Forest Cheng",
+      affiliationIds: [26],
       photo: "./images/team/team-018-forest-cheng.webp",
     },
     {
@@ -814,6 +980,7 @@ window.ODB_DATA = {
       sortOrder: 45,
       nameZh: "Yilin Mao",
       nameEn: "Yilin Mao",
+      affiliationIds: [26],
       photo: "./images/team/team-029-mao-yilin.webp",
     },
     {
@@ -822,14 +989,16 @@ window.ODB_DATA = {
       sortOrder: 46,
       nameZh: "Patricia Ho",
       nameEn: "Patricia Ho",
+      affiliationIds: [26],
       photo: "./images/team/team-035-patricia-ho.webp",
     },
     {
       key: "046-xu-leyao",
       category: "specialty_member",
       sortOrder: 47,
-      nameZh: "XU Leyao",
-      nameEn: "XU Leyao",
+      nameZh: "Leyao XU",
+      nameEn: "Leyao XU",
+      affiliationIds: [26],
       photo: "./images/team/team-046-xu-leyao.webp",
     },
     {
@@ -838,21 +1007,8 @@ window.ODB_DATA = {
       sortOrder: 48,
       nameZh: "Yefeng Wu",
       nameEn: "Yefeng Wu",
+      affiliationIds: [26],
       photo: "./images/team/team-051-yefeng-wu.webp",
-    },
-  ],
-  catMembers: [
-    {
-      key: "baize",
-      nameZh: "白泽",
-      nameEn: "Baize",
-      photo: "./images/team/team-baize.webp",
-    },
-    {
-      key: "paopao",
-      nameZh: "泡泡",
-      nameEn: "Paopao",
-      photo: "./images/team/team-paopao.webp",
     },
   ],
   partners: [
@@ -914,7 +1070,7 @@ window.ODB_DATA = {
       key: "segi",
       logo: "./images/logo/SEGi.webp",
       nameZh: "马来西亚世纪大学",
-      nameEn: "SEGi University & Colleges",
+      nameEn: "SEGi University",
     },
     {
       key: "nha",
