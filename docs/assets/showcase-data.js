@@ -76,6 +76,15 @@ window.ODB_DATA = {
       photo: "./images/team/team-061-benyou-wang.webp",
     },
     {
+      key: "105-jianquan-li",
+      category: "steering_chair",
+      sortOrder: 4,
+      nameZh: "李健铨",
+      nameEn: "Jianquan Li",
+      affiliationIds: [32],
+      photo: "./images/team/team-105-jianquan-li.webp",
+    },
+    {
       key: "063-walter-yu-hang-lam",
       category: "steering_member",
       sortOrder: 1,
@@ -569,15 +578,6 @@ window.ODB_DATA = {
       nameEn: "Xiangbo Wu",
       affiliationIds: [31],
       photo: "./images/team/team-104-xiangbo-wu.webp",
-    },
-    {
-      key: "105-jianquan-li",
-      category: "consortium_contributor",
-      sortOrder: 2,
-      nameZh: "Jianquan Li",
-      nameEn: "Jianquan Li",
-      affiliationIds: [32],
-      photo: "./images/team/team-105-jianquan-li.webp",
     },
     {
       key: "053-yifan-zheng",

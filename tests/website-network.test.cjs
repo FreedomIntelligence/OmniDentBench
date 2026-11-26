@@ -110,7 +110,7 @@ test('both languages render institution and author locations on the map and the 
       assert.ok(hero.includes(`data-map-author="${region}"`));
       assert.ok(hero.includes(`data-map-line="${region}"`));
     }
-    assert.deepEqual(Array.from(data.team.filter(person => person.category === 'steering_chair'), person => person.key), ['059-junwen-wang', '060-zuolin-jin', '061-benyou-wang']);
+    assert.deepEqual(Array.from(data.team.filter(person => person.category === 'steering_chair'), person => person.key), ['059-junwen-wang', '060-zuolin-jin', '061-benyou-wang', '105-jianquan-li']);
   }
 });
 

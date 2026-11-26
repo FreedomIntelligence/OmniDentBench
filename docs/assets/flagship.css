@@ -134,7 +134,7 @@ button.portrait { display: block; padding: 0; border: 0; }
 .person-caption { padding-top: 6px; }
 .person h4 { margin: 0; font-size: .875rem; font-weight: 600; line-height: 1.4; letter-spacing: -.015em; text-align: center; text-wrap: balance; overflow-wrap: anywhere; }
 .person p { font-size: .75rem; line-height: 1.4; color: var(--muted); margin-top: 3px; }
-.chairs { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 480px; gap: 20px; }
+.team-grid.chairs { grid-template-columns: repeat(4, minmax(0, 1fr)); max-width: 600px; gap: 20px; }
 .chairs .portrait { max-width: 108px; aspect-ratio: 1; }
 .chairs h4 { font-size: 1rem; letter-spacing: -.015em; }
 .chairs p { font-size: .8125rem; }
@@ -182,7 +182,6 @@ html[lang='zh-CN'] .hero-desc { line-height: 1.9; }
   .specialty h3 { font-size: 1rem; }
   .specialty-label { min-height: 76px; }
   .team-grid { grid-template-columns: repeat(8, minmax(0, 1fr)); }
-  .chairs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .method-card { padding-left: 28px; padding-right: 28px; }
   .footer-brand { font-size: 1.6rem; }
 }
@@ -216,7 +215,6 @@ html[lang='zh-CN'] .hero-desc { line-height: 1.9; }
   .language-panel { gap: 28px; grid-template-columns: 1fr; }
   .team-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 16px 10px; }
   .portrait { max-width: 80px; }
-  .chairs { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: 480px; gap: 20px; }
   .chairs .portrait { max-width: 104px; }
   .method-grid { gap: 28px; }
   .method-card { padding: 0; border: 0; }
@@ -272,7 +270,7 @@ html[lang='zh-CN'] .hero-desc { line-height: 1.9; }
   .team-group summary small { display: block; margin: 5px 0 0; font-size: .9375rem; }
   .team-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px 8px; margin-top: 12px; }
   .portrait { max-width: 72px; }
-  .chairs { grid-template-columns: 1fr; max-width: 320px; gap: 14px; }
+  .team-grid.chairs { grid-template-columns: 1fr; max-width: 320px; gap: 14px; }
   .chairs .person { display: grid; grid-template-columns: 72px minmax(0, 1fr); align-items: center; gap: 12px; text-align: left; }
   .chairs .portrait { max-width: 72px; aspect-ratio: 1; }
   .chairs .person-caption { padding: 0; }
@@ -296,7 +294,6 @@ html[lang='zh-CN'] .hero-desc { line-height: 1.9; }
   .brand-logo { width: 34px; }
   #language { font-size: .875rem; padding-left: 10px; }
   .team-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-  .chairs { grid-template-columns: 1fr; }
   .chairs .person { grid-template-columns: 68px minmax(0, 1fr); }
   .chairs .portrait { max-width: 68px; }
 }

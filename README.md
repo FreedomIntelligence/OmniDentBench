@@ -122,13 +122,14 @@ When publishing results, report the two metrics separately and include the langu
 
 OmniDentBench brings together **16 partner institutions**. [Explore the collaboration map](https://freedomintelligence.github.io/OmniDentBench/#collaboration-map) · [View the research team](https://freedomintelligence.github.io/OmniDentBench/#team)
 
-### Steering chairs (3)
+### Steering chairs (4)
 
 <table>
   <tr>
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-059-junwen-wang"><img src="docs/images/team/team-059-junwen-wang.webp" width="60" alt=""><br><sub>Junwen Wang</sub></a></td>
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-060-zuolin-jin"><img src="docs/images/team/team-060-zuolin-jin.webp" width="60" alt=""><br><sub>Zuolin Jin</sub></a></td>
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-061-benyou-wang"><img src="docs/images/team/team-061-benyou-wang.webp" width="60" alt=""><br><sub>Benyou Wang</sub></a></td>
+    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-105-jianquan-li"><img src="docs/images/team/team-105-jianquan-li.webp" width="60" alt=""><br><sub>Jianquan Li</sub></a></td>
   </tr>
 </table>
 
@@ -222,12 +223,11 @@ OmniDentBench brings together **16 partner institutions**. [Explore the collabor
   </tr>
 </table>
 
-### Consortium contributors (2)
+### Consortium contributors (1)
 
 <table>
   <tr>
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-104-xiangbo-wu"><img src="docs/images/team/team-104-xiangbo-wu.webp" width="60" alt=""><br><sub>Xiangbo Wu</sub></a></td>
-    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-105-jianquan-li"><img src="docs/images/team/team-105-jianquan-li.webp" width="60" alt=""><br><sub>Jianquan Li</sub></a></td>
   </tr>
 </table>
 

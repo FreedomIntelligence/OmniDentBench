@@ -8,7 +8,8 @@ let en = selectedLanguage ? selectedLanguage !== 'zh' : !location.pathname.endsW
 const chairProfiles = {
   '059-junwen-wang': { en: 'HKU Dentistry · Hong Kong', zh: '香港大学牙医学院 · 香港', url: 'https://hub.hku.hk/cris/rp/rp00280' },
   '060-zuolin-jin': { en: 'Shenzhen Stomatology Hospital (Pingshan) · Shenzhen', zh: '南方医科大学深圳口腔医院（坪山）· 深圳', url: 'https://www.sz.gov.cn/hdjl/ywzsk/wsj/xzsx/content/post_13000002.html' },
-  '061-benyou-wang': { en: 'CUHK-Shenzhen · Shenzhen', zh: '香港中文大学（深圳）· 深圳', url: 'https://sds.cuhk.edu.cn/en/teacher/571' }
+  '061-benyou-wang': { en: 'CUHK-Shenzhen · Shenzhen', zh: '香港中文大学（深圳）· 深圳', url: 'https://sds.cuhk.edu.cn/en/teacher/571' },
+  '105-jianquan-li': { en: 'Freedom AI · Shenzhen', zh: '自由动脉 · 深圳', url: 'https://www.freedomai.cn/' }
 };
 
 const groups = [
