@@ -1,5 +1,5 @@
 (() => {
-  const { regions, profiles } = window.ODB_NETWORK_DATA;
+  const { regions, profiles, profileUrls } = window.ODB_NETWORK_DATA;
   const state = { region: 'all', partner: null };
   const mapRegions = [...regions,
     { key: 'japan', code: 'JP', en: 'Japan', zh: '日本', anchor: [140.87, 38.27], label: [90, 37.5], cardAlign: 'right' },
@@ -355,13 +355,13 @@
       const person = data.team.find(item => item.key === key);
       if (!person) return;
       hideRosterName();
-      const profile = profiles[key];
+      const profileUrl = profileUrls?.[key] ?? profiles[key]?.url;
       const affiliations = getAffiliations(data, person)
         .map(affiliation => `<li>${escape(en ? affiliation.name : affiliation.nameZh ?? affiliation.name)}</li>`)
         .join('');
       const inTeamRoster = Boolean(trigger.closest('#team'));
       dialogTrigger = trigger;
-      dialog.querySelector('.network-dialog-content').innerHTML = `<img class="network-profile-photo" src="${person.photo}" alt="${escape(personName(person))}" width="160" height="176"><p class="network-kicker">${escape(role(person))}</p><h3 id="network-person-title">${escape(personName(person))}</h3>${person.nameEn !== person.nameZh ? `<p class="network-profile-other-name">${escape(en ? person.nameZh : person.nameEn)}</p>` : ''}<div class="network-profile-affiliations"><h4>${t('机构', 'Affiliations')}</h4><ul>${affiliations}</ul></div>${profile ? `<a class="network-profile-source" href="${profile.url}" target="_blank" rel="noopener noreferrer">${t('机构公开资料', 'Institutional profile')}</a>` : ''}${inTeamRoster ? '' : `<a class="network-profile-team" href="#member-${person.key}">${t('在团队名册中查看', 'View in the team roster')}</a>`}`;
+      dialog.querySelector('.network-dialog-content').innerHTML = `<img class="network-profile-photo" src="${person.photo}" alt="${escape(personName(person))}" width="160" height="176"><p class="network-kicker">${escape(role(person))}</p><h3 id="network-person-title">${escape(personName(person))}</h3>${person.nameEn !== person.nameZh ? `<p class="network-profile-other-name">${escape(en ? person.nameZh : person.nameEn)}</p>` : ''}<div class="network-profile-affiliations"><h4>${t('机构', 'Affiliations')}</h4><ul>${affiliations}</ul></div>${profileUrl ? `<a class="network-profile-source" href="${escape(profileUrl)}" target="_blank" rel="noopener noreferrer">${t('机构公开资料', 'Institutional profile')}</a>` : ''}${inTeamRoster ? '' : `<a class="network-profile-team" href="#member-${person.key}">${t('在团队名册中查看', 'View in the team roster')}</a>`}`;
       dialog.showModal();
     }
 

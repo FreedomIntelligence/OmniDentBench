@@ -32,5 +32,25 @@ window.ODB_NETWORK_DATA = {
     '092-colman-mcgrath': { region: 'hong-kong', partners: ['hku'], url: 'https://facdent.hku.hk/people/professoriate-staff/profile/mcgrathc' },
     '093-edward-chin-man': { region: 'hong-kong', partners: ['hku'], url: 'https://facdent.hku.hk/people/professoriate-staff/profile/edward-lo' },
     '099-nasir-bashir': { region: 'hong-kong', partners: ['hku'], url: 'https://facdent.hku.hk/geh/cpd-20261027.php' }
+  },
+  profileUrls: {
+    '001-ming-zhong': 'https://gjjl.lshhxy.edu.cn/info/1004/2425.htm',
+    '003-hui-zhang': 'https://m.cnconf.com/mini_site/program/user_show/cn/5465/?id=892180',
+    '004-mingming-xu': 'https://ss.bjmu.edu.cn/Html/Mobile/Doctors/Main/Index_707.html',
+    '006-weihua-cai': 'https://www.smuszsh.com/yyfw/jkkp/jkzs/content/post_1537957.html#:~:text=本期专家介绍',
+    '007-xiaojing-wang': 'https://www.sciconf.cn/cn/person-detail/426?user_id=ctqgFOtIF_jtjS6Xm2Wue9Q_d_d',
+    '009-shan-jiang': 'https://www.smuszsh.com/ksdh/ksjs/yznmbk/ksry/content/post_838767.html',
+    '011-kun-qi': 'https://www.dentalxjtu.com/info/1048/54922.htm',
+    '085-abdul-warith-akinshipo': 'https://dental.unilag.edu.ng/staff/akinshipo-abdul-warith/',
+    '087-adetayo-aborisade': 'https://fds.buk.edu.ng/Oral%20_diagnostic_science#:~:text=Dr%20Adetayo%20Aborisade',
+    '088-antonin-tichy': 'https://nomos.is.cuni.cz/person/1826941175998271',
+    '090-brandon-c-key': 'https://dentistry.uth.edu/directory/profile/brandon-c-key',
+    '096-falk-schwendicke': 'https://www.lmu-klinikum.de/zep/unser-team/prof-schwendicke/27bab1e6b1de4a5b',
+    '098-miguel-roig-cayon': 'https://www.uic.es/es/teacher/mroig',
+    '100-olabisi-hajarat-oderinu': 'https://dental.unilag.edu.ng/staff/olabisi-hajarat-oderinu/',
+    '102-ricardo-palacios-banuelos': 'https://clinicablasi.com/dr-ricardo-palacios/',
+    '103-suresh-kandagal-veerabhadrappa': 'https://university.segi.edu.my/list-of-academics-faculty-of-dentistry/#:~:text=Suresh%20Kandagal%20Veerabhadrappa',
+    '106-yuta-chiba': 'https://jglobal.jst.go.jp/detail?JGLOBAL_ID=201801006072827453',
+    '107-lluis-giner-tarrida': 'https://raed.academy/en/academicians/dr-lluis-giner-tarrida/'
   }
 };
