@@ -120,7 +120,7 @@ When publishing results, report the two metrics separately and include the langu
 
 ## Institutions and team
 
-OmniDentBench brings together **17 partner institutions**. [Explore the collaboration map](https://freedomintelligence.github.io/OmniDentBench/#collaboration-map) · [View the research team](https://freedomintelligence.github.io/OmniDentBench/#team)
+OmniDentBench brings together **16 partner institutions**. [Explore the collaboration map](https://freedomintelligence.github.io/OmniDentBench/#collaboration-map) · [View participant affiliations](https://freedomintelligence.github.io/OmniDentBench/#participant-institutions) · [View the research team](https://freedomintelligence.github.io/OmniDentBench/#team)
 
 ### Steering chairs (4)
 
@@ -308,22 +308,19 @@ OmniDentBench brings together **17 partner institutions**. [Explore the collabor
   <tr>
     <td align="center" width="25%"><img src="docs/images/partner-marks/peking-tesinghua-center-for-life-sciences.webp" width="140" alt=""><br><sub>Peking-Tsinghua Center for Life Sciences</sub></td>
     <td align="center" width="25%"><img src="docs/images/partner-marks/national-biomedical-imaging-center.webp" width="140" alt=""><br><sub>Peking University National Biomedical Imaging Center</sub></td>
-    <td align="center" width="25%"><img src="docs/images/logo/chongqing-medical-university.webp" width="140" alt=""><br><sub>Chongqing Medical University</sub></td>
     <td align="center" width="25%"><img src="docs/images/partner-marks/the-prince-philip-dentap-hospital.webp" width="140" alt=""><br><sub>The Prince Philip Dental Hospital</sub></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/mayo-clinic-logo.webp" width="140" alt=""><br><sub>Mayo Clinic</sub></td>
   </tr>
   <tr>
-    <td align="center" width="25%"><img src="docs/images/partner-marks/mayo-clinic-logo.webp" width="140" alt=""><br><sub>Mayo Clinic</sub></td>
     <td align="center" width="25%"><img src="docs/images/partner-marks/lmu-klinikum-logo.webp" width="140" alt=""><br><sub>Ludwig-Maximilians-Universität München Klinikum (LMU Klinikum)</sub></td>
     <td align="center" width="25%"><img src="docs/images/partner-marks/SEGi.webp" width="140" alt=""><br><sub>SEGi University</sub></td>
     <td align="center" width="25%"><img src="docs/images/partner-marks/national-hospital-abuja-logo.webp" width="140" alt=""><br><sub>National Hospital Abuja</sub></td>
+    <td align="center" width="25%"><img src="docs/images/partner-marks/cmul-logo.webp" width="140" alt=""><br><sub>College of Medicine, University of Lagos (CMUL)</sub></td>
   </tr>
   <tr>
-    <td align="center" width="25%"><img src="docs/images/partner-marks/cmul-logo.webp" width="140" alt=""><br><sub>College of Medicine, University of Lagos (CMUL)</sub></td>
     <td align="center" width="25%"><img src="docs/images/partner-marks/bayero-university-kano-logo.webp" width="140" alt=""><br><sub>Bayero University Kano</sub></td>
     <td align="center" width="25%"><img src="docs/images/partner-marks/smanu-Danfodiyo-University-Sokoto.webp" width="140" alt=""><br><sub>Usmanu Danfodiyo University Sokoto</sub></td>
     <td align="center" width="25%"><img src="docs/images/partner-marks/university-of-maiduguri-logo.webp" width="140" alt=""><br><sub>University of Maiduguri</sub></td>
-  </tr>
-  <tr>
     <td align="center" width="25%"><img src="docs/images/partner-marks/madda-walabu-university-logo.webp" width="140" alt=""><br><sub>Madda Walabu University</sub></td>
   </tr>
 </table>

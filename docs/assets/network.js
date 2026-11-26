@@ -11,6 +11,9 @@
   const project = ([longitude, latitude]) => [(longitude + 180) / 360 * 1000, (85 - latitude) / 145 * 500];
   const findRegion = key => mapRegions.find(region => region.key === key);
   const partnerRegion = key => regions.find(region => region.partners.includes(key));
+  const partnerCount = (count, en) => en
+    ? `${count} partner ${count === 1 ? 'institution' : 'institutions'}`
+    : `${count} 家合作机构`;
 
   function portraitLabelY(region) {
     if (region.key === 'mainland') return 22;
@@ -53,6 +56,18 @@
     return person.affiliationIds.map(id => data.affiliations[id]);
   }
 
+  function getParticipantInstitutions(data, region = 'all') {
+    const affiliationIds = new Set(data.team.flatMap(person => person.affiliationIds));
+    const institutionIds = new Set();
+    for (const id of affiliationIds) {
+      const affiliation = data.affiliations[id];
+      if (region === 'all' || affiliation.region === region) {
+        institutionIds.add(affiliation.institutionId ?? id);
+      }
+    }
+    return [...institutionIds].map(id => data.affiliations[id]);
+  }
+
   function getPeople(data, { region = 'all', partner = null, query = '' } = {}) {
     const search = query.trim().toLocaleLowerCase();
     return data.team.filter(person => {
@@ -66,7 +81,6 @@
   function render({ en, data, groups }) {
     const t = (zh, english) => en ? english : zh;
     const name = item => en ? item.en : item.zh;
-    const institutionCount = count => t(`${count} 家机构`, `${count} ${count === 1 ? 'institution' : 'institutions'}`);
     const sortedPeople = groups.flatMap(([category]) => data.team.filter(person => person.category === category));
     const rosterLink = t('跳到完整团队名册', 'Skip to the full team roster');
     const portrait = person => {
@@ -98,12 +112,12 @@
               const label = escape(name(region));
               const regionHeading = `<span class="network-pin-name">${label}</span><span class="network-pin-code" aria-hidden="true">${region.code}</span>`;
               const authorCount = t(`${authors.length} 位作者`, `${authors.length} ${authors.length === 1 ? 'author' : 'authors'}`);
-              const regionControl = `type="button" data-region="${region.key}" aria-pressed="${selectedRegion === region.key}" aria-controls="network-panel network-roster"`;
+              const regionControl = `type="button" data-region="${region.key}" aria-pressed="${selectedRegion === region.key}" aria-controls="network-panel network-roster participant-institutions"`;
               const photos = authors.slice(0, 3).map(person => `<img src="${person.photo}" alt="" width="24" height="25" draggable="false">`).join('');
               const width = partnerKeys.length > 2 ? 30 : region.key === 'hong-kong' ? 27 : region.key === 'united-states' ? 23 : partnerKeys.length ? 18 : region.key === 'japan' ? 8.5 : 12;
               return `<div class="network-cluster${partnerKeys.length ? '' : ' network-cluster--authors'}" data-card-align="${region.cardAlign ?? 'center'}" style="left:${region.label[0]}%;--pin-top:${region.label[1]}%;--portrait-pin-top:${portraitLabelY(region)}%;--cluster-width:${width}%;--mark-columns:${Math.min(partnerKeys.length, 3)}">
                 ${partnerKeys.length
-                  ? `<button class="network-pin" ${regionControl} aria-label="${label}: ${institutionCount(partnerKeys.length)}, ${authorCount}">${regionHeading}</button>
+                  ? `<button class="network-pin" ${regionControl} aria-label="${label}: ${partnerCount(partnerKeys.length, en)}, ${authorCount}">${regionHeading}</button>
                     <div class="network-map-marks">${partnerKeys.map(key => {
                       const partner = data.partners.find(item => item.key === key);
                       const partnerLabel = escape(en ? partner.nameEn : partner.nameZh);
@@ -117,18 +131,27 @@
         </div>
       </section>
       <section id="institutions" class="section institutions-section" aria-labelledby="collaboration-directory-title" tabindex="-1">
-        <h2 class="visually-hidden" id="collaboration-directory-title">${t('合作机构与成员', 'Institutions and people')}</h2>
+        <h2 class="visually-hidden" id="collaboration-directory-title">${t('机构与成员', 'Institutions and people')}</h2>
         <div id="network-panel" class="network-panel">
-          <p id="network-panel-count"></p>
-          <div class="network-panel-content" id="network-results" role="region" aria-label="${t('合作机构列表', 'Partner institutions')}"></div>
+          <div class="network-directory-heading">
+            <h3 id="partner-institutions-title">${t('合作机构', 'Partner institutions')}</h3>
+            <p id="network-panel-count"></p>
+          </div>
+          <div class="network-panel-content" id="network-results" role="region" aria-labelledby="partner-institutions-title"></div>
           <span id="network-status" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></span>
         </div>
         <div class="network-roster" id="network-roster" role="group" aria-label="${t('项目团队头像', 'Project team portraits')}">
           <a class="network-roster-skip network-roster-shortcut visually-hidden" href="#team">${rosterLink}</a>
           <div class="network-roster-grid">${sortedPeople.map(person => portrait(person)).join('')}</div>
-          <a class="network-roster-skip" href="#team">${rosterLink}</a>
           <span class="network-roster-tooltip" aria-hidden="true" hidden></span>
         </div>
+        <section id="participant-institutions" aria-labelledby="participant-institutions-title">
+          <div class="network-directory-heading">
+            <h3 id="participant-institutions-title">${t('参与者所在机构', 'Participant affiliations')}</h3>
+            <a class="network-roster-skip" href="#team">${rosterLink}</a>
+          </div>
+          <ul class="network-affiliation-list" role="list"></ul>
+        </section>
       </section>
       <dialog class="network-dialog" aria-labelledby="network-person-title"><button class="network-dialog-close" type="button" aria-label="${t('关闭成员资料', 'Close profile')}">×</button><div class="network-dialog-content"></div></dialog>
     </div>`;
@@ -141,13 +164,13 @@
     const name = item => en ? item.en : item.zh;
     const personName = person => en ? person.nameEn : person.nameZh;
     const partnerName = partner => en ? partner.nameEn : partner.nameZh;
-    const institutionCount = count => t(`${count} 家机构`, `${count} ${count === 1 ? 'institution' : 'institutions'}`);
     const peopleCount = count => t(`${count} 位成员`, `${count} ${count === 1 ? 'person' : 'people'}`);
     const role = person => {
       const group = groups.find(([category]) => category === person.category);
       return group ? group[en ? 2 : 1] : '';
     };
     const content = root.querySelector('#network-results');
+    const affiliationList = root.querySelector('.network-affiliation-list');
     const panelCount = root.querySelector('#network-panel-count');
     const status = root.querySelector('#network-status');
     const dialog = root.querySelector('dialog');
@@ -258,14 +281,21 @@
       const region = findRegion(selectedRegion);
       const partners = getPartners(data, selectedRegion);
       const people = getPeople(data, { region: selectedRegion });
+      const institutions = getParticipantInstitutions(data, selectedRegion);
+      const institutionNames = institutions.map(institution => {
+        const english = institution.institutionName ?? institution.name;
+        const label = t(institution.institutionNameZh ?? institution.nameZh ?? english, english);
+        return label.replace(/[.。]$/, '');
+      }).sort((first, second) => first.localeCompare(second, t('zh-CN', 'en')));
       const visiblePeople = new Set(people.map(person => person.key));
-      panelCount.textContent = `${region ? `${name(region)} · ` : ''}${institutionCount(partners.length)} · ${peopleCount(people.length)}`;
+      panelCount.textContent = `${region ? `${name(region)} · ` : ''}${partnerCount(partners.length, en)} · ${peopleCount(people.length)}`;
       regionControls.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.region === selectedRegion)));
       leaders.forEach(({ region, path }) => path.parentElement.classList.toggle('is-selected', region.key === selectedRegion));
       content.innerHTML = `<div class="network-institution-list">${partners.map(partner => `<div class="network-institution-row"><img src="${partner.logo}" alt="" loading="lazy"><span><strong>${escape(partnerName(partner))}</strong><small>${name(partnerRegion(partner.key))}</small></span></div>`).join('')}</div>`;
+      affiliationList.innerHTML = institutionNames.map(label => `<li>${escape(label)}</li>`).join('');
       hideRosterName();
       portraits.forEach(button => { button.hidden = !visiblePeople.has(button.dataset.person); });
-      status.textContent = panelCount.textContent;
+      status.textContent = `${panelCount.textContent} · ${t(`${institutions.length} 家参与者所在机构`, `${institutions.length} participant ${institutions.length === 1 ? 'affiliation' : 'affiliations'}`)}`;
     }
 
     function openPerson(key, trigger) {
@@ -316,5 +346,5 @@
     layoutAtlas();
   }
 
-  window.ODBNetwork = { render, init, getPartners, getPeople, project };
+  window.ODBNetwork = { render, init, getPartners, getPeople, getParticipantInstitutions, project };
 })();

@@ -92,7 +92,9 @@ button.network-map-portraits:is(:hover, [aria-pressed='true']) { background: #dc
 .network-author-pin .network-map-portraits { background: transparent; padding: 0; min-height: 25px; }
 .section.institutions-section { padding-block: 10px clamp(38px, 5vw, 72px); background: var(--collaboration-surface); }
 #institutions:focus { outline: none; }
-#network-panel-count { margin-bottom: 12px; color: var(--muted); font-size: .8125rem; line-height: 1.5; text-align: end; }
+.network-directory-heading { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 0 16px; margin-bottom: 10px; }
+.network-directory-heading h3 { font-size: 1.125rem; font-weight: 650; line-height: 1.4; }
+#network-panel-count { color: var(--muted); font-size: .8125rem; line-height: 1.5; }
 .network-institution-list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px clamp(12px, 2vw, 28px); }
 .network-institution-row { display: flex; align-items: center; gap: 12px; padding: 6px 4px; }
 .network-institution-row img { width: 56px; height: 44px; object-fit: contain; flex-shrink: 0; }
@@ -104,6 +106,10 @@ button.network-map-portraits:is(:hover, [aria-pressed='true']) { background: #dc
 .network-roster-skip:focus-visible { outline-offset: 2px; }
 .network-roster-shortcut:focus-visible { position: static; width: fit-content; height: auto; clip-path: none; white-space: normal; }
 .network-roster-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); gap: 6px; padding: 2px 0 12px; }
+#participant-institutions { margin-top: 8px; }
+#participant-institutions .network-directory-heading { align-items: center; margin-bottom: 4px; }
+.network-affiliation-list { columns: 2; column-gap: clamp(20px, 4vw, 64px); margin: 0; padding: 0; list-style: none; }
+.network-affiliation-list li { break-inside: avoid; padding-block: 8px; border-top: 1px solid var(--line); font-size: 1rem; line-height: 1.5; overflow-wrap: anywhere; }
 .network-portrait { display: grid; place-items: center; min-width: 0; min-height: 40px; padding: 2px; border: 0; border-radius: 3px; background: none; }
 .network-portrait[hidden] { display: none; }
 .network-portrait img { width: 28px; height: auto; aspect-ratio: 12/13; object-fit: cover; object-position: center 23%; border-radius: 2px; background: #e9eff4; }
@@ -170,6 +176,7 @@ button.network-map-portraits:is(:hover, [aria-pressed='true']) { background: #dc
 }
 @media (max-width: 600px) {
   .network-institution-list { grid-template-columns: 1fr; }
+  .network-affiliation-list { columns: 1; }
   .network-roster-grid { grid-template-columns: repeat(auto-fill, minmax(32px, 1fr)); gap: 5px; }
   .network-portrait { min-height: 32px; }
   .network-portrait img { width: 24px; }
