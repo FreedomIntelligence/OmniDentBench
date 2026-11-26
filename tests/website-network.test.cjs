@@ -19,10 +19,10 @@ test('every partner is counted once; mainland and Hong Kong remain separate', ()
   assert.equal(assignments.length, data.partners.length);
   assert.equal(new Set(assignments).size, data.partners.length);
   assert.deepEqual([...assignments].sort(), Array.from(data.partners, partner => partner.key).sort());
-  assert.equal(getPartners(data, 'mainland').length, 5);
+  assert.equal(getPartners(data, 'mainland').length, 6);
   assert.equal(getPartners(data, 'hong-kong').length, 2);
   assert.equal(getPartners(data, 'nigeria').length, 5);
-  assert.equal(getPartners(data).length, 16);
+  assert.equal(getPartners(data).length, 17);
   assert.equal(getPartners(data, 'missing').length, 0);
   assert.equal(getPartners(data, 'mainland').some(partner => partner.key === 'cuhk'), true);
   assert.equal(getPartners(data, 'hong-kong').some(partner => partner.key === 'cuhk'), false);
@@ -55,6 +55,8 @@ test('regional people require source-backed, valid affiliations', () => {
   assert.ok(getPeople(data, { region: 'mainland' }).some(person => person.key === '059-junwen-wang'));
   assert.ok(getPeople(data, { region: 'nigeria' }).length > 0);
   assert.deepEqual(Array.from(getPeople(data, { partner: 'segi' }), person => person.key), ['103-suresh-kandagal-veerabhadrappa']);
+  assert.deepEqual(Array.from(getPeople(data, { partner: 'chongqing-medical-university' }), person => person.key),
+    ['002-dayong-liu', '042-shuwei-huang', '016-fangjie-zhou']);
   assert.match(data.affiliations[25].name, /SEGi University.*Malaysia/);
   assert.equal(getPeople(data, { partner: 'cuhk' })[0].key, '061-benyou-wang');
   assert.equal(getPeople(data, { region: 'mainland', partner: 'hku' }).length, 0);
@@ -88,7 +90,8 @@ test('both languages render institution and author locations on the map and the 
     assert.equal(regionCodes.length, 11);
     assert.equal(new Set(regionCodes).size, 11);
     assert.doesNotMatch(hero, /<strong>\d+<\/strong>/);
-    assert.equal((html.match(/data-partner="/g) || []).length, 16);
+    assert.equal((html.match(/data-partner="/g) || []).length, 17);
+    assert.match(hero, en ? /title="Chongqing Medical University"/ : /title="重庆医科大学"/);
     const directory = html.slice(directoryStart);
     assert.equal((directory.match(/class="network-portrait"/g) || []).length, data.team.length);
     assert.match(html, en ? /Chinese mainland/ : /中国大陆/);

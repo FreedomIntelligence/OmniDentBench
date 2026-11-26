@@ -343,7 +343,8 @@
       root.querySelectorAll('[data-map-line]').forEach(line => line.classList.toggle('is-selected', line.dataset.mapLine === state.region));
       root.querySelectorAll('.network-map-marks [data-partner]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.partner === state.partner)));
       if (partner) {
-        const linkedPeople = people.filter(person => profiles[person.key].partners.includes(partner.key));
+        const linkedProfiles = people.filter(person => profiles[person.key].partners.includes(partner.key));
+        const linkedPeople = linkedProfiles.length ? linkedProfiles : getPeople(data, { region: state.region, partner: partner.key });
         content.innerHTML = `<button class="network-back" type="button" data-back>${t('查看本地区全部机构', 'All institutions in this location')}</button><div class="network-institution-detail"><img src="${partner.logo}" alt=""><h3>${escape(partnerName(partner))}</h3><p>${name(partnerRegion(partner.key))}</p></div>${linkedPeople.length ? renderLinkedPeople(linkedPeople) : `<p class="network-empty-copy">${t('尚未补充该机构与项目成员的关联资料。可在完整团队中浏览全部成员。', 'Member affiliations for this institution have not yet been linked. Explore all members in the full team.')}</p>`}`;
       } else {
         content.innerHTML = `<div class="network-institution-list">${partners.map(partner => `<button class="network-institution-row" type="button" data-partner="${partner.key}"><img src="${partner.logo}" alt="" loading="lazy"><span><strong>${escape(partnerName(partner))}</strong><small>${name(partnerRegion(partner.key))}</small></span></button>`).join('')}</div>${region && people.length ? renderLinkedPeople(people) : ''}`;

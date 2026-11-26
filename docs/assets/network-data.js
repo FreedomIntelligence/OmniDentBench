@@ -2,7 +2,7 @@
 // Person locations are linked only when an institutional profile supports them.
 window.ODB_NETWORK_DATA = {
   regions: [
-    { key: 'mainland', code: 'CN', en: 'Chinese mainland', zh: '中国大陆', partners: ['cuhk', 'frd', 'peking-university', 'ptcls', 'pku-biomedical-imaging'], anchor: [116.4, 39.9], label: [88, 24], cardAlign: 'above' },
+    { key: 'mainland', code: 'CN', en: 'Chinese mainland', zh: '中国大陆', partners: ['cuhk', 'frd', 'peking-university', 'ptcls', 'pku-biomedical-imaging', 'chongqing-medical-university'], anchor: [116.4, 39.9], label: [88, 24], cardAlign: 'above' },
     { key: 'hong-kong', code: 'HK', en: 'Hong Kong, China', zh: '中国香港', partners: ['hku', 'prince-philip-dental-hospital'], anchor: [114.17, 22.3], label: [89, 63], cardAlign: 'below' },
     { key: 'nigeria', code: 'NG', en: 'Nigeria', zh: '尼日利亚', partners: ['nha', 'cmul', 'buk', 'udus', 'maiduguri'], anchor: [7.49, 9.07], label: [32, 63], cardAlign: 'below' },
     { key: 'united-states', code: 'US', en: 'United States', zh: '美国', partners: ['mayo'], anchor: [-92.46, 44.01], label: [18.5, 37.5], cardAlign: 'left' },
