@@ -242,6 +242,7 @@ sha256,distribution,source_pmcid,figure_label,source_url,license_url,modificatio
 1b188f6bf0b4d8bd7fbeb880f15662c857184ffe3e5dc6937c9c801c0dfee649,bundled,PMC12486560,Figs 2A and B:,https://pmc.ncbi.nlm.nih.gov/articles/PMC12486560/#F2,,Frozen source JPEG; bytes unchanged
 1b2261aea887ff98ba35915fc58a0fbab95c65ff08a12a7c8049d53a40f690d6,bundled,PMC11947331,Fig. 5,https://pmc.ncbi.nlm.nih.gov/articles/PMC11947331/#Fig5,,Frozen source JPEG; bytes unchanged
 1b42e6eccd510adb78759f1abb77cbf8f2a76adcd2dea0d5a3c84a61eee4e312,bundled,PMC5817348,Figure10,https://pmc.ncbi.nlm.nih.gov/articles/PMC5817348/#JDS-19-74-g010.tif,,Frozen source JPEG; bytes unchanged
+1b48b9a8ba85d91d2ff80109c3fa0b835a79d6286ab8317abf9ee2f5696dd643,bundled,PMC7758263,Fig. 2,https://pmc.ncbi.nlm.nih.gov/articles/PMC7758263/#F2,https://creativecommons.org/licenses/by-nc/3.0/,Frozen source JPEG; bytes unchanged
 1bc0ac04d7d5508544c90fc6634c7a8b8439e05896f52f5d5384fde440f88d99,bundled,PMC7220074,Figure 1,https://pmc.ncbi.nlm.nih.gov/articles/PMC7220074/#F1,,Frozen source JPEG; bytes unchanged
 1bebbbeaef2cb017898e4ee4b450b092f071c7aeb967706aeac59960a80429ad,bundled,PMC10175012,Figure 7,https://pmc.ncbi.nlm.nih.gov/articles/PMC10175012/#fig7,https://creativecommons.org/licenses/by/4.0/,Original published image; bytes unchanged
 1c022934682148d890cda66ca36a366000aaa94dab6a48dd3dfa18247eebfd9d,bundled,PMC8967591,Figure 9,https://pmc.ncbi.nlm.nih.gov/articles/PMC8967591/#fig9,,Frozen source JPEG; bytes unchanged
@@ -1701,7 +1702,6 @@ c6c1ce85eaae3b1248f43118f0231950260cd72fd9c5dc08507b3f0ce2c23893,bundled,PMC1027
 c6d2e6c481aca58a7f71711711c43ae169233a9b0ada69993d7c5f9142eb1490,bundled,PMC4601953,Fig. 2,https://pmc.ncbi.nlm.nih.gov/articles/PMC4601953/#fig0010,,Frozen source JPEG; bytes unchanged
 c6e64ded0fce992e8373f1871d2df036cb916362ac2c3b0071cf96197208406e,bundled,PMC9528003,Figure 1.,https://pmc.ncbi.nlm.nih.gov/articles/PMC9528003/#fig1-03000605211047704,,Frozen source JPEG; bytes unchanged
 c72517f46083cd034f707218e0c4ead21b9033ee85d722264320c71701a80a55,bundled,PMC11440670,Fig. 8:,https://pmc.ncbi.nlm.nih.gov/articles/PMC11440670/#F8,,Frozen source JPEG; bytes unchanged
-c725ad0622a123e0c06be0de127939dd89c39f3d5af0fc0f5fbd05e8c04c017f,bundled,PMC7758263,Fig. 3,https://pmc.ncbi.nlm.nih.gov/articles/PMC7758263/#F3,,Frozen source JPEG; bytes unchanged
 c73d89f2216f43569328f9a9ffb68ae4c2d0ff374c860ec2c1002786beb25561,bundled,PMC10870340,Figure 3,https://pmc.ncbi.nlm.nih.gov/articles/PMC10870340/#FIG3,,Frozen source JPEG; bytes unchanged
 c74081ade2569f5697222bbd0f307c9c60c5782cd182bc60924795565455b7bd,bundled,PMC10944649,Figure 3,https://pmc.ncbi.nlm.nih.gov/articles/PMC10944649/#FIG3,https://creativecommons.org/licenses/by/4.0/,Original published image; bytes unchanged
 c74d26316240c5055b474a3ec7e7b5f5a6b0b6c94cb0edf1d21253ce1c00c5fe,bundled,PMC11249558,Fig. 2.,https://pmc.ncbi.nlm.nih.gov/articles/PMC11249558/#F2,,Frozen source JPEG; bytes unchanged

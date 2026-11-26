@@ -72,7 +72,7 @@ function renderSampleItem(t) {
       credit: 'Manila et al. (2020)',
       license: ['CC BY-NC 3.0', 'by-nc/3.0'],
       figures: [
-        [683, 273, 'F3', t('双侧上颌窦的轴位及冠状位 CBCT 图像', 'Axial and coronal CBCT views of the maxillary sinuses')]
+        [676, 322, 'F2', t('双侧上颌窦的轴位及冠状位 CBCT 图像', 'Axial and coronal CBCT views of the maxillary sinuses')]
       ]
     }
   ];
