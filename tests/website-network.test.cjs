@@ -22,6 +22,7 @@ test('every partner is counted once; mainland and Hong Kong remain separate', ()
   assert.equal(getPartners(data, 'mainland').length, 6);
   assert.equal(getPartners(data, 'hong-kong').length, 2);
   assert.equal(getPartners(data, 'nigeria').length, 5);
+  assert.equal(getPartners(data, 'japan').length, 0);
   assert.equal(getPartners(data).length, 17);
   assert.equal(getPartners(data, 'missing').length, 0);
   assert.equal(getPartners(data, 'mainland').some(partner => partner.key === 'cuhk'), true);
@@ -53,7 +54,7 @@ test('regional people require source-backed, valid affiliations', () => {
   }
   assert.ok(getPeople(data, { region: 'hong-kong' }).some(person => person.key === '059-junwen-wang'));
   assert.ok(getPeople(data, { region: 'mainland' }).some(person => person.key === '059-junwen-wang'));
-  assert.ok(getPeople(data, { region: 'nigeria' }).length > 0);
+  assert.equal(getPeople(data, { region: 'nigeria' }).length, 7);
   assert.deepEqual(Array.from(getPeople(data, { partner: 'segi' }), person => person.key), ['103-suresh-kandagal-veerabhadrappa']);
   assert.deepEqual(Array.from(getPeople(data, { partner: 'chongqing-medical-university' }), person => person.key),
     ['002-dayong-liu', '042-shuwei-huang', '016-fangjie-zhou']);
@@ -90,27 +91,27 @@ test('both languages render institution and author locations on the map and the 
     assert.equal(regionCodes.length, 11);
     assert.equal(new Set(regionCodes).size, 11);
     assert.doesNotMatch(hero, /<strong>\d+<\/strong>/);
-    assert.equal((html.match(/data-partner="/g) || []).length, 17);
+    assert.equal((hero.match(/class="network-map-mark"/g) || []).length, 17);
+    assert.doesNotMatch(html, /data-partner=|map-author-popover/);
     assert.match(hero, en ? /title="Chongqing Medical University"/ : /title="重庆医科大学"/);
     const directory = html.slice(directoryStart);
     assert.equal((directory.match(/class="network-portrait"/g) || []).length, data.team.length);
     assert.match(html, en ? /Chinese mainland/ : /中国大陆/);
     assert.match(html, en ? /Hong Kong, China/ : /中国香港/);
     assert.match(html, /aria-haspopup="dialog"/);
-    assert.match(html, /<div class="network-roster" role="group"/);
+    assert.match(html, /<div class="network-roster" id="network-roster" role="group"/);
     assert.match(html, /class="network-roster-skip network-roster-shortcut visually-hidden" href="#team"/);
     assert.ok(html.lastIndexOf('class="network-portrait"') < html.indexOf('class="network-roster-skip" href="#team"'));
     assert.doesNotMatch(html, /<select\b|network-map-directory|data-mode=/);
     assert.doesNotMatch(html, /institutions-title|network-panel-title|network-profile-note|network-attribution|institution-grid/);
     const portraits = [...html.matchAll(/class="network-portrait" type="button" data-person="([^"]+)"/g)];
     assert.equal(new Set(portraits.map(([, key]) => key)).size, data.team.length);
-    assert.match(hero, /id="map-author-popover" aria-labelledby="map-author-title" hidden/);
+    assert.equal((hero.match(/aria-controls="network-panel network-roster"/g) || []).length, 18);
     assert.doesNotMatch(hero, /data-zoom=|network-map-controls/);
     assert.doesNotMatch(hero, /class="network-map-authors"|class="network-map-controls"[^]*data-map-author=/);
-    assert.doesNotMatch(directory, /data-map-author=|map-author-popover/);
     assert.equal((directory.match(/class="network-roster-grid"/g) || []).length, 1);
     for (const region of ['japan', 'czechia', 'spain', 'united-kingdom', ...regions.map(item => item.key)]) {
-      assert.ok(hero.includes(`data-map-author="${region}"`));
+      assert.ok(hero.includes(`data-region="${region}"`));
       assert.ok(hero.includes(`data-map-line="${region}"`));
     }
     assert.deepEqual(Array.from(data.team.filter(person => person.category === 'steering_chair'), person => person.key), ['059-junwen-wang', '060-zuolin-jin', '061-benyou-wang', '105-jianquan-li']);

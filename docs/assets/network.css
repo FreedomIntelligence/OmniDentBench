@@ -67,8 +67,8 @@
 .network-leaders { overflow: visible; pointer-events: none; }
 .network-leaders path { fill: none; stroke: #6d8da4; stroke-width: 1.25; stroke-linecap: round; opacity: .84; }
 .network-leaders circle { fill: #527c9d; stroke: #f6fafd; stroke-width: 1.5; }
-.network-leaders :is(.is-selected, .is-author-open) path { stroke: var(--blue); stroke-width: 2.25; opacity: 1; }
-.network-leaders :is(.is-selected, .is-author-open) circle { fill: var(--blue); r: 4.5px; }
+.network-leaders .is-selected path { stroke: var(--blue); stroke-width: 2.25; opacity: 1; }
+.network-leaders .is-selected circle { fill: var(--blue); r: 4.5px; }
 .network-cluster { position: absolute; top: var(--pin-top); z-index: 2; transform: translate(var(--card-x, -50%), var(--card-offset, -50%)); width: min(var(--cluster-width), 190px); background: linear-gradient(145deg, #f8fcffab, #eaf4fb70); border: 1px solid #f9fcffe8; border-radius: 5px; box-shadow: 0 5px 16px #17354e26, inset 0 0 0 1px #789ab348; backdrop-filter: blur(5px) saturate(125%); }
 .network-cluster[data-card-align='above'] { --card-offset: -100%; }
 .network-cluster[data-card-align='below'] { --card-offset: 0%; }
@@ -81,52 +81,31 @@
 .network-pin:focus-visible { z-index: 3; outline-offset: 3px; }
 .network-cluster:focus-within { z-index: 3; }
 .network-map-marks { display: grid; grid-template-columns: repeat(var(--mark-columns), minmax(0, 1fr)); gap: 3px; padding: 0 4px 4px; }
-.network-map-marks button { display: grid; place-items: center; padding: 1px; min-width: 0; height: clamp(36px, 4cqw, 52px); border: 1px solid #e2edf2; background: #ffffff73; border-radius: 3px; }
-.network-map-marks button:hover, .network-map-marks button[aria-pressed='true'] { border-color: var(--blue); background: #f0f6fc; }
-.network-map-marks button:focus-visible { outline-offset: 1px; }
+.network-map-mark { display: grid; place-items: center; padding: 1px; min-width: 0; height: clamp(36px, 4cqw, 52px); border: 1px solid #e2edf2; background: #ffffff73; border-radius: 3px; }
 .network-map-marks img { width: 100%; height: 100%; min-height: 0; object-fit: contain; }
 .network-map-portraits { display: flex; width: 100%; align-items: center; gap: 4px; min-height: 32px; padding: 4px; border: 0; border-radius: 0 0 4px 4px; background: #e3eff681; }
 .network-map-portraits img { width: 24px; height: 25px; object-fit: cover; object-position: center 23%; border-radius: 2px; }
 .network-map-portraits small { color: var(--ink); font-size: .6875rem; margin-inline-start: 2px; white-space: nowrap; }
-.network-map-portraits:hover, .network-map-portraits[aria-expanded='true'], .network-author-pin[aria-expanded='true'] { background: #dceaf6; }
+button.network-map-portraits:is(:hover, [aria-pressed='true']) { background: #dceaf6; }
 .network-author-pin { flex-wrap: wrap; white-space: normal; text-align: start; }
 .network-author-pin > .network-pin-name { flex: 1; }
 .network-author-pin .network-map-portraits { background: transparent; padding: 0; min-height: 25px; }
-.network-map-author-popover { position: absolute; z-index: 3; width: min(18rem, calc(100% - 16px)); left: min(var(--author-left, 8px), max(8px, calc(100% - 18rem - 8px))); top: var(--author-top, 8px); padding: 8px 12px; border-radius: 12px; background: #f9fcfe; box-shadow: 0 6px 24px #102a4333; }
-.network-map-author-popover header { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
-.network-map-author-popover h2 { font-size: .9375rem; line-height: 1.4; }
-.network-map-author-close { flex: none; width: 36px; min-height: 36px; border: 0; border-radius: 4px; background: transparent; font-size: 1.25rem; line-height: 1; }
-.network-map-author-close:hover { background: #e7eff7; }
-.network-map-author-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(32px, 1fr)); gap: 4px; max-height: min(36svh, 17rem); padding: 4px; overflow: auto; overscroll-behavior: contain; }
-.network-map-author-list :focus-visible { outline-offset: -2px; }
 .section.institutions-section { padding-block: 10px clamp(38px, 5vw, 72px); background: var(--collaboration-surface); }
 #institutions:focus { outline: none; }
 #network-panel-count { margin-bottom: 12px; color: var(--muted); font-size: .8125rem; line-height: 1.5; text-align: end; }
-.network-institution-list, .network-person-list { display: grid; gap: 8px clamp(12px, 2vw, 28px); }
-.network-institution-list { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.network-person-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-.network-institution-row, .network-person-row { display: flex; align-items: center; width: 100%; gap: 12px; padding: 6px 4px; text-align: left; border: 0; border-radius: 4px; background: transparent; }
-.network-institution-row:hover, .network-person-row:hover { background: #e6f0f7; }
-.network-institution-row:focus-visible, .network-person-row:focus-visible { outline-offset: -2px; }
+.network-institution-list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px clamp(12px, 2vw, 28px); }
+.network-institution-row { display: flex; align-items: center; gap: 12px; padding: 6px 4px; }
 .network-institution-row img { width: 56px; height: 44px; object-fit: contain; flex-shrink: 0; }
-.network-institution-row span, .network-person-row span { min-width: 0; }
-.network-institution-row strong, .network-person-row strong { display: block; font-size: .875rem; font-weight: 650; line-height: 1.45; overflow-wrap: anywhere; }
-.network-institution-row small, .network-person-row small { display: block; font-size: .75rem; color: #536c7d; margin-top: 2px; line-height: 1.4; }
-.network-person-row img { width: 52px; height: 56px; object-fit: cover; object-position: center 23%; flex-shrink: 0; border-radius: 3px; background: #e9eff4; }
-.network-back { font-size: .8125rem; color: var(--blue) !important; padding: 7px 0; background: transparent; border: 0; text-decoration: underline; text-underline-offset: 4px; }
-.network-institution-detail { padding: 10px 0 6px; }
-.network-institution-detail img { width: 100%; height: 64px; object-fit: contain; margin: 4px 0 12px; }
-.network-institution-detail h3 { font-size: 1rem; line-height: 1.45; }
-.network-institution-detail p { margin-top: 4px; color: #536c7d; font-size: .8125rem; }
-.network-subheading { margin: 20px 0 4px; font-size: .875rem; font-weight: 650; }
-.network-subheading span { color: #536c7d; margin-left: 5px; }
-.network-empty-copy { padding: 10px 0 16px; font-size: .875rem; line-height: 1.6; color: #536c7d; }
+.network-institution-row span { min-width: 0; }
+.network-institution-row strong { display: block; font-size: .875rem; font-weight: 650; line-height: 1.45; overflow-wrap: anywhere; }
+.network-institution-row small { display: block; font-size: .75rem; color: #536c7d; margin-top: 2px; line-height: 1.4; }
 .network-roster { position: relative; margin-top: clamp(24px, 3vw, 40px); }
 .network-roster-skip { display: flex; width: fit-content; align-items: center; min-height: 44px; margin-inline-start: auto; color: var(--blue); font-size: .875rem; text-decoration: underline; text-underline-offset: 4px; }
 .network-roster-skip:focus-visible { outline-offset: 2px; }
 .network-roster-shortcut:focus-visible { position: static; width: fit-content; height: auto; clip-path: none; white-space: normal; }
-.network-roster-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(40px, 1fr)); gap: 6px; padding: 2px 0 12px; }
+.network-roster-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); gap: 6px; padding: 2px 0 12px; }
 .network-portrait { display: grid; place-items: center; min-width: 0; min-height: 40px; padding: 2px; border: 0; border-radius: 3px; background: none; }
+.network-portrait[hidden] { display: none; }
 .network-portrait img { width: 28px; height: auto; aspect-ratio: 12/13; object-fit: cover; object-position: center 23%; border-radius: 2px; background: #e9eff4; }
 .network-portrait:hover, .network-portrait:focus-visible { background: #e7eff7; }
 .network-portrait:focus-visible { outline-offset: 1px; }
@@ -159,7 +138,7 @@
   .specialty-icon svg { width: 27px; height: 29px; }
 }
 @media (max-height: 790px) {
-  .network-map-marks button { height: clamp(32px, 5svh, 40px); }
+  .network-map-mark { height: clamp(32px, 5svh, 40px); }
 }
 @container (max-width: 1100px) or (max-height: 510px) {
   .network-cluster { width: auto; border: 0; background: transparent; box-shadow: none; backdrop-filter: none; }
@@ -167,7 +146,7 @@
   .network-map-marks, .network-map-portraits, .network-pin-name { display: none; }
   .network-pin { padding: 0; min-height: 32px; border-radius: 50%; }
   .network-pin-code { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid #8aa9c0; border-radius: 50%; color: var(--blue); background: white; font-size: .6875rem; font-weight: 750; }
-  .network-pin:is(:hover, [aria-pressed='true'], [aria-expanded='true']) .network-pin-code { background: var(--blue); color: white; }
+  .network-pin:is(:hover, [aria-pressed='true']) .network-pin-code { background: var(--blue); color: white; }
 }
 @media (max-width: 380px) {
   .network-pin-code { width: 30px; height: 30px; }
@@ -190,8 +169,8 @@
   .specialty-label { min-height: 66px; }
 }
 @media (max-width: 600px) {
-  .network-institution-list, .network-person-list { grid-template-columns: 1fr; }
-  .network-roster-grid { grid-template-columns: repeat(auto-fit, minmax(32px, 1fr)); gap: 5px; }
+  .network-institution-list { grid-template-columns: 1fr; }
+  .network-roster-grid { grid-template-columns: repeat(auto-fill, minmax(32px, 1fr)); gap: 5px; }
   .network-portrait { min-height: 32px; }
   .network-portrait img { width: 24px; }
   .network-dialog { padding: 38px 24px 28px; }

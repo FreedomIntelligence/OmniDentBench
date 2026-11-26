@@ -1,6 +1,6 @@
 (() => {
   const { regions, profiles, profileUrls } = window.ODB_NETWORK_DATA;
-  const state = { region: 'all', partner: null };
+  let selectedRegion = 'all';
   const mapRegions = [...regions,
     { key: 'japan', code: 'JP', en: 'Japan', zh: '日本', anchor: [140.87, 38.27], label: [90, 37.5], cardAlign: 'right' },
     { key: 'czechia', code: 'CZ', en: 'Czechia', zh: '捷克', anchor: [14.42, 50.08], label: [73, 15.5], cardAlign: 'above' },
@@ -9,7 +9,7 @@
   ];
   const escape = value => String(value).replace(/[&<>"']/g, character => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[character]));
   const project = ([longitude, latitude]) => [(longitude + 180) / 360 * 1000, (85 - latitude) / 145 * 500];
-  const findRegion = key => regions.find(region => region.key === key);
+  const findRegion = key => mapRegions.find(region => region.key === key);
   const partnerRegion = key => regions.find(region => region.partners.includes(key));
 
   function portraitLabelY(region) {
@@ -46,7 +46,7 @@
 
   function getPartners(data, regionKey = 'all') {
     const region = findRegion(regionKey);
-    return regionKey === 'all' ? data.partners : data.partners.filter(partner => region?.partners.includes(partner.key));
+    return regionKey === 'all' ? data.partners : data.partners.filter(partner => region?.partners?.includes(partner.key));
   }
 
   function getAffiliations(data, person) {
@@ -98,36 +98,32 @@
               const label = escape(name(region));
               const regionHeading = `<span class="network-pin-name">${label}</span><span class="network-pin-code" aria-hidden="true">${region.code}</span>`;
               const authorCount = t(`${authors.length} 位作者`, `${authors.length} ${authors.length === 1 ? 'author' : 'authors'}`);
-              const authorControl = 'aria-controls="map-author-popover" aria-expanded="false"';
+              const regionControl = `type="button" data-region="${region.key}" aria-pressed="${selectedRegion === region.key}" aria-controls="network-panel network-roster"`;
               const photos = authors.slice(0, 3).map(person => `<img src="${person.photo}" alt="" width="24" height="25" draggable="false">`).join('');
               const width = partnerKeys.length > 2 ? 30 : region.key === 'hong-kong' ? 27 : region.key === 'united-states' ? 23 : partnerKeys.length ? 18 : region.key === 'japan' ? 8.5 : 12;
               return `<div class="network-cluster${partnerKeys.length ? '' : ' network-cluster--authors'}" data-card-align="${region.cardAlign ?? 'center'}" style="left:${region.label[0]}%;--pin-top:${region.label[1]}%;--portrait-pin-top:${portraitLabelY(region)}%;--cluster-width:${width}%;--mark-columns:${Math.min(partnerKeys.length, 3)}">
                 ${partnerKeys.length
-                  ? `<button class="network-pin" type="button" data-region="${region.key}" aria-pressed="${state.region === region.key}" aria-controls="network-panel map-author-popover" aria-expanded="false" aria-label="${label}: ${institutionCount(partnerKeys.length)}, ${authorCount}">${regionHeading}</button>
+                  ? `<button class="network-pin" ${regionControl} aria-label="${label}: ${institutionCount(partnerKeys.length)}, ${authorCount}">${regionHeading}</button>
                     <div class="network-map-marks">${partnerKeys.map(key => {
                       const partner = data.partners.find(item => item.key === key);
                       const partnerLabel = escape(en ? partner.nameEn : partner.nameZh);
-                      return `<button type="button" data-partner="${key}" aria-label="${partnerLabel}" title="${partnerLabel}"><img src="${partner.logo}" alt="" draggable="false"></button>`;
+                      return `<span class="network-map-mark" title="${partnerLabel}"><img src="${partner.logo}" alt="${partnerLabel}" draggable="false"></span>`;
                     }).join('')}</div>
-                    <button class="network-map-portraits" type="button" data-map-author="${region.key}" ${authorControl} aria-label="${label}: ${authorCount}">${photos}<small>${authorCount}</small></button>`
-                  : `<button class="network-pin network-author-pin" type="button" data-map-author="${region.key}" ${authorControl} aria-label="${label}: ${authorCount}">${regionHeading}<span class="network-map-portraits">${photos}</span></button>`}
+                    <button class="network-map-portraits" ${regionControl} aria-label="${label}: ${authorCount}">${photos}<small>${authorCount}</small></button>`
+                  : `<button class="network-pin network-author-pin" ${regionControl} aria-label="${label}: ${authorCount}">${regionHeading}<span class="network-map-portraits">${photos}</span></button>`}
               </div>`;
             }).join('')}
           </div>
         </div>
-        <section class="network-map-author-popover" id="map-author-popover" aria-labelledby="map-author-title" hidden>
-          <header><h2 id="map-author-title"></h2><button class="network-map-author-close" type="button" aria-label="${t('收起当地作者', 'Collapse local authors')}">×</button></header>
-          <div class="network-map-author-list"></div>
-        </section>
       </section>
       <section id="institutions" class="section institutions-section" aria-labelledby="collaboration-directory-title" tabindex="-1">
         <h2 class="visually-hidden" id="collaboration-directory-title">${t('合作机构与成员', 'Institutions and people')}</h2>
         <div id="network-panel" class="network-panel">
           <p id="network-panel-count"></p>
-          <div class="network-panel-content" id="network-results" role="region" aria-label="${t('机构与成员列表', 'Institutions and people')}"></div>
+          <div class="network-panel-content" id="network-results" role="region" aria-label="${t('合作机构列表', 'Partner institutions')}"></div>
           <span id="network-status" class="visually-hidden" role="status" aria-live="polite" aria-atomic="true"></span>
         </div>
-        <div class="network-roster" role="group" aria-label="${t('项目团队头像', 'Project team portraits')}">
+        <div class="network-roster" id="network-roster" role="group" aria-label="${t('项目团队头像', 'Project team portraits')}">
           <a class="network-roster-skip network-roster-shortcut visually-hidden" href="#team">${rosterLink}</a>
           <div class="network-roster-grid">${sortedPeople.map(person => portrait(person)).join('')}</div>
           <a class="network-roster-skip" href="#team">${rosterLink}</a>
@@ -223,75 +219,8 @@
     });
     const roster = root.querySelector('.network-roster');
     const rosterTooltip = root.querySelector('.network-roster-tooltip');
-    const authorPopover = root.querySelector('#map-author-popover');
-    const authorList = authorPopover.querySelector('.network-map-author-list');
-    const closeAuthors = authorPopover.querySelector('.network-map-author-close');
-    let activeAuthorRegion = null;
-    let authorTrigger = null;
-
-    function setAuthorExpanded(region, expanded) {
-      map.querySelectorAll(`[data-region="${region}"], [data-map-author="${region}"]`).forEach(button => {
-        button.setAttribute('aria-expanded', String(expanded));
-      });
-      canvas.querySelector(`[data-map-line="${region}"]`).classList.toggle('is-author-open', expanded);
-    }
-
-    function hideMapAuthors(restoreFocus = false) {
-      if (!activeAuthorRegion) return;
-      setAuthorExpanded(activeAuthorRegion, false);
-      authorPopover.hidden = true;
-      activeAuthorRegion = null;
-      if (restoreFocus) authorTrigger.focus({ preventScroll: true });
-      authorTrigger = null;
-    }
-
-    function toggleMapAuthors(regionKey, trigger) {
-      if (regionKey === activeAuthorRegion) {
-        hideMapAuthors();
-        return;
-      }
-      hideMapAuthors();
-      const region = mapRegions.find(item => item.key === regionKey);
-      const people = getPeople(data, { region: regionKey });
-      authorPopover.querySelector('h2').textContent = name(region);
-      authorList.innerHTML = people.map(person => {
-        const label = escape(personName(person));
-        return `<button class="network-portrait" type="button" data-person="${person.key}" aria-label="${label}" aria-haspopup="dialog" title="${label}"><img src="${person.photo}" alt="" width="28" height="30"></button>`;
-      }).join('');
-      authorList.scrollTop = 0;
-      authorPopover.hidden = false;
-      activeAuthorRegion = regionKey;
-      authorTrigger = trigger;
-      setAuthorExpanded(regionKey, true);
-
-      const bounds = map.getBoundingClientRect();
-      const point = trigger.getBoundingClientRect();
-      const width = authorPopover.offsetWidth;
-      const height = authorPopover.offsetHeight;
-      const left = Math.max(8, Math.min(point.left - bounds.left + (point.width - width) / 2, bounds.width - width - 8));
-      const below = point.bottom - bounds.top + 8;
-      const above = point.top - bounds.top - height - 8;
-      const top = below + height > bounds.height - 8 && above >= 8 ? above : below;
-      authorPopover.style.setProperty('--author-left', `${left}px`);
-      authorPopover.style.setProperty('--author-top', `${Math.max(8, Math.min(top, bounds.height - height - 8))}px`);
-    }
-
-    map.addEventListener('pointerdown', event => {
-      if (!event.target.closest('#map-author-popover, [data-region], [data-map-author]')) hideMapAuthors();
-    });
-    map.addEventListener('keydown', event => {
-      if (!activeAuthorRegion) return;
-      if (event.key === 'Escape') {
-        event.preventDefault();
-        hideMapAuthors(true);
-      } else if (event.key === 'Tab' && !event.shiftKey && event.target === authorTrigger) {
-        event.preventDefault();
-        closeAuthors.focus({ preventScroll: true });
-      } else if (event.key === 'Tab' && event.shiftKey && event.target === closeAuthors) {
-        event.preventDefault();
-        authorTrigger.focus({ preventScroll: true });
-      }
-    });
+    const portraits = roster.querySelectorAll('.network-portrait');
+    const regionControls = map.querySelectorAll('[data-region]');
     let dialogTrigger = null;
 
     function hideRosterName() {
@@ -325,31 +254,18 @@
       if (event.key === 'Escape') hideRosterName();
     });
 
-    const personCard = person => `<button class="network-person-row" type="button" data-person="${person.key}" aria-haspopup="dialog"><img src="${person.photo}" alt="" width="64" height="70" loading="lazy"><span><strong>${escape(personName(person))}</strong><small>${escape(role(person))}</small></span></button>`;
-    function renderLinkedPeople(people) {
-      return `<h3 class="network-subheading">${t('关联成员', 'Linked people')} <span>${people.length}</span></h3><div class="network-person-list">${people.map(personCard).join('')}</div>`;
-    }
-
     function update() {
-      const region = findRegion(state.region);
-      const partners = getPartners(data, state.region);
-      const partner = partners.find(item => item.key === state.partner);
-      const people = region ? data.team.filter(person => profiles[person.key]?.region === region.key) : data.team;
-      const regionLabel = region ? name(region) : '';
-      panelCount.textContent = `${regionLabel ? `${regionLabel} · ` : ''}${institutionCount(partners.length)} · ${region
-        ? t(`${people.length} 位已关联成员`, `${people.length} linked ${people.length === 1 ? 'person' : 'people'}`)
-        : peopleCount(people.length)}`;
-      root.querySelectorAll('[data-region]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.region === state.region)));
-      root.querySelectorAll('[data-map-line]').forEach(line => line.classList.toggle('is-selected', line.dataset.mapLine === state.region));
-      root.querySelectorAll('.network-map-marks [data-partner]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.partner === state.partner)));
-      if (partner) {
-        const linkedProfiles = people.filter(person => profiles[person.key].partners.includes(partner.key));
-        const linkedPeople = linkedProfiles.length ? linkedProfiles : getPeople(data, { region: state.region, partner: partner.key });
-        content.innerHTML = `<button class="network-back" type="button" data-back>${t('查看本地区全部机构', 'All institutions in this location')}</button><div class="network-institution-detail"><img src="${partner.logo}" alt=""><h3>${escape(partnerName(partner))}</h3><p>${name(partnerRegion(partner.key))}</p></div>${linkedPeople.length ? renderLinkedPeople(linkedPeople) : `<p class="network-empty-copy">${t('尚未补充该机构与项目成员的关联资料。可在完整团队中浏览全部成员。', 'Member affiliations for this institution have not yet been linked. Explore all members in the full team.')}</p>`}`;
-      } else {
-        content.innerHTML = `<div class="network-institution-list">${partners.map(partner => `<button class="network-institution-row" type="button" data-partner="${partner.key}"><img src="${partner.logo}" alt="" loading="lazy"><span><strong>${escape(partnerName(partner))}</strong><small>${name(partnerRegion(partner.key))}</small></span></button>`).join('')}</div>${region && people.length ? renderLinkedPeople(people) : ''}`;
-      }
-      status.textContent = partner ? partnerName(partner) : panelCount.textContent;
+      const region = findRegion(selectedRegion);
+      const partners = getPartners(data, selectedRegion);
+      const people = getPeople(data, { region: selectedRegion });
+      const visiblePeople = new Set(people.map(person => person.key));
+      panelCount.textContent = `${region ? `${name(region)} · ` : ''}${institutionCount(partners.length)} · ${peopleCount(people.length)}`;
+      regionControls.forEach(button => button.setAttribute('aria-pressed', String(button.dataset.region === selectedRegion)));
+      leaders.forEach(({ region, path }) => path.parentElement.classList.toggle('is-selected', region.key === selectedRegion));
+      content.innerHTML = `<div class="network-institution-list">${partners.map(partner => `<div class="network-institution-row"><img src="${partner.logo}" alt="" loading="lazy"><span><strong>${escape(partnerName(partner))}</strong><small>${name(partnerRegion(partner.key))}</small></span></div>`).join('')}</div>`;
+      hideRosterName();
+      portraits.forEach(button => { button.hidden = !visiblePeople.has(button.dataset.person); });
+      status.textContent = panelCount.textContent;
     }
 
     function openPerson(key, trigger) {
@@ -369,25 +285,9 @@
     root.addEventListener('click', event => {
       const button = event.target.closest('button');
       if (button?.hasAttribute('data-region')) {
-        const selected = state.region === button.dataset.region && !state.partner;
-        state.region = selected ? 'all' : button.dataset.region;
-        state.partner = null;
+        const region = button.dataset.region;
+        selectedRegion = selectedRegion === region ? 'all' : region;
         update();
-        toggleMapAuthors(button.dataset.region, button);
-      } else if (button?.hasAttribute('data-map-author')) {
-        toggleMapAuthors(button.dataset.mapAuthor, button);
-      } else if (button === closeAuthors) {
-        hideMapAuthors(true);
-      } else if (button?.hasAttribute('data-partner')) {
-        state.partner = button.dataset.partner;
-        state.region = partnerRegion(state.partner).key;
-        update();
-        if (!button.closest('.network-map-marks')) content.querySelector('[data-back]').focus();
-      } else if (button?.hasAttribute('data-back')) {
-        const key = state.partner;
-        state.partner = null;
-        update();
-        content.querySelector(`[data-partner="${key}"]`)?.focus({ preventScroll: true });
       } else if (button?.hasAttribute('data-person')) {
         openPerson(button.dataset.person, button);
       } else if (button?.classList.contains('network-dialog-close')) {
