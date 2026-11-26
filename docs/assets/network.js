@@ -149,7 +149,7 @@
             <h3 id="participant-institutions-title">${t('作者所属机构', 'Author affiliations')}</h3>
             <a class="network-roster-skip" href="#team">${rosterLink}</a>
           </div>
-          <ol class="network-affiliation-list"></ol>
+          <ol class="network-affiliation-list" role="list"></ol>
         </section>
       </section>
       <dialog class="network-dialog" aria-labelledby="network-person-title"><button class="network-dialog-close" type="button" aria-label="${t('关闭成员资料', 'Close profile')}">×</button><div class="network-dialog-content"></div></dialog>
@@ -288,7 +288,7 @@
       content.innerHTML = `<div class="network-institution-list">${partners.map(partner => `<div class="network-institution-row"><img src="${partner.logo}" alt="" loading="lazy"><span><strong>${escape(partnerName(partner))}</strong><small>${name(partnerRegion(partner.key))}</small></span></div>`).join('')}</div>`;
       affiliationList.innerHTML = affiliations.map(([number, affiliation]) => {
         const label = t(affiliation.nameZh ?? affiliation.name, affiliation.name);
-        return `<li value="${number}">${escape(label)}</li>`;
+        return `<li value="${number}"><span class="network-affiliation-number">${number}.</span> <span>${escape(label)}</span></li>`;
       }).join('');
       hideRosterName();
       portraits.forEach(button => { button.hidden = !visiblePeople.has(button.dataset.person); });

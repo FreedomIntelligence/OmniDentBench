@@ -116,7 +116,7 @@ test('both languages render institution and author locations on the map and the 
     assert.match(directory, en ? />Partner institutions<\/h3>/ : />合作机构<\/h3>/);
     assert.match(directory, en ? />Authors<\/h3>/ : />作者<\/h3>/);
     assert.match(directory, en ? />Author affiliations<\/h3>/ : />作者所属机构<\/h3>/);
-    assert.match(directory, /<ol class="network-affiliation-list"><\/ol>/);
+    assert.match(directory, /<ol class="network-affiliation-list" role="list"><\/ol>/);
     assert.ok(html.lastIndexOf('class="network-portrait"') < html.indexOf('id="participant-institutions"'));
     assert.ok(html.lastIndexOf('class="network-portrait"') < html.indexOf('class="network-roster-skip" href="#team"'));
     assert.doesNotMatch(html, /<select\b|network-map-directory|data-mode=/);
