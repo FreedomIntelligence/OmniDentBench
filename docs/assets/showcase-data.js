@@ -1,5 +1,5 @@
 window.ODB_DATA = {
-  // Author superscripts and affiliation text from the manuscript’s generated author list.
+  // Affiliations from the manuscript and confirmed author updates.
   affiliations: {
     1: { name: "Division of Applied Oral Sciences & Community Dental Care, Faculty of Dentistry, The University of Hong Kong, Hong Kong SAR, China.", region: "hong-kong", partners: ["hku"] },
     2: { name: "Beijing Institute of Collaborative Innovation, Beijing, China.", region: "mainland" },
@@ -45,6 +45,7 @@ window.ODB_DATA = {
     42: { name: "Faculty of Dentistry, International University of Catalunya, Barcelona, Spain.", region: "spain" },
     43: { name: "MRC Biostatistics Unit, University of Cambridge, Cambridge, United Kingdom.", region: "united-kingdom" },
     44: { name: "Clinic for Conservative Dentistry, Periodontology and Digital Dentistry, LMU University Hospital, LMU Medicine, Munich, Germany.", region: "germany", partners: ["lmu"] },
+    45: { name: "Affiliated Hospital of Guangdong Medical University, China.", region: "mainland" },
   },
   team: [
     {
@@ -351,7 +352,7 @@ window.ODB_DATA = {
       nameZh: "Jingyi Liang",
       nameEn: "Jingyi Liang",
       affiliationIds: [3],
-      photo: "./images/team/team-anonymous.webp",
+      photo: "./images/team/team-080-jingyi-liang.webp",
     },
     {
       key: "081-zikun-jin",
@@ -360,7 +361,7 @@ window.ODB_DATA = {
       nameZh: "Zikun Jin",
       nameEn: "Zikun Jin",
       affiliationIds: [1],
-      photo: "./images/team/team-anonymous.webp",
+      photo: "./images/team/team-081-zikun-jin.webp",
     },
     {
       key: "082-xiang-liu",
@@ -413,7 +414,7 @@ window.ODB_DATA = {
       sortOrder: 5,
       nameZh: "Aylin Barthelmé",
       nameEn: "Aylin Barthelmé",
-      affiliationIds: [40],
+      affiliationIds: [19],
       photo: "./images/team/team-anonymous.webp",
     },
     {
@@ -549,7 +550,7 @@ window.ODB_DATA = {
       nameZh: "Yuta Chiba",
       nameEn: "Yuta Chiba",
       affiliationIds: [39],
-      photo: "./images/team/team-anonymous.webp",
+      photo: "./images/team/team-106-yuta-chiba.webp",
     },
     {
       key: "107-lluis-giner-tarrida",
@@ -567,7 +568,7 @@ window.ODB_DATA = {
       nameZh: "Xiangbo Wu",
       nameEn: "Xiangbo Wu",
       affiliationIds: [31],
-      photo: "./images/team/team-anonymous.webp",
+      photo: "./images/team/team-104-xiangbo-wu.webp",
     },
     {
       key: "105-jianquan-li",
@@ -576,7 +577,7 @@ window.ODB_DATA = {
       nameZh: "Jianquan Li",
       nameEn: "Jianquan Li",
       affiliationIds: [32],
-      photo: "./images/team/team-anonymous.webp",
+      photo: "./images/team/team-105-jianquan-li.webp",
     },
     {
       key: "053-yifan-zheng",
@@ -818,7 +819,7 @@ window.ODB_DATA = {
       sortOrder: 27,
       nameZh: "黄敏",
       nameEn: "Min Huang",
-      affiliationIds: [5],
+      affiliationIds: [45],
       photo: "./images/team/team-032-min-huang.webp",
     },
     {
@@ -890,7 +891,7 @@ window.ODB_DATA = {
       sortOrder: 35,
       nameZh: "杨宽",
       nameEn: "Kuan Yang",
-      affiliationIds: [30],
+      affiliationIds: [15],
       photo: "./images/team/team-026-kuan-yang.webp",
     },
     {

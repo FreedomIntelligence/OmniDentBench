@@ -184,8 +184,8 @@ OmniDentBench brings together **16 partner institutions**. [Explore the collabor
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-072-jiajun-you"><img src="docs/images/team/team-072-jiajun-you.webp" width="60" alt=""><br><sub>Jiajun You</sub></a></td>
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-073-zhenyang-cai"><img src="docs/images/team/team-073-zhenyang-cai.webp" width="60" alt=""><br><sub>Zhenyang Cai</sub></a></td>
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-074-zhou-su"><img src="docs/images/team/team-074-zhou-su.webp" width="60" alt=""><br><sub>Zhou Su</sub></a></td>
-    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-080-jingyi-liang"><img src="docs/images/team/team-anonymous.webp" width="60" alt=""><br><sub>Jingyi Liang</sub></a></td>
-    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-081-zikun-jin"><img src="docs/images/team/team-anonymous.webp" width="60" alt=""><br><sub>Zikun Jin</sub></a></td>
+    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-080-jingyi-liang"><img src="docs/images/team/team-080-jingyi-liang.webp" width="60" alt=""><br><sub>Jingyi Liang</sub></a></td>
+    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-081-zikun-jin"><img src="docs/images/team/team-081-zikun-jin.webp" width="60" alt=""><br><sub>Zikun Jin</sub></a></td>
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-082-xiang-liu"><img src="docs/images/team/team-anonymous.webp" width="60" alt=""><br><sub>Xiang Liu</sub></a></td>
   </tr>
 </table>
@@ -217,7 +217,7 @@ OmniDentBench brings together **16 partner institutions**. [Explore the collabor
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-101-ramat-oyebunmi-braimah"><img src="docs/images/team/team-101-ramat-oyebunmi-braimah.webp" width="60" alt=""><br><sub>Ramat Oyebunmi Braimah</sub></a></td>
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-102-ricardo-palacios-banuelos"><img src="docs/images/team/team-anonymous.webp" width="60" alt=""><br><sub>Ricardo Palacios-Bañuelos</sub></a></td>
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-103-suresh-kandagal-veerabhadrappa"><img src="docs/images/team/team-103-suresh-kandagal-veerabhadrappa.webp" width="60" alt=""><br><sub>Suresh Kandagal Veerabhadrappa</sub></a></td>
-    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-106-yuta-chiba"><img src="docs/images/team/team-anonymous.webp" width="60" alt=""><br><sub>Yuta Chiba</sub></a></td>
+    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-106-yuta-chiba"><img src="docs/images/team/team-106-yuta-chiba.webp" width="60" alt=""><br><sub>Yuta Chiba</sub></a></td>
     <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-107-lluis-giner-tarrida"><img src="docs/images/team/team-anonymous.webp" width="60" alt=""><br><sub>Lluís Giner Tarrida</sub></a></td>
   </tr>
 </table>
@@ -226,8 +226,8 @@ OmniDentBench brings together **16 partner institutions**. [Explore the collabor
 
 <table>
   <tr>
-    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-104-xiangbo-wu"><img src="docs/images/team/team-anonymous.webp" width="60" alt=""><br><sub>Xiangbo Wu</sub></a></td>
-    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-105-jianquan-li"><img src="docs/images/team/team-anonymous.webp" width="60" alt=""><br><sub>Jianquan Li</sub></a></td>
+    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-104-xiangbo-wu"><img src="docs/images/team/team-104-xiangbo-wu.webp" width="60" alt=""><br><sub>Xiangbo Wu</sub></a></td>
+    <td align="center" width="88"><a href="https://freedomintelligence.github.io/OmniDentBench/#member-105-jianquan-li"><img src="docs/images/team/team-105-jianquan-li.webp" width="60" alt=""><br><sub>Jianquan Li</sub></a></td>
   </tr>
 </table>
 

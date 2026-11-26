@@ -37,7 +37,7 @@ test('regional people require source-backed, valid affiliations', () => {
     assert.ok(profile.partners.every(partner => region.partners.includes(partner)));
   }
   assert.equal(getPeople(data).length, 107);
-  assert.equal(Object.keys(data.affiliations).length, 44);
+  assert.equal(Object.keys(data.affiliations).length, 45);
   assert.equal(data.affiliations[5].name,
     'Shenzhen Stomatology Hospital (Pingshan) of Southern Medical University, Shenzhen, China.');
   for (const person of data.team) {
