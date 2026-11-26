@@ -47,6 +47,9 @@ test('regional people require source-backed, valid affiliations', () => {
   for (const affiliation of Object.values(data.affiliations)) {
     const region = regions.find(item => item.key === affiliation.region);
     assert.ok(!affiliation.partners || affiliation.partners.every(partner => region?.partners.includes(partner)));
+    if (affiliation.region === 'mainland' || affiliation.region === 'hong-kong') {
+      assert.match(affiliation.nameZh, /\p{Script=Han}/u, affiliation.name);
+    }
   }
   assert.ok(getPeople(data, { region: 'hong-kong' }).some(person => person.key === '059-junwen-wang'));
   assert.ok(getPeople(data, { region: 'mainland' }).some(person => person.key === '059-junwen-wang'));
