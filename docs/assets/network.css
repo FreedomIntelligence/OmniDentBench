@@ -108,8 +108,9 @@ button.network-map-portraits:is(:hover, [aria-pressed='true']) { background: #dc
 .network-roster-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); gap: 6px; padding: 2px 0 12px; }
 #participant-institutions { margin-top: 8px; }
 #participant-institutions .network-directory-heading { align-items: center; margin-bottom: 4px; }
-.network-affiliation-list { columns: 2; column-gap: clamp(20px, 4vw, 64px); margin: 0; padding: 0; list-style: none; }
+.network-affiliation-list { columns: 2; column-gap: clamp(38px, 5vw, 72px); margin: 0; padding: 0; padding-inline-start: 3ch; list-style: decimal outside; }
 .network-affiliation-list li { break-inside: avoid; padding-block: 8px; border-top: 1px solid var(--line); font-size: 1rem; line-height: 1.5; overflow-wrap: anywhere; }
+.network-affiliation-list li::marker { color: var(--muted); font-size: .875rem; font-variant-numeric: tabular-nums; }
 .network-portrait { display: grid; place-items: center; min-width: 0; min-height: 40px; padding: 2px; border: 0; border-radius: 3px; background: none; }
 .network-portrait[hidden] { display: none; }
 .network-portrait img { width: 28px; height: auto; aspect-ratio: 12/13; object-fit: cover; object-position: center 23%; border-radius: 2px; background: #e9eff4; }

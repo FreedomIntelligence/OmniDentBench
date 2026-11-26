@@ -120,7 +120,7 @@ When publishing results, report the two metrics separately and include the langu
 
 ## Institutions and team
 
-OmniDentBench brings together **16 partner institutions**. [Explore the collaboration map](https://freedomintelligence.github.io/OmniDentBench/#collaboration-map) · [View participant affiliations](https://freedomintelligence.github.io/OmniDentBench/#participant-institutions) · [View the research team](https://freedomintelligence.github.io/OmniDentBench/#team)
+OmniDentBench brings together **16 partner institutions**. [Explore the collaboration map](https://freedomintelligence.github.io/OmniDentBench/#collaboration-map) · [View author affiliations](https://freedomintelligence.github.io/OmniDentBench/#participant-institutions) · [View the research team](https://freedomintelligence.github.io/OmniDentBench/#team)
 
 ### Steering chairs (4)
 

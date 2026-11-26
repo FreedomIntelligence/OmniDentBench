@@ -11,7 +11,7 @@ for (const file of ['showcase-data.js', 'network-data.js', 'network.js', 'specia
 }
 const data = context.window.ODB_DATA;
 const { regions, profiles } = context.window.ODB_NETWORK_DATA;
-const { getPartners, getPeople, getParticipantInstitutions, render } = context.window.ODBNetwork;
+const { getPartners, getPeople, getAuthorAffiliations, render } = context.window.ODBNetwork;
 
 test('every partner is counted once; mainland and Hong Kong remain separate', () => {
   const assignments = regions.flatMap(region => region.partners);
@@ -63,18 +63,17 @@ test('regional people require source-backed, valid affiliations', () => {
   assert.equal(getPeople(data, { region: 'spain', query: 'Lluís Giner Tarrida' })[0].key, '107-lluis-giner-tarrida');
 });
 
-test('participant institutions are deduplicated, region-specific, and independent of partnerships', () => {
-  const all = getParticipantInstitutions(data);
-  const mainland = getParticipantInstitutions(data, 'mainland');
-  const hongKong = getParticipantInstitutions(data, 'hong-kong');
-  assert.equal(new Set(all).size, all.length);
-  assert.ok(mainland.every(institution => institution.region === 'mainland'));
-  assert.ok(mainland.includes(data.affiliations[33]));
-  assert.ok(mainland.includes(data.affiliations[9]));
-  assert.ok(!all.includes(data.affiliations[30]));
+test('author affiliations keep manuscript numbers and order when filtered by region', () => {
+  const all = getAuthorAffiliations(data);
+  const mainland = getAuthorAffiliations(data, 'mainland');
+  const hongKong = getAuthorAffiliations(data, 'hong-kong');
+  assert.deepEqual(Array.from(all, ([number]) => Number(number)), Array.from({ length: 45 }, (_, i) => i + 1));
+  assert.deepEqual(Array.from(mainland), Array.from(all.filter(([, entry]) => entry.region === 'mainland')));
+  assert.match(mainland.find(([number]) => number === '33')[1].name, /^Chongqing Medical University,/);
+  assert.ok(mainland.some(([number]) => number === '30'));
   assert.ok(!getPartners(data).some(partner => partner.key === 'chongqing-medical-university'));
-  assert.deepEqual(Array.from(hongKong), [data.affiliations[1]]);
-  assert.deepEqual(Array.from(getParticipantInstitutions(data, 'japan')), [data.affiliations[39]]);
+  assert.deepEqual(Array.from(hongKong, ([number]) => number), ['1', '14', '26', '27', '28']);
+  assert.deepEqual(Array.from(getAuthorAffiliations(data, 'japan'), ([number]) => number), ['39']);
   assert.deepEqual(Array.from(data.team.find(person => person.key === '073-zhenyang-cai').affiliationIds), [6, 4]);
 });
 
@@ -115,7 +114,9 @@ test('both languages render institution and author locations on the map and the 
     assert.match(html, /<div class="network-roster" id="network-roster" role="group"/);
     assert.match(html, /class="network-roster-skip network-roster-shortcut visually-hidden" href="#team"/);
     assert.match(directory, en ? />Partner institutions<\/h3>/ : />合作机构<\/h3>/);
-    assert.match(directory, en ? />Participant affiliations<\/h3>/ : />参与者所在机构<\/h3>/);
+    assert.match(directory, en ? />Authors<\/h3>/ : />作者<\/h3>/);
+    assert.match(directory, en ? />Author affiliations<\/h3>/ : />作者所属机构<\/h3>/);
+    assert.match(directory, /<ol class="network-affiliation-list"><\/ol>/);
     assert.ok(html.lastIndexOf('class="network-portrait"') < html.indexOf('id="participant-institutions"'));
     assert.ok(html.lastIndexOf('class="network-portrait"') < html.indexOf('class="network-roster-skip" href="#team"'));
     assert.doesNotMatch(html, /<select\b|network-map-directory|data-mode=/);
